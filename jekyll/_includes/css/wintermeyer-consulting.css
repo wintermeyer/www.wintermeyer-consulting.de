@@ -34,12 +34,12 @@ figure {
   padding: 0.5em;
 }
 
-.img-circular{
+.img-sw-avatar{
   float: right;
 
  width: 150px;
  height: 150px;
- background-image: url('/assets/stefan-wintermeyer/stefan-wintermeyer.jpg');
+ background-image: url("{% base64 assets/stefan-wintermeyer/stefan-wintermeyer-150x150.jpg %}");
  background-size: cover;
  display: block;
  border-radius: 100px;
