@@ -1,0 +1,12 @@
+.img-sw-avatar{
+  float: right;
+
+ width: 150px;
+ height: 150px;
+ background-image: url("{% base64 assets/stefan-wintermeyer/stefan-wintermeyer-150x150.jpg %}");
+ background-size: cover;
+ display: block;
+ border-radius: 100px;
+ -webkit-border-radius: 100px;
+ -moz-border-radius: 100px;
+}
