@@ -1,0 +1,61 @@
+{% comment %}
+To display a table of all books use
+  {% include books.html %}
+
+To display a table of all books taged by 'Foo' use
+  {% include books.html tag='Foo' %}
+
+To display a table with the title 'Foo' use
+  {% include books.html title='Foo' %}
+{% endcomment %}
+
+{% assign counter=0 %}
+{% for book in site.data.books %}
+  {% if include.tag %}
+    {% if book.tags contains include.tag %}
+      {% assign counter=counter | plus:1 %}
+    {% endif %}
+  {% else %}
+    {% assign counter=counter | plus:1 %}
+  {% endif %}
+{% endfor %}
+
+{% if counter > 0 %}
+  <h2>Bücher</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Titel</th>
+        <th>ISBN-Nr.</th>
+        <th>Bestellen</th>
+        <th>Sprache</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for book in site.data.books %}
+      {% assign display_book = 0 %}
+      {% unless include.tag %}
+        {% assign display_book = 1 %}
+      {% elsif book.tags contains include.tag %}
+        {% assign display_book = 1 %}
+      {% endunless %}
+
+      {% if display_book == 1 %}
+         <tr>
+          <td>
+            {% if book.book_url %}
+            <a href="{{ book.book_url }}">{{ book.title }}</a>
+            {% else %}
+            {{ book.title }}
+            {% endif %}
+            {% if book.subtitle %}<br/>{{ book.subtitle }}{% endif %}
+          </td>
+          <td>{{ book.isbn }}</td>
+          <td><a href="{{ book.amazon_url }}">Amazon-Link</a></td>
+          <td>{{ book.lang }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+  </table>
+{% endif %}

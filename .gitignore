@@ -1,3 +1,14 @@
-_site/
-.sass-cache/
-.jekyll-metadata
+# Jekyll
+# 
+_site
+_drafts
+.sass-cache
+.asset-cache
+
+# OS X
+#
+.DS_Store
+
+# Deployment
+#
+bin/

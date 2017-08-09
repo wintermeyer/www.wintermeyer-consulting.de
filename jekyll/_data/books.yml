@@ -1,0 +1,32 @@
+- title: "Learn Rails 5.1 (Part 1)"
+  isbn: 154543025X
+  amazon_url: http://amzn.to/2vcO4Se
+  lang: en
+  tags:
+    - Rails
+
+- title: "Learn Rails 5.1 (Part 2)"
+  isbn: 1546496149
+  amazon_url: http://amzn.to/2hBO9u2
+  lang: en
+  tags:
+    - Rails
+
+- title: "Ruby on Rails 3.2"
+  subtitle: "Für Ein-, Um- und Quereinsteiger"
+  isbn: 3827329892
+  amazon_url: http://www.amazon.de/Ruby-Rails-3-2-Quereinsteiger-Library/dp/3827329892
+  book_url: http://ruby-auf-schienen.de
+  lang: de
+  tags:
+    - Rails
+
+- title: "Asterisk"
+  subtitle: ""
+  isbn: 3827330335
+  amazon_url: http://www.amazon.de/Asterisk-1-4-1-6-Studentenausgabe-Programmierung/dp/3827330335
+  book_url: http://das-asterisk-buch.de
+  lang: de
+  tags:
+    - Asterisk
+    - VoIP
