@@ -10,6 +10,9 @@
     {% include css/normalize.css %}
     {% include css/milligram.css %}
     {% include css/wintermeyer-consulting.css %}
+    {% if page.sw_avatar %}
+    {% include css/sw_avatar.css %}
+    {% endif %}
   </style>
 
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
