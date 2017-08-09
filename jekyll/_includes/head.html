@@ -6,9 +6,11 @@
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
-  <link rel="stylesheet" href="{{ "/assets/css/normalize.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/assets/css/milligram.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/assets/css/wintermeyer-consulting.css" | relative_url }}">
+  <style type="text/css">
+    {% include css/normalize.css %}
+    {% include css/milligram.css %}
+    {% include css/wintermeyer-consulting.css %}
+  </style>
 
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">

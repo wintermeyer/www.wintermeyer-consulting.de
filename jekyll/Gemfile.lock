@@ -49,6 +49,7 @@ PLATFORMS
 DEPENDENCIES
   jekyll (= 3.5.1)
   minima (~> 2.0)
+  sass
   tzinfo-data
 
 BUNDLED WITH
