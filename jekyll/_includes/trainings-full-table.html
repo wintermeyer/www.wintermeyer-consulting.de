@@ -1,0 +1,85 @@
+{% assign counter=0 %}
+{% for training in site.data.trainings %}
+  {% if include.tag %}
+    {% if training.tags contains include.tag %}
+      {% assign counter=counter | plus:1 %}
+    {% endif %}
+  {% else %}
+    {% assign counter=counter | plus:1 %}
+  {% endif %}
+{% endfor %}
+
+{% if counter > 0 %}
+  <h2>Schulungstermine</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Schulung</th>
+        <th>Termin</th>
+        <th>Dauer</th>
+        <th>Ort</th>
+        <th>Preis</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for training in site.data.trainings reversed %}
+      {% assign display_trainings = 0 %}
+      {% unless include.tag %}
+        {% assign display_trainings = 1 %}
+      {% elsif training.tags contains include.tag %}
+        {% assign display_trainings = 1 %}
+      {% endunless %}
+
+      {% if display_trainings == 1 %}
+      <tr>
+        <td>
+          {% if page.url == training.url %}
+            {{ training.name }}
+          {% else %}
+            <a href="{{ training.url }}">{{ training.name }}</a>
+          {% endif %}
+        </td>
+
+        <td>
+          <ul>
+          {% for termin in training.trainings %}
+            <script type="application/ld+json">
+            {
+              "@context": "http://schema.org",
+              "@type": "Event",
+              "name": "{{ training.name }}",
+              "startDate" : "{{ termin.date | date: "%Y-%m-%-dT00:00" }}",
+              "url" : "https://www.wintermeyer-consulting.de{{ training.url }}",
+              "location" : {
+                "@type" : "Place",
+                "name" : "{{ termin.location }}",
+                "address" : "{{ termin.location }}, Deutschland"
+              },
+              "offers":{
+                "@id":"#Offer",
+                "@type":"Offer",
+                "priceCurrency":"EUR",
+                "price":"{{ training.price }}"
+              }
+            }
+            </script>
+            <li>{{ termin.date | date: "%-d.%m.%Y" }} - {{ termin.location }}</li>
+          {% endfor %}
+        </ul>
+        </td>
+
+        <td>
+          {{ training.duration }}
+          {% if training.duration == 1 %}
+            Tag
+          {% else %}
+            Tage
+          {% endif %}
+        </td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

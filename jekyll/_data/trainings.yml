@@ -5,20 +5,18 @@
   trainings:
     - date: 2017-03-17
       location: Koblenz
-  price: 985
-  tags:
-    - WebPerf
+  price: 980
+  tag: WebPerf
 
-- name: Ruby on Rails 5.0
-  excerpt: "Ruby on Rails 5.0 Training"
+- name: Ruby on Rails 5.1
+  excerpt: "Ruby on Rails 5.1 Training"
   url: /trainings/ruby-on-rails.html
   duration: 2
   trainings:
     - date: 2017-03-15
       location: Koblenz
-  price: 985
-  tags:
-    - Rails
+  price: 1.200
+  tag: Rails
 
 - name: Phoenix Framework
   excerpt: "Phoenix Anfänger Training"
@@ -28,5 +26,4 @@
     - date: 2017-03-21
       location: Koblenz
   price: 1.200
-  tags:
-    - Phoenix
+  tag: Phoenix
