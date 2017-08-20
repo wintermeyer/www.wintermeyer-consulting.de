@@ -1,3 +1,17 @@
+- date: 19.08.2017
+  conference: FrOSCon
+  conference_url: https://www.froscon.de
+  city: Sankt Augustin
+  country: Deutschland
+  title: vutuv - Free, Fast and Secure Business Networking
+  video_url: https://media.ccc.de/v/froscon2017-1960-vutuv_-_an_open-source_business_network
+  slides_url: https://speakerdeck.com/wintermeyer/froscon-2017-talk-about-vutuv
+  length: "48:00"
+  lang: de
+  tags:
+    - Phoenix
+    - WebPerf
+
 - date: 11.02.2017
   conference: Lonestar ElixirConf
   conference_url: http://lonestarelixir.com
