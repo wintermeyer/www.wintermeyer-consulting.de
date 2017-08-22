@@ -7,7 +7,7 @@
 #
 cd ~/Github/www.wintermeyer-consulting.de/jekyll/
 echo "* Generating the HTML files with Jekyll"
-jekyll build
+JEKYLL_ENV=production jekyll build
 
 echo -n "Number of generated HTML Files:"
 find _site -name "*.*ml" | wc -l
