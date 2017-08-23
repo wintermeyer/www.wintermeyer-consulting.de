@@ -17,13 +17,12 @@
         <th>Schulung</th>
         <th>Termin</th>
         <th>Dauer</th>
-        <th>Ort</th>
-        <th>Preis</th>
+        <th>Preis (zzgl. MwSt.)</th>
       </tr>
     </thead>
     <tbody>
 
-    {% for training in site.data.trainings reversed %}
+    {% for training in site.data.trainings %}
       {% assign display_trainings = 0 %}
       {% unless include.tag %}
         {% assign display_trainings = 1 %}
@@ -42,7 +41,6 @@
         </td>
 
         <td>
-          <ul>
           {% for termin in training.trainings %}
             <script type="application/ld+json">
             {
@@ -64,9 +62,8 @@
               }
             }
             </script>
-            <li>{{ termin.date | date: "%-d.%m.%Y" }} - {{ termin.location }}</li>
+            {{ termin.date | date: "%-d.%m.%Y" }} in {{ termin.location }}
           {% endfor %}
-        </ul>
         </td>
 
         <td>
@@ -76,6 +73,9 @@
           {% else %}
             Tage
           {% endif %}
+        </td>
+        <td>
+          {{ training.price }} Euro
         </td>
       </tr>
       {% endif %}

@@ -1,29 +1,33 @@
-- name: WebPerformance
-  excerpt: "Fussgängerzone oder Autobahn?"
-  url: /trainings/webperformance.html
-  duration: 1
-  trainings:
-    - date: 2017-03-17
-      location: Koblenz
-  price: 980
-  tag: WebPerf
 
 - name: Ruby on Rails 5.1
   excerpt: "Ruby on Rails 5.1 Training"
-  url: /trainings/ruby-on-rails.html
+  url: /trainings/rails.html
   duration: 2
   trainings:
-    - date: 2017-03-15
+    - date: 2017-09-25
       location: Koblenz
-  price: 1.200
-  tag: Rails
+  price: 1200
+  tags:
+    - Rails
 
 - name: Phoenix Framework
   excerpt: "Phoenix Anfänger Training"
   url: /trainings/phoenix.html
   duration: 2
   trainings:
-    - date: 2017-03-21
+    - date: 2017-09-28
       location: Koblenz
-  price: 1.200
-  tag: Phoenix
+  price: 1200
+  tags:
+    - Phoenix
+
+- name: WebPerformance
+  excerpt: "Fussgängerzone oder Autobahn?"
+  url: /trainings/webperformance.html
+  duration: 1
+  trainings:
+    - date: 2017-09-27
+      location: Koblenz
+  price: 980
+  tags: 
+    - WebPerf

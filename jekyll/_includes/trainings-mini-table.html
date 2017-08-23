@@ -1,0 +1,46 @@
+{% assign counter=0 %}
+{% for training in site.data.trainings %}
+  {% if include.tag %}
+    {% if training.tags contains include.tag %}
+      {% assign counter=counter | plus:1 %}
+    {% endif %}
+  {% else %}
+    {% assign counter=counter | plus:1 %}
+  {% endif %}
+{% endfor %}
+
+{% if counter > 0 %}
+  <table>
+    <thead>
+      <tr>
+        <th>Termin</th>
+        <th>Preis (zzgl. MwSt.)</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for training in site.data.trainings %}
+      {% assign display_trainings = 0 %}
+      {% unless include.tag %}
+        {% assign display_trainings = 1 %}
+      {% elsif training.tags contains include.tag %}
+        {% assign display_trainings = 1 %}
+      {% endunless %}
+
+      {% if display_trainings == 1 %}
+      <tr>
+        <td>
+          {% for termin in training.trainings %}
+            <a href="{{ training.url }}">{{ termin.date | date: "%-d.%m.%Y" }} in {{ termin.location }}</a>
+          {% endfor %}
+        </td>
+
+        <td>
+          {{ training.price }} Euro
+        </td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
