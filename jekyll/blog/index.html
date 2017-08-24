@@ -1,0 +1,29 @@
+---
+layout: default
+title: Wintermeyer Consulting Blog
+description: >
+  Posts die zu lang für Twitter und zu Deutsch für Medium sind. Themen: Ruby on Rails, Phoenix, WebPerformance, Jekyll, ... das Web.
+sw_avatar: true
+---
+<div class="container">
+  <div class="row">
+    <div class="column">
+      <div class="img-sw-avatar"></div>
+
+      <h1>Blog</h1>
+      <p>Posts die zu lang für <a href="https://twitter.com/wintermeyer">Twitter (@wintermeyer)</a> und zu Deutsch für <a href="https://medium.com/@wintermeyer">Medium</a> sind.</p>
+      {% for post in site.posts %}
+        <h3>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h3>
+
+        {% assign date_format = site.minima.date_format | default: "%-d. %B %Y" %}
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        <p>{{ post.description }}</p>
+        <hr />
+      {% endfor %}
+
+      <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
+    </div>
+  </div>
+</div>
