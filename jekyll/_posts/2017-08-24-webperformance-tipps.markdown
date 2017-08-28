@@ -4,6 +4,8 @@ title:  "5 WebPerformance Tipps für deutsche Webseiten"
 date:   2017-08-24 10:27:41 +0200
 author: Stefan Wintermeyer
 categories: webperformance
+tags:
+  - webperformance
 description: >
   Schritte für eine optimale WebPerformance deutscher Webseiten. HTTP/2 und QUIC sind erst der Anfang. Schneller = Besseres Google-Ranking.
 ---
