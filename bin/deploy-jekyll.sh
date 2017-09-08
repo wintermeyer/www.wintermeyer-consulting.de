@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# This script deploys the static files for www.wintermeyer-consulting.de
-#
+# This script deploys the static files for
+URL="www.wintermeyer-consulting.de"
 
 # Build the HTML files
 #
-cd ~/Github/www.wintermeyer-consulting.de/jekyll/
+cd ~/Github/$URL/jekyll/
 echo "* Generating the HTML files with Jekyll"
 JEKYLL_ENV=production jekyll build
 
@@ -13,7 +13,9 @@ echo -n "Number of generated HTML Files:"
 find _site -name "*.*ml" | wc -l
 echo
 
-cd ~/Github/www.wintermeyer-consulting.de/
+# Create a new export directory
+#
+cd ~/Github/$URL/
 mkdir -p export/jekyll/
 rm -rf export/jekyll/_site
 cp -r jekyll/_site export/jekyll/
@@ -23,12 +25,17 @@ cp -r jekyll/_site export/jekyll/
 echo "* Run html-minifier for all HTML files"
 html-minifier -c conf/html-minifier.conf  --file-ext html --input-dir jekyll/_site/ --output-dir export/jekyll/_site/ 2>&1 /dev/null
 
-echo "* Compress each HTML file"
+echo "* Compress HTML files"
+echo "** gzip"
 find export/jekyll/_site -name "*.*ml" -exec echo -n "." \; -exec zopfli --i70 {} \;
+echo
+echo "** brotli"
+find export/jekyll/_site -name "*.*ml" -exec echo -n "." \; -exec bro --quality 10 --input {} --output {}.br \;
 echo
 
 echo "* List file sizes"
 find export/jekyll/_site -name "*.*ml.gz" -exec du -hs {} \;
+find export/jekyll/_site -name "*.*ml.br" -exec du -hs {} \;
 
 # chmod a+r to be safe that the webserver can read everything
 #
@@ -42,7 +49,7 @@ tempfoo=`basename $0`
 TMPFILE=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
 
 echo "* Deploy with rsync"
-rsync -rlpcgoDvz --log-file=$TMPFILE --delete export/jekyll/_site/* stefan@nassau.frankfurt.amooma.de:/var/www/www.wintermeyer-consulting.de/
+rsync -rlpcgoDvz --log-file=$TMPFILE --delete export/jekyll/_site/* stefan@mothership.frankfurt.amooma.de:/var/www/$URL/current/
 
 # Remove the tempfile
 #
