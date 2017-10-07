@@ -4,7 +4,7 @@
   url: /trainings/rails.html
   duration: 2
   trainings:
-    - date: 2017-09-25
+    - date: 2017-11-13
       location: Koblenz
   price: 1200
   tags:
@@ -15,7 +15,7 @@
   url: /trainings/phoenix.html
   duration: 2
   trainings:
-    - date: 2017-09-28
+    - date: 2017-11-19
       location: Koblenz
   price: 1200
   tags:
@@ -26,8 +26,8 @@
   url: /trainings/webperformance.html
   duration: 1
   trainings:
-    - date: 2017-09-27
+    - date: 2017-11-15
       location: Koblenz
   price: 980
-  tags: 
+  tags:
     - WebPerf
