@@ -1,6 +1,14 @@
 - publication: "Linux Magazin"
   publication_url: http://www.linux-magazin.de
   publisher: Computec Media GmbH
+  issue_number: "11/2017"
+  title: "Kleine Brötchen"
+  article_url: http://www.linux-magazin.de/Ausgaben/2017/11/Brotli
+  tags:
+    - WebPerf
+- publication: "Linux Magazin"
+  publication_url: http://www.linux-magazin.de
+  publisher: Computec Media GmbH
   issue_number: "10/2017"
   title: "Heißer Vogel - Phoenix 1.3"
   article_url: http://www.linux-magazin.de/Ausgaben/2017/10/Phoenix-1.3
