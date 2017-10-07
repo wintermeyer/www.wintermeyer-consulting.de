@@ -30,7 +30,7 @@ echo "** gzip"
 find export/jekyll/_site -name "*.*ml" -exec echo -n "." \; -exec zopfli --i70 {} \;
 echo
 echo "** brotli"
-find export/jekyll/_site -name "*.*ml" -exec echo -n "." \; -exec bro --quality 10 --input {} --output {}.br \;
+find export/jekyll/_site -name "*.*ml" -exec echo -n "." \; -exec brotli -9kf {} \;
 echo
 
 echo "* List file sizes"
