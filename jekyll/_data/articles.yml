@@ -3,7 +3,7 @@
   publisher: Computec Media GmbH
   issue_number: "11/2017"
   title: "Kleine Brötchen"
-  article_url: http://www.linux-magazin.de/Ausgaben/2017/11/Brotli
+  article_url: http://www.linux-magazin.de/ausgaben/2017/11/brotli/
   tags:
     - WebPerf
 - publication: "Linux Magazin"
@@ -11,7 +11,7 @@
   publisher: Computec Media GmbH
   issue_number: "10/2017"
   title: "Heißer Vogel - Phoenix 1.3"
-  article_url: http://www.linux-magazin.de/Ausgaben/2017/10/Phoenix-1.3
+  article_url: http://www.linux-magazin.de/ausgaben/2017/10/phoenix-1-3/
   tags:
     - Phoenix
 - publication: "Linux Magazin"
@@ -19,7 +19,7 @@
   publisher: Computec Media GmbH
   issue_number: "6/2017"
   title: "Neue Version 5.1 von Ruby on Rails"
-  article_url: http://www.linux-magazin.de/Ausgaben/2017/06/Ruby-on-Rails
+  article_url: http://www.linux-magazin.de/ausgaben/2017/06/ruby-on-rails/
   tags:
     - Rails
 - publication: "iX Magazin"
@@ -27,7 +27,7 @@
   publisher: Heise
   issue_number: "9/2015"
   title: "Taxi ins Web - Was HTTP/2 für den Webverkehr bedeutet"
-  article_url: http://www.heise.de/ix/inhalt/2015/9/116/
+  article_url: https://shop.heise.de/katalog/taxi-ins-web
   tags:
     - WebPerf
 - publication: "iX Magazin"
@@ -35,7 +35,7 @@
   publisher: Heise
   issue_number: "8/2015"
   title: "WebPerformance - Das Laden von Webseiten optimieren"
-  article_url: http://www.heise.de/ix/inhalt/2015/8/102/
+  article_url: https://shop.heise.de/katalog/schneller-wechsel
   tags:
     - WebPerf
 - publication: "iX Magazin"
