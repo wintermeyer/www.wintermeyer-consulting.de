@@ -1,10 +1,10 @@
 
-- name: Ruby on Rails 5.1
-  excerpt: "Ruby on Rails 5.1 Training"
+- name: Ruby on Rails 5.2
+  excerpt: "Ruby on Rails 5.2 Training"
   url: /trainings/rails.html
   duration: 2
   trainings:
-    - date: 2017-11-13
+    - date: 2018-08-13
       location: Koblenz
   price: 1200
   tags:
@@ -15,7 +15,7 @@
   url: /trainings/phoenix.html
   duration: 2
   trainings:
-    - date: 2017-11-19
+    - date: 2018-09-12
       location: Koblenz
   price: 1200
   tags:
@@ -26,7 +26,7 @@
   url: /trainings/webperformance.html
   duration: 1
   trainings:
-    - date: 2017-11-15
+    - date: 2018-09-14
       location: Koblenz
   price: 980
   tags:
