@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Phoenix LiveView Basics :: Phoenix Beginner&#x27;s Guide</title>
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/phoenix-liveview-basics.html">
+    <meta name="generator" content="Antora 2.3.1">
+    <link rel="stylesheet" href="../../antora-assets/css/site.css">
+    <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
+  </head>
+  <body class="article">
+<header class="header" role="banner">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="/">Wintermeyer Consulting</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Phoenix Links</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Phoenix Framework</strong></div>
+            <a class="navbar-item" href="https://www.phoenixframework.org">Phoenix Homepage</a>
+            <a class="navbar-item" href="https://github.com/phoenixframework/phoenix">GitHub Repository</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Elixir</strong></div>
+            <a class="navbar-item" href="https://elixir-lang.org">Elixir Homepage</a>
+            <a class="navbar-item" href="https://github.com/elixir-lang/elixir">GitHub Repository</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Stefan Wintermeyer</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Work related</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer-consulting.de">Training and Consulting</a>
+            <a class="navbar-item"
+              href="https://speakerdeck.com/wintermeyer">SpeakerDeck</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Phoenix projects</strong></div>
+            <a class="navbar-item"
+              href="https://www.vutuv.de/users/stefan.wintermeyer">vutuv</a>
+            <a class="navbar-item"
+              href="https://www.mehr-schulferien.de">Schulferien Deutschland</a>
+            <div class="navbar-item"><strong>Private</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer.de">Personal Homepage</a>
+            <div class="navbar-item"><strong>Social Media</strong></div>
+            <a class="navbar-item" href="https://twitter.com/wintermeyer">Twitter</a>
+            <a class="navbar-item" href="https://www.facebook.com/stefan.wintermeyer">Facebook</a>
+            <a class="navbar-item"
+              href="https://www.instagram.com/wintermeyer/">Instagram</a>
+          </div>
+        </div>
+        <a class="navbar-item" href="https://twitter.com/wintermeyer">
+          <span class="icon">
+            <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="phoenix" data-version="1.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Phoenix Beginner&#x27;s Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#preface">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="elixir-introduction.html">Elixir Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html">Phoenix Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#the-base-setup">The Base Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#hello-world">Hello World!</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html#conn-struct">The conn Struct</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="phoenix-basics.html#static-clock">Static Clock</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#links">Links</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html#static-files">Static files</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="phoenix-basics.html#images">Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#css">CSS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-liveview-basics.html">LiveView Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#light-switch">Light Switch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#clock">Clock</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#counter">Counter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#aiport-code-search">Airport Code Search</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#autocomplete">Autocomplete</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="router.html">Router</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#mix-phx-routes">Display all existing routes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-params">Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-query-string">Query Strings</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-multilevel-paths">Multilevel Paths</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-wildcards">Wildcards</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#training">Remote Training</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Phoenix Beginner&#x27;s Guide</span>
+    <span class="version">1.5</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Phoenix Beginner's Guide</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.5</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Phoenix Beginner's Guide</a></li>
+    <li><a href="phoenix-liveview-basics.html">LiveView Basics</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Phoenix LiveView Basics</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>LiveView is an interesting alternative to single-page application (SPA) written
+with JavaScript which communicate with the server via JSON and change the
+content of the page by themself. Adding a JavaScript Framework to create a SPA
+is adding an other element to your technology stack which has consequences.
+Creating the same functionality with LiveView keeps your technology stack light
+and you don&#8217;t add one more programming language (JavaScript) to your development
+process.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Feel free to skip this chapter if you are not interested in single-page
+applications. You can come back any time.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Of course LiveView does use JavaScript to do it&#8217;s magic but that is done for
+you. You don&#8217;t have to code any JavaScript yourself. The good to go LiveView
+JavaScript connects via a websocket to your Phoenix application and both
+communicate with each other. On the JavaScript side this is as light weighted
+as possible and uses much less client resources than most JavaScript frameworks.</p>
+</div>
+<div class="paragraph">
+<p>One need thing about LiveView is that on the initial request Phoenix delivers
+a normal HTML page which includes all the design and content you want it to have.
+So the user doesn&#8217;t have to wait for JavaScript to do it&#8217;s work to have a
+usable webpage. As a sideeffect all search engines can use it right away without
+having to rely on JavaScript.</p>
+</div>
+<div class="paragraph">
+<p>During this chapter I&#8217;ll show you a couple of examples. They are meant to give
+you an idea of the possiblities. If LiveView is the right choice for your
+project you&#8217;ll have to invest more time afterwards with experiements and the
+lecture of</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/phoenixframework/phoenix_live_view">Phoenix LiveView GitHub Repo</a></p>
+</li>
+<li>
+<p><a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html" class="bare">https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="light-switch"><a class="anchor" href="#light-switch"></a>Light Switch</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The light switch is the "Hello World!" of LiveView.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+I stole the light switch idea from the great Pragmatic Studio online
+course at <a href="https://online.pragmaticstudio.com/courses/liveview" class="bare">https://online.pragmaticstudio.com/courses/liveview</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We start with a fresh Phoenix application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --live --no-ecto <i class="conum" data-value="1"></i><b>(1)</b>
+* creating demo/config/config.exs
+* creating demo/config/dev.exs
+* creating demo/config/prod.exs
+
+[...]
+
+Fetch and install dependencies? [Yn] <i class="conum" data-value="2"></i><b>(2)</b>
+
+[...]
+
+We are almost there! The following steps are missing:
+
+    $ cd demo
+
+Start your Phoenix app with:
+
+    $ mix phx.server
+
+You can also run your app inside IEx (Interactive Elixir) as:
+
+    $ iex -S mix phx.server</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>'--live' adds all the needed stuff to use LiveView out of the box. For this example we don&#8217;t need Ecto.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Always <code>Y</code> and depending on your internet connection a good time for a cup of coffee.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The aim of this demo is a new webpage with the path <code>/light</code> which offers a
+status of a virtual light bulb and a switch functionality to turn on/off that
+light bulb. All this without reloading the page and without any JavaScript.</p>
+</div>
+<div class="paragraph">
+<p>First we have to add the route:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.Router do
+  use DemoWeb, :router
+
+  [...]
+
+  scope "/", DemoWeb do
+    pipe_through :browser
+
+    live "/", PageLive, :index <i class="conum" data-value="1"></i><b>(1)</b>
+    live "/light", LightLive <i class="conum" data-value="2"></i><b>(2)</b>
+  end
+
+  [...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Because we created the app with the <code>--live</code> switch the default root path is already a live view. Therefor the <code>live</code> macro is used here (at the beginning of the line) instead of the traditional <code>get</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This is the new <code>light</code> route which leads to the <code>LightLive</code> module.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>LiveView modules are located in the <code>lib/demo_web/live/</code> directory. There we have to create
+our new <code>LightLive</code> module:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/live/light_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.LightLive do
+  use DemoWeb, :live_view
+
+  def render(assigns) do <i class="conum" data-value="1"></i><b>(1)</b>
+    ~L"""
+    &lt;h1&gt;The light is off.&lt;/h1&gt;
+    """
+  end
+end
+&lt;1&gt; The `render/1` function renders the template. We use the `~L` sigil to define the template.</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We use the <code>~L</code> sigil to store the template code in this controller. It is
+easier for the purpose of this document. For bigger templates it makes more
+sense to store them in their own file. That would be a LiveEEx Templates
+(<code>.leex</code> extension) and would be named <code>lib/demo_web/live/light_live.html.leex</code>
+in this case and include <code>&lt;h1&gt;The light is off.&lt;/h1&gt;</code>. When you have that file
+you don&#8217;t need the <code>render/1</code> function at all.</p>
+</div>
+<div class="paragraph">
+<p>Have a look at <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html" class="bare">https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html</a> for more information.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Now we can open the browser and open the URL <code><a href="http://localhost:4000/light" class="bare">http://localhost:4000/light</a></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview-static.png" alt="http://localhost:4000/light">
+</div>
+</div>
+<div class="paragraph">
+<p>Our aim is to change the world <code>off</code> to <code>on</code> and trigger that by a button. For that to
+happen we first have to replace the current word with a variable and we have to assign
+that variable to the socket struct (which is used to transport that information). We assign
+the initial state of the variable <code>light_bulb_status</code> in the <code>mount/3</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/live/light_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.LightLive do
+  use DemoWeb, :live_view
+
+  def mount(_params, _session, socket) do <i class="conum" data-value="1"></i><b>(1)</b>
+    socket = assign(socket, :light_bulb_status, "off") <i class="conum" data-value="2"></i><b>(2)</b>
+    {:ok, socket}
+  end
+
+  def render(assigns) do
+    ~L"""
+    &lt;h1&gt;The light is &lt;%= @light_bulb_status %&gt;.&lt;/h1&gt;
+    """
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Out of all the posssible parameters of <code>mount/3</code> we only need the <code>socket</code> struct for our example.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We assign the value <code>off</code> to the variable <code>light_bulb_status</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The browser automatically reloads but the page&#8217;s content hasn&#8217;t changed. Only we know that the <code>off</code>
+is not a static content any more.</p>
+</div>
+<div class="paragraph">
+<p>To turn on the light bulb we need a button:
+.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">def render(assigns) do
+  ~L"""
+  &lt;h1&gt;The light is &lt;%= @light_bulb_status %&gt;.&lt;/h1&gt;
+  &lt;button phx-click="on"&gt;On&lt;/button&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+  """
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The button tag includes <code>phx-click="on"</code> which is special Phoenix code to trigger an event.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we see the button on the webpage:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview-on-button.png" alt="http://localhost:4000/light">
+</div>
+</div>
+<div class="paragraph">
+<p>But clicking on the button doesn&#8217;t do anything. We have to add a <code>handle_event/3</code> function for the <code>on</code> event:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/live/light_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.LightLive do
+  use DemoWeb, :live_view
+
+  def mount(_params, _session, socket) do
+    socket = assign(socket, :light_bulb_status, "off")
+    {:ok, socket}
+  end
+
+  def render(assigns) do
+    ~L"""
+    &lt;h1&gt;The light is &lt;%= @light_bulb_status %&gt;.&lt;/h1&gt;
+    &lt;button phx-click="on"&gt;On&lt;/button&gt;
+    """
+  end
+
+  def handle_event("on", _value, socket) do <i class="conum" data-value="1"></i><b>(1)</b>
+    socket =
+      socket
+      |&gt; assign(:light_bulb_status, "on") <i class="conum" data-value="2"></i><b>(2)</b>
+
+    {:noreply, socket}
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We don&#8217;t need the <code>_value</code> parameter. Just the first parameter to match the function and the socket struct.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We set the <code>light_bulb_status</code> variable to <code>on</code>.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To use the pipe operator in the <code>handle_event/3</code> function is kind of overkill for
+just one variable. In that case it would make sense to use this code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>def handle_event("on", _value, socket) do
+  {:noreply, assign(socket, :light_bulb_status, "on")}
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Same argument works for the <code>mount/3</code> function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>def mount(_params, _session, socket) do
+  {:ok, assign(socket, :light_bulb_status, "off")}
+end</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>No we can load the page having the light <code>off</code>. After clicking on the button
+the text updates to <code>on</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview-on-button-after-clicking.png" alt="http://localhost:4000/light">
+</div>
+</div>
+<div class="paragraph">
+<p>But it would be nice to add a second button so that we can switch the light off
+again. In addition we have to add an other event handler for the <code>off</code> event:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/live/light_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.LightLive do
+  use DemoWeb, :live_view
+
+  def mount(_params, _session, socket) do
+    socket = assign(socket, :light_bulb_status, "off")
+    {:ok, socket}
+  end
+
+  def render(assigns) do
+    ~L"""
+    &lt;h1&gt;The light is &lt;%= @light_bulb_status %&gt;.&lt;/h1&gt;
+    &lt;button phx-click="on"&gt;On&lt;/button&gt;
+    &lt;button phx-click="off"&gt;Off&lt;/button&gt;
+    """
+  end
+
+  def handle_event("on", _value, socket) do
+    socket =
+      socket
+      |&gt; assign(:light_bulb_status, "on")
+
+    {:noreply, socket}
+  end
+
+  def handle_event("off", _value, socket) do
+    socket =
+      socket
+      |&gt; assign(:light_bulb_status, "off")
+
+    {:noreply, socket}
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we have a webpage with two buttons which work to turn the imaginary light on
+and off. But I don&#8217;t like that both buttons are active all the time. That is bad
+UX. Let&#8217;s fix that:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/live/light_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.LightLive do
+  use DemoWeb, :live_view
+
+  def mount(_params, _session, socket) do
+    socket =
+      socket
+      |&gt; assign(:light_bulb_status, "off")
+      |&gt; assign(:on_button_status, "") <i class="conum" data-value="1"></i><b>(1)</b>
+      |&gt; assign(:off_button_status, "disabled")
+
+    {:ok, socket}
+  end
+
+  def render(assigns) do
+    ~L"""
+    &lt;h1&gt;The light is &lt;%= @light_bulb_status %&gt;.&lt;/h1&gt;
+    &lt;button phx-click="on" &lt;%= @on_button_status %&gt;&gt;On&lt;/button&gt;
+    &lt;button phx-click="off" &lt;%= @off_button_status %&gt;&gt;Off&lt;/button&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+    """
+  end
+
+  def handle_event("on", _value, socket) do
+    socket =
+      socket
+      |&gt; assign(:light_bulb_status, "on")
+      |&gt; assign(:on_button_status, "disabled") <i class="conum" data-value="3"></i><b>(3)</b>
+      |&gt; assign(:off_button_status, "")
+
+    {:noreply, socket}
+  end
+
+  def handle_event("off", _value, socket) do
+    socket =
+      socket
+      |&gt; assign(:light_bulb_status, "off")
+      |&gt; assign(:on_button_status, "")
+      |&gt; assign(:off_button_status, "disabled")
+
+    {:noreply, socket}
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We assign a value for the <code>on_button_status</code> and <code>off_button_status</code> to make the on button active and the off button inactive at the start.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We use the <code>@off_button_status</code> to disable the off button right at the beginning.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We toggle the values of the buttons.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We are all set. The buttons work in the way a user would like them to work. All
+without writing a single line of JavaScript. Phoenix LiveView takes care of all
+that. We can concentrate on the application development with Elixir.</p>
+</div>
+<div class="paragraph">
+<p>Please open your browser at <a href="http://localhost:4000/light" class="bare">http://localhost:4000/light</a> and give it a try.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview-working-on-off-button.png" alt="http://localhost:4000/light">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="clock"><a class="anchor" href="#clock"></a>Clock</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The clock is an example of content that is pushed and triggered by the server.
+No interaction by the user. It displays the current server time on a webpage.</p>
+</div>
+<div class="paragraph">
+<p>We start with a fresh Phoenix application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new clock --live --no-ecto <i class="conum" data-value="1"></i><b>(1)</b>
+* creating demo/config/config.exs
+* creating demo/config/dev.exs
+
+[...]
+
+$ cd clock</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>No need to complicate things by adding Ecto to this example.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The first thing is always to add a new route for the LiveView:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/clock_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule ClockWeb.Router do
+  use ClockWeb, :router
+
+  [...]
+
+  scope "/", ClockWeb do
+    pipe_through :browser
+
+    live "/", PageLive, :index
+    live "/clock", ClockLive <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+
+  [...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Our new clock will be available at <a href="http://localhost:4000/clock" class="bare">http://localhost:4000/clock</a></td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">lib/clock_web/live/clock_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule ClockWeb.ClockLive do
+  use ClockWeb, :live_view
+
+  def mount(_params, _session, socket) do
+    if connected?(socket) do <i class="conum" data-value="1"></i><b>(1)</b>
+      :timer.send_interval(1000, self(), :tick) <i class="conum" data-value="2"></i><b>(2)</b>
+    end
+
+    socket = assign_current_time(socket) <i class="conum" data-value="3"></i><b>(3)</b>
+    {:ok, socket}
+  end
+
+  def render(assigns) do
+    ~L"""
+    &lt;h1&gt;&lt;%= @now %&gt;&lt;/h1&gt;
+    """
+  end
+
+  def handle_info(:tick, socket) do <i class="conum" data-value="4"></i><b>(4)</b>
+    socket = assign_current_time(socket)
+
+    {:noreply, socket}
+  end
+
+  def assign_current_time(socket) do
+    now =
+      Time.utc_now() <i class="conum" data-value="5"></i><b>(5)</b>
+      |&gt; Time.to_string()
+      |&gt; String.split(".") <i class="conum" data-value="6"></i><b>(6)</b>
+      |&gt; hd
+
+    assign(socket, now: now) <i class="conum" data-value="7"></i><b>(7)</b>
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>mount/3</code> gets called twice. The first time when the inital HTTP-Request gets answered. That would be the initial webpage. And a second time when the LiveView JavaScript client has connected to the websocket. We want to start our timer at that second request.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This is a bit of Erlang code which fires up a timer which calls the <code>tick/1</code> method every 1,000 milliseconds.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>assign_current_time/1</code> function gets called to add the <code>now</code> value to the <code>socket</code> struct.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>handle_info/2</code> gets called by the 1 second timer to update the value of <code>now</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>Time.utc_now()</code> returns the current time on the server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>This pipeline is just used so that the time is displayed without the milliseconds.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Returns a <code>socket</code> struct.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Fire up the webserver with <code>mix phx.server</code> and open <a href="http://localhost:4000/clock" class="bare">http://localhost:4000/clock</a> in your browser.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview-clock.png" alt="http://localhost:4000/clock">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="counter"><a class="anchor" href="#counter"></a>Counter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This LiveView example will generate a counter website. It starts with 0 and each
+time you click on a button it will increase by one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --live --no-ecto
+[...]
+$ cd demo</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">scope "/", DemoWeb do
+  pipe_through :browser
+
+  live "/", PageLive, :index
+  live "/counter", CounterLive <i class="conum" data-value="1"></i><b>(1)</b>
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The counter will be available at <a href="http://localhost:4000/counter" class="bare">http://localhost:4000/counter</a></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we have to create the <code>lib/demo_web/live/counter_live.ex</code> file and fill it
+with live:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/live/counter_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.CounterLive do
+  use DemoWeb, :live_view
+
+  def mount(_params, _session, socket) do
+    socket = assign(socket, :counter, 0) <i class="conum" data-value="1"></i><b>(1)</b>
+    {:ok, socket}
+  end
+
+  def render(assigns) do
+    ~L"""
+    &lt;h1&gt;Current count: &lt;%= @counter %&gt;&lt;/h1&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;button phx-click="inc"&gt;+1&lt;/button&gt; <i class="conum" data-value="3"></i><b>(3)</b>
+    &lt;button phx-click="reset"&gt;Reset&lt;/button&gt; <i class="conum" data-value="4"></i><b>(4)</b>
+    """
+  end
+
+  def handle_event("inc", _, socket) do
+    socket = update(socket, :counter, &amp;(&amp;1 + 1)) <i class="conum" data-value="5"></i><b>(5)</b>
+    {:noreply, socket}
+  end
+
+  def handle_event("reset", _, socket) do
+    socket = assign(socket, :counter, 0) <i class="conum" data-value="6"></i><b>(6)</b>
+    {:noreply, socket}
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We assign the value of 0 to <code>counter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Display the value of <code>@counter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Increase by 1 button.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Reset the counter to 0 button.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>update/3</code> is used to call a capture function to increase the value of the <code>counter</code> by 1.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>We reset the <code>counter</code> to 0 here.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please open your browser at <a href="http://localhost:4000/counter" class="bare">http://localhost:4000/counter</a> and give it a try.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview_counter.png" alt="http://localhost:4000/counter">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_assign_vs_update"><a class="anchor" href="#_assign_vs_update"></a>assign vs update</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>In the counter example we use this code with an <code>update/3</code> function:
+.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">def handle_event("inc", _, socket) do
+  socket = update(socket, :counter, &amp;(&amp;1 + 1))
+  {:noreply, socket}
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We could achieve the same result with this code which uses the <code>assign/3</code>
+function. But for that we&#8217;d have to get the value of <code>counter</code> via the
+<code>socket</code> struct:
+.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">def handle_event("inc", _, socket) do
+  counter = socket.assigns.counter + 1
+  socket = assign(socket, :counter, counter)
+  {:noreply, socket}
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both versions work fine. Of course the <code>update/3</code> is a bit more elegant. But you
+will get no medal for using it. Use the function you feel more comfortable with.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aiport-code-search"><a class="anchor" href="#aiport-code-search"></a>Airport Code Search</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this LiveView example we create a search field for airport codes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new travelagent --live --no-ecto
+$ cd travelagent</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We begin with the route of the new page:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/travelagent_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+scope "/", TravelagentWeb do
+  pipe_through :browser
+
+  live "/", PageLive, :index
+  live "/search", SearchLive
+end
+[...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next we need to create a module which holds that list of airports and a search
+function. We&#8217;ll put this into <code>lib/travelagent/airports.ex</code></p>
+</div>
+<div class="listingblock">
+<div class="title">lib/travelagent/airports.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Travelagent.Airports do
+  def search_by_code(""), do: [] <i class="conum" data-value="1"></i><b>(1)</b>
+
+  def search_by_code(code) do <i class="conum" data-value="2"></i><b>(2)</b>
+    list_airports()
+    |&gt; Enum.filter(&amp;String.starts_with?(&amp;1.code, code))
+  end
+
+  def list_airports do <i class="conum" data-value="3"></i><b>(3)</b>
+    [
+      %{name: "Berlin Brandenburg", code: "BER"},
+      %{name: "Berlin Schönefeld", code: "SXF"},
+      %{name: "Berlin Tegel", code: "TXL"},
+      %{name: "Bremen", code: "BRE"},
+      %{name: "Köln/Bonn", code: "CGN"},
+      %{name: "Dortmund", code: "DTM"},
+      %{name: "Dresden", code: "DRS"},
+      %{name: "Düsseldorf", code: "DUS"},
+      %{name: "Frankfurt", code: "FRA"},
+      %{name: "Frankfurt-Hahn", code: "HHN"},
+      %{name: "Hamburg", code: "HAM"},
+      %{name: "Hannover", code: "HAJ"},
+      %{name: "Leipzig Halle", code: "LEJ"},
+      %{name: "München", code: "MUC"},
+      %{name: "Münster Osnabrück", code: "FMO"},
+      %{name: "Nürnberg", code: "NUE"},
+      %{name: "Paderborn Lippstadt", code: "PAD"},
+      %{name: "Stuttgart", code: "STR"}
+    ]
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A search for an empty string results in an empty list.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>search_by_code/1</code> searches for airport code&#8217;s fragments and full codes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We hardcode a list of German airports here. In a real application this would be longer and probably database driven.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This time we don&#8217;t use the <code>~L</code> sigil in the controller but a LiveEEx Template
+file:</p>
+</div>
+<div class="paragraph">
+<p>lib/travelagent_web/live/search_live.html.leex</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form phx-submit="airport_code_search"&gt;
+  &lt;fieldset&gt;
+    &lt;label for="nameField"&gt;Airport Code&lt;/label&gt;
+    &lt;input type="text" name="airport_code" value="&lt;%= @airport_code %&gt;"
+    placeholder="e.g. FRA"
+    autofocus autocomplete="off" /&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;input class="button-primary" type="submit" value="Search Airport"&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;%= unless @airports == [] do %&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+  &lt;h2&gt;Search Results&lt;/h2&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Airport Code&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;%= for airport &lt;- @airports do %&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;%= airport.code %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= airport.name %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;% end %&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;% end %&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>I think it is always a curtesy to the user to set the first input field to <code>autofocus</code>. And we add an <code>autocomplete="off"</code> just to be sure that the browser doesn&#8217;t interact with us.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>When search results in a list of airport a table with the results will be displayed.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lastly the TravelagentWeb.SearchLive module:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/travelagent_web/live/search_live.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule TravelagentWeb.SearchLive do
+  use TravelagentWeb, :live_view
+  alias Travelagent.Airports <i class="conum" data-value="1"></i><b>(1)</b>
+
+  def mount(_params, _session, socket) do
+    socket =
+      socket
+      |&gt; assign(:airport_code, "") <i class="conum" data-value="2"></i><b>(2)</b>
+      |&gt; assign(:airports, [])
+
+    {:ok, socket}
+  end
+
+  def handle_event(
+        "airport_code_search",
+        %{"airport_code" =&gt; airport_code},
+        socket
+      ) do
+    airport_code = String.upcase(airport_code) <i class="conum" data-value="3"></i><b>(3)</b>
+
+    socket =
+      socket
+      |&gt; assign(:airport_code, airport_code) <i class="conum" data-value="4"></i><b>(4)</b>
+      |&gt; assign(:airports, Airports.search_by_code(airport_code)) <i class="conum" data-value="5"></i><b>(5)</b>
+
+    {:noreply, socket}
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>One can argue if this <code>alias</code> is needed here. It results in a shorter line of code later on.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We assign the <code>airport_code</code> to empty and assign an empty list to <code>airports</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We auto upcase the search string.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The upcased search string gets returned to the view.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The result of the search gets returned to the view.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please open your browser at <a href="http://localhost:4000/search" class="bare">http://localhost:4000/search</a> and give it a try.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview_airport_search.png" alt="http://localhost:4000/search">
+</div>
+</div>
+<div class="sect2">
+<h3 id="autocomplete"><a class="anchor" href="#autocomplete"></a>Autocomplete</h3>
+<div class="paragraph">
+<p>It would be nice to have some sort of autocomplete functionality for the airport
+code search. So that when I start to enter an <code>h</code> I&#8217;ll get all airports which
+codes start with an <code>h</code>. Without having to click on the <code>Search Airport</code> button.
+Lucky us we only have to do a couple of changes in the LiveEEx Template file.</p>
+</div>
+<div class="paragraph">
+<p>lib/travelagent_web/live/search_live.html.leex</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form phx-change="airport_code_search"&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+  &lt;fieldset&gt;
+    &lt;label for="nameField"&gt;Airport Code&lt;/label&gt;
+    &lt;input type="text" name="airport_code" value="&lt;%= @airport_code %&gt;"
+    placeholder="e.g. FRA"
+    autofocus autocomplete="off" /&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;%= unless @airports == [] do %&gt;
+  &lt;h2&gt;Search Results&lt;/h2&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Airport Code&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;%= for airport &lt;- @airports do %&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;%= airport.code %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= airport.name %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;% end %&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;% end %&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We just have to use <code>phx-change</code> for the form. This means that each change triggers <code>handle_event/3</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please open your browser at <a href="http://localhost:4000/search" class="bare">http://localhost:4000/search</a> and give it a try.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/liveview_airport_search_autocomplete.png" alt="http://localhost:4000/search">
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
+  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+</footer>
+<script src="../../antora-assets/js/site.js"></script>
+<script async src="../../antora-assets/js/vendor/highlight.js"></script>
+  </body>
+</html>

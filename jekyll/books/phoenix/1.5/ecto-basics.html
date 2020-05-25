@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ecto Introduction :: Phoenix Beginner&#x27;s Guide</title>
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/ecto-basics.html">
+    <meta name="generator" content="Antora 2.3.1">
+    <link rel="stylesheet" href="../../antora-assets/css/site.css">
+    <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
+  </head>
+  <body class="article">
+<header class="header" role="banner">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="/">Wintermeyer Consulting</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Phoenix Links</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Phoenix Framework</strong></div>
+            <a class="navbar-item" href="https://www.phoenixframework.org">Phoenix Homepage</a>
+            <a class="navbar-item" href="https://github.com/phoenixframework/phoenix">GitHub Repository</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Elixir</strong></div>
+            <a class="navbar-item" href="https://elixir-lang.org">Elixir Homepage</a>
+            <a class="navbar-item" href="https://github.com/elixir-lang/elixir">GitHub Repository</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Stefan Wintermeyer</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Work related</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer-consulting.de">Training and Consulting</a>
+            <a class="navbar-item"
+              href="https://speakerdeck.com/wintermeyer">SpeakerDeck</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Phoenix projects</strong></div>
+            <a class="navbar-item"
+              href="https://www.vutuv.de/users/stefan.wintermeyer">vutuv</a>
+            <a class="navbar-item"
+              href="https://www.mehr-schulferien.de">Schulferien Deutschland</a>
+            <div class="navbar-item"><strong>Private</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer.de">Personal Homepage</a>
+            <div class="navbar-item"><strong>Social Media</strong></div>
+            <a class="navbar-item" href="https://twitter.com/wintermeyer">Twitter</a>
+            <a class="navbar-item" href="https://www.facebook.com/stefan.wintermeyer">Facebook</a>
+            <a class="navbar-item"
+              href="https://www.instagram.com/wintermeyer/">Instagram</a>
+          </div>
+        </div>
+        <a class="navbar-item" href="https://twitter.com/wintermeyer">
+          <span class="icon">
+            <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="phoenix" data-version="1.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Phoenix Beginner&#x27;s Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#preface">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="elixir-introduction.html">Elixir Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html">Phoenix Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#the-base-setup">The Base Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#hello-world">Hello World!</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html#conn-struct">The conn Struct</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="phoenix-basics.html#static-clock">Static Clock</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#links">Links</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html#static-files">Static files</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="phoenix-basics.html#images">Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#css">CSS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-liveview-basics.html">LiveView Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#light-switch">Light Switch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#clock">Clock</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#counter">Counter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#aiport-code-search">Airport Code Search</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#autocomplete">Autocomplete</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="router.html">Router</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#mix-phx-routes">Display all existing routes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-params">Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-query-string">Query Strings</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-multilevel-paths">Multilevel Paths</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-wildcards">Wildcards</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#training">Remote Training</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Phoenix Beginner&#x27;s Guide</span>
+    <span class="version">1.5</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Phoenix Beginner's Guide</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.5</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Phoenix Beginner's Guide</a></li>
+    <li><a href="ecto-basics.html">Ecto Introduction</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Ecto Introduction</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ecto is a persistence framework for Elixir. That is a fancy way of saying that
+we use Ecto to talk to a SQL database. This chapter will introduce you to the
+basics of Ecto in the Phoenix context.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We are going to use a <a href="https://www.postgresql.org">PostgreSQL</a> database. Ecto
+works fine with other databases too (e.g. <a href="https://mariadb.com">MariaDB</a>) but most
+Phoenix developers prefer PostgreSQL. For this book we assume that you have a
+PostgreSQL user on your development system which was granted the right to create
+a database and which has the following credentials:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>user: postgres</p>
+</li>
+<li>
+<p>password: postgres</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Because those are the default values for the development system in Phoenix.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_data"><a class="anchor" href="#_create_data"></a>Create Data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we can query data we have to create it and before that we have to tell
+Ecto what data model we are using. Because we are ending up using Ecto in
+Phoenix anyway I am using a basic Phoenix application to walk you through the
+process. Let&#8217;s create a small bookstore:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new bookstore
+[...]
+$ cd bookstore</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To generate the needed files we can use the <code>mix phx.gen.context</code> generator
+(more info about it at
+<a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html" class="bare">https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html</a>).</p>
+</div>
+<div class="paragraph">
+<p>As a first resource we want to create a table with authors. In the Phoenix world
+we have to put that new resource <code>authors</code> into a context.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A context is an API boundary for one or more resources. It was included in
+Phoenix with version 1.3. Don&#8217;t loose any sleep on the question what a context
+is. You&#8217;ll get a feeling about it. Good naming of contexts is important but not
+at this stadium of your Ecto learning process.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.gen.context Store Author authors first_name last_name twitter_account
+* creating lib/bookstore/store/author.ex
+* creating priv/repo/migrations/20200516093442_create_authors.exs
+* creating lib/bookstore/store.ex
+* injecting lib/bookstore/store.ex
+* creating test/bookstore/store_test.exs
+* injecting test/bookstore/store_test.exs
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The last output of that command is a bit misleading right now. If we do a <code>mix ecto.migrate</code> we get this repeating error message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.migrate
+Compiling 16 files (.ex)
+Generated bookstore app
+
+11:42:00.676 [error] Postgrex.Protocol (#PID&lt;0.384.0&gt;) failed to connect: ** (Postgrex.Error) FATAL 3D000 (invalid_catalog_name) database "bookstore_dev" does not exist</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ecto wants to connect to a database but there is none. We have to create it first with the comment <code>mix ecto.create</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.create
+The database for Bookstore.Repo has been created</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration for this development database can be found in the file
+<code>config/dev.exs</code>. Please change that in case you use a different database or
+user.</p>
+</div>
+<div class="listingblock">
+<div class="title">config/dev.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">use Mix.Config
+
+# Configure your database
+config :bookstore, Bookstore.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "bookstore_dev",
+  hostname: "localhost",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+[...]</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In case you want to drop this database (e.g. to re-run the
+<code>mix ecto.create</code> command) you can do so with the command <code>mix ecto.drop</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we can run the migration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.migrate
+
+11:53:48.162 [info]  == Running 20200516093442 Bookstore.Repo.Migrations.CreateAuthors.change/0 forward
+
+11:53:48.164 [info]  create table authors
+
+11:53:48.177 [info]  == Migrated 20200516093442 in 0.0s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The migration script created the table <code>authors</code> in the database <code>bookstore_dev</code>.
+But let&#8217;s double check:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ psql -U postgres bookstore_dev <i class="conum" data-value="1"></i><b>(1)</b>
+psql (12.2)
+Type "help" for help.
+
+bookstore_dev=# SELECT column_name FROM information_schema.columns WHERE TABLE_NAME='authors'; <i class="conum" data-value="2"></i><b>(2)</b>
+   column_name
+-----------------
+ id
+ first_name
+ last_name
+ twitter_account
+ inserted_at
+ updated_at
+(6 rows)
+
+bookstore_dev=# \q <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>psql</code> is the command line client for PostgreSQL. If you are not familiar with it: Don&#8217;t try this at home!</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This command lists all column names of the table <code>authors</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>\q</code> is the command to quit the command line client.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The migration created that table and added columns. But it added more columns
+than we asked for. It added <code>id</code>, <code>inserted_at</code> and <code>updated_at</code>. But that is
+all right. We will see what they are for in a minute.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_an_author"><a class="anchor" href="#_create_an_author"></a>Create an author</h3>
+<div class="paragraph">
+<p>The module <code>Bookstore.Store</code> was created by <code>mix phx.gen.context</code>. It contains a couple of useful functions. One of it is <code>create_author/1</code>. Here is the code for that function:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">@doc """
+Creates a author.
+
+## Examples
+
+    iex&gt; create_author(%{field: value}) <i class="conum" data-value="1"></i><b>(1)</b>
+    {:ok, %Author{}}
+
+    iex&gt; create_author(%{field: bad_value})
+    {:error, %Ecto.Changeset{}}
+
+"""
+def create_author(attrs \\ %{}) do
+  %Author{}
+  |&gt; Author.changeset(attrs)
+  |&gt; Repo.insert()
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Very useful documentation for the function. While browsing through <code>Bookstore.Store</code> your should always read the <code>@doc</code> documentation.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><mark>Work in progess</mark></p>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
+  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+</footer>
+<script src="../../antora-assets/js/site.js"></script>
+<script async src="../../antora-assets/js/vendor/highlight.js"></script>
+  </body>
+</html>

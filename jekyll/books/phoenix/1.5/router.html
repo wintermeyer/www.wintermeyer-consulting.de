@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Router :: Phoenix Beginner&#x27;s Guide</title>
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/router.html">
+    <meta name="generator" content="Antora 2.3.1">
+    <link rel="stylesheet" href="../../antora-assets/css/site.css">
+    <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
+  </head>
+  <body class="article">
+<header class="header" role="banner">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="/">Wintermeyer Consulting</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Phoenix Links</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Phoenix Framework</strong></div>
+            <a class="navbar-item" href="https://www.phoenixframework.org">Phoenix Homepage</a>
+            <a class="navbar-item" href="https://github.com/phoenixframework/phoenix">GitHub Repository</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Elixir</strong></div>
+            <a class="navbar-item" href="https://elixir-lang.org">Elixir Homepage</a>
+            <a class="navbar-item" href="https://github.com/elixir-lang/elixir">GitHub Repository</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Stefan Wintermeyer</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Work related</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer-consulting.de">Training and Consulting</a>
+            <a class="navbar-item"
+              href="https://speakerdeck.com/wintermeyer">SpeakerDeck</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Phoenix projects</strong></div>
+            <a class="navbar-item"
+              href="https://www.vutuv.de/users/stefan.wintermeyer">vutuv</a>
+            <a class="navbar-item"
+              href="https://www.mehr-schulferien.de">Schulferien Deutschland</a>
+            <div class="navbar-item"><strong>Private</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer.de">Personal Homepage</a>
+            <div class="navbar-item"><strong>Social Media</strong></div>
+            <a class="navbar-item" href="https://twitter.com/wintermeyer">Twitter</a>
+            <a class="navbar-item" href="https://www.facebook.com/stefan.wintermeyer">Facebook</a>
+            <a class="navbar-item"
+              href="https://www.instagram.com/wintermeyer/">Instagram</a>
+          </div>
+        </div>
+        <a class="navbar-item" href="https://twitter.com/wintermeyer">
+          <span class="icon">
+            <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="phoenix" data-version="1.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Phoenix Beginner&#x27;s Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#preface">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="elixir-introduction.html">Elixir Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html">Phoenix Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#the-base-setup">The Base Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#hello-world">Hello World!</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html#conn-struct">The conn Struct</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="phoenix-basics.html#static-clock">Static Clock</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#links">Links</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html#static-files">Static files</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="phoenix-basics.html#images">Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-basics.html#css">CSS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-liveview-basics.html">LiveView Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#light-switch">Light Switch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#clock">Clock</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#counter">Counter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#aiport-code-search">Airport Code Search</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#autocomplete">Autocomplete</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="router.html">Router</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#mix-phx-routes">Display all existing routes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#router-params">Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#router-query-string">Query Strings</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#router-multilevel-paths">Multilevel Paths</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#router-wildcards">Wildcards</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#training">Remote Training</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Phoenix Beginner&#x27;s Guide</span>
+    <span class="version">1.5</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Phoenix Beginner's Guide</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.5</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Phoenix Beginner's Guide</a></li>
+    <li><a href="router.html">Router</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Router</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>We have used <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html">Phoenix.Router</a>
+plenty of times in <a href="phoenix-basics.html" class="page">Phoenix Basics</a> and you already
+understand the concept. So this is just a small chapter with some useful
+details.</p>
+</div>
+<div class="paragraph">
+<p>All code in this chapter will result form this base application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --no-ecto --no-dashboard <i class="conum" data-value="1"></i><b>(1)</b>
+$ cd demo</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We don&#8217;t include the <a href="https://hexdocs.pm/phoenix_live_dashboard/Phoenix.LiveDashboard.html">Phoenix.LiveDashboard</a> (--no-dashboard) to keep our router setup tidy. Otherwise a million routes would leave just to the real-time performance monitoring dashboard which is not a topic in this chapter.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This results in a minimal router setup:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre>defmodule DemoWeb.Router do
+  use DemoWeb, :router
+
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
+  scope "/", DemoWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+  end
+end</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For us relevant is just the last <code>/</code> part.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mix-phx-routes"><a class="anchor" href="#mix-phx-routes"></a>Display existing routes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With the command <code>mix phx.routes</code> you get a list of all defined routes. In our vanilla demo system this is the output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.routes
+Compiling 13 files (.ex)
+Generated demo app
+page_path  GET  /                    DemoWeb.PageController :index <i class="conum" data-value="1"></i><b>(1)</b>
+websocket  WS   /socket/websocket    DemoWeb.UserSocket <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This route is for a HTTP GET request for the root path - which gets matched by <code>/</code> - of our application. It triggers the <code>:index</code> action in the <code>DemoWeb.PageController</code> controller.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>No need to discuss <code>websockets</code> in this chapter. <mark>I will remove that line in following exampless to clean up the output.</mark></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In more complex applications with a dashboard the output of <code>mix phx.routes</code> gets quite a bit longer. Then <code>mix phx.routes | grep "whatever-you-search"</code> becomes a very handy tool on the command line.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="router-params"><a class="anchor" href="#router-params"></a>Params</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Often you have some sort of ID in the URL or other params you need to access in your application. And sometimes you want that to be handled in the router.</p>
+</div>
+<div class="paragraph">
+<p>We create a product view in our <code>demo</code> application to show how it&#8217;s working. We
+have to touch/create three files to make this happen:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+
+scope "/", DemoWeb do
+  pipe_through :browser
+
+  get "/", PageController, :index
+  get "/products/:id", ProductController, :show <i class="conum" data-value="1"></i><b>(1)</b>
+end
+
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We ask the router to match everything at that position to the parameter <code>:id</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/product_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.ProductController do
+  use DemoWeb, :controller
+
+  def show(conn, %{"id" =&gt; id}) do <i class="conum" data-value="1"></i><b>(1)</b>
+    conn
+    |&gt; assign(:id, id)
+    |&gt; render("show.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We match the <code>id</code> in the params.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/views/product_view.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.ProductView do
+  use DemoWeb, :view
+end</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/product/show.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">&lt;h1&gt;ID: &lt;%= @id %&gt;&lt;/h1&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Just a simple display. Normally we would have fetched the product with that id from our database and display it.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you open <a href="http://localhost:4000/products/1" class="bare">http://localhost:4000/products/1</a> with your browser you&#8217;ll see this
+log entry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[info] GET /products/1
+[debug] Processing with DemoWeb.ProductController.show/2
+  Parameters: %{"id" =&gt; "1"}
+  Pipelines: [:browser]
+[info] Sent 200 in 373µs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And just as a final proof the screenshot:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/router-products-1.png" alt="http://localhost:4000/products/1">
+</div>
+</div>
+<div class="sect2">
+<h3 id="router-query-string"><a class="anchor" href="#router-query-string"></a>Query String</h3>
+<div class="paragraph">
+<p>Query Strings don&#8217;t belong in the router but are handled very similar to the
+above params in the controller.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume we want to add the query string "color=blue" to our product request:
+<a href="http://localhost:4000/products/1?color=blue" class="bare">http://localhost:4000/products/1?color=blue</a></p>
+</div>
+<div class="paragraph">
+<p>We can&#8217;t match for it in the router but Phoenix does realize what happens:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[info] GET /products/1
+[debug] Processing with DemoWeb.ProductController.show/2
+  Parameters: %{"color" =&gt; "blue", "id" =&gt; "1"} <i class="conum" data-value="1"></i><b>(1)</b>
+  Pipelines: [:browser]
+[info] Sent 200 in 600µs</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Both parameter become part of the <code>params</code> map.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Without doing anything in the router the query string parameter <code>color</code> finds it&#8217;s way into the controller. But we have to change the the controller a bit:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/product_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.ProductController do
+  use DemoWeb, :controller
+
+  def show(conn, %{"id" =&gt; id, "color" =&gt; color}) do <i class="conum" data-value="1"></i><b>(1)</b>
+    conn
+    |&gt; assign(:id, id)
+    |&gt; assign(:color, color) <i class="conum" data-value="2"></i><b>(2)</b>
+    |&gt; render("show.html")
+  end
+
+  def show(conn, %{"id" =&gt; id}) do <i class="conum" data-value="3"></i><b>(3)</b>
+    conn
+    |&gt; assign(:id, id)
+    |&gt; render("show.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This <code>show/2</code> function matches if there is an <code>:id</code> and a <code>:color</code> parameter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>In addition to <code>:id</code> we have to assign <code>:color</code> too.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This <code>show/2</code> function matches if there is only an <code>:id</code> parameter.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The order of the <code>show/2</code> functions in the controller is very important. If we use the other order for this specific example the <code>%{"id" &#8658; id, "color" &#8658; color}</code> would never match because <code>%{"id" &#8658; id}</code> always matches first if it&#8217;s the first function.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lastly we have to change the template:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/product_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">&lt;h1&gt;ID: &lt;%= @id %&gt;&lt;/h1&gt;
+
+&lt;%= if assigns[:color] do %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;p&gt;Color: &lt;%= @color %&gt;&lt;/p&gt;
+&lt;% end %&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Because we call this template from two different functions we have to take care of the case when the color assign hasn&#8217;t taken place. The alternative would be a different template for each function.</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/router-params-color.png" alt="http://localhost:4000/products/1?color=blue">
+</div>
+</div>
+<div class="paragraph">
+<p>A view on the routes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.routes
+Compiling 1 file (.ex)
+   page_path  GET  /                                      DemoWeb.PageController :index
+product_path  GET  /products/:id                          DemoWeb.ProductController :show</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_link_with_params"><a class="anchor" href="#_link_with_params"></a>Link with params</h3>
+<div class="paragraph">
+<p>Assuming you&#8217;d like to link to the next product ID this would be the template:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/product_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">&lt;h1&gt;ID: &lt;%= @id %&gt;&lt;/h1&gt;
+
+&lt;%= if assigns[:color] do %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;p&gt;Color: &lt;%= @color %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+
+&lt;%= link "Next", to: Routes.product_path(@conn, :show, String.to_integer(@id) + 1) %&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We use the <code>DemoWeb.ProductController :show</code> route and add the <code>id</code> to it. To increase the current <code>@id</code> we have to call <code>String.to_integer/1</code> first.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_link_with_query"><a class="anchor" href="#_link_with_query"></a>Link with query</h3>
+<div class="paragraph">
+<p>Assuming you&#8217;d like to link to the first product with the query "color=orange" you&#8217;d have to use this code:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/product_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">&lt;h1&gt;ID: &lt;%= @id %&gt;&lt;/h1&gt;
+
+&lt;%= if assigns[:color] do %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;p&gt;Color: &lt;%= @color %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+
+&lt;%= link "First product in orange", to: Routes.product_path(@conn, :show, 1, color: "orange") %&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This results in a link to <code><a href="http://localhost:4000/products/1?color=orange" class="bare">http://localhost:4000/products/1?color=orange</a></code></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="router-multilevel-paths"><a class="anchor" href="#router-multilevel-paths"></a>Multilevel Paths</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous easy code examples we always put the routes on the first level.
+But of course you can use sublevel paths too. Here&#8217;s an example:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+scope "/", DemoWeb do
+  pipe_through :browser
+
+  get "/an-other-test/abc/def/", PageController, :index
+end
+[...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>No surprise here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.routes
+Compiling 1 file (.ex)
+page_path  GET  /an-other-test/abc/def    DemoWeb.PageController :index</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="router-wildcards"><a class="anchor" href="#router-wildcards"></a>Wildcards</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You don&#8217;t have to define the route excactly. You can use the <code>*</code> wildcard too.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+scope "/", DemoWeb do
+  pipe_through :browser
+
+  get "/names/st*an", PageController, :index
+end
+[...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This route matches <code>/names/stefan</code> and <code>/names/stephan</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[info] GET /names/stefan
+[debug] Processing with DemoWeb.PageController.index/2
+  Parameters: %{"an" =&gt; ["stefan"]} <i class="conum" data-value="1"></i><b>(1)</b>
+  Pipelines: [:browser]
+[info] Sent 200 in 4ms
+[info] GET /names/stephan
+[debug] Processing with DemoWeb.PageController.index/2
+  Parameters: %{"an" =&gt; ["stephan"]}
+  Pipelines: [:browser]
+[info] Sent 200 in 1ms</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The parameter <code>an</code> which is automatically named as the last match segment contains the whole match. You can use that to to some interesting things.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_misc"><a class="anchor" href="#_misc"></a>Misc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>No need to replicate the official documentation in this chapter. By now you understand the concept of <code>Phoenix.Router</code>. You&#8217;ll find solutions for all the special cases which are not handled in this chapter in the official documentation at <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html" class="bare">https://hexdocs.pm/phoenix/Phoenix.Router.html</a></p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
+  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+</footer>
+<script src="../../antora-assets/js/site.js"></script>
+<script async src="../../antora-assets/js/vendor/highlight.js"></script>
+  </body>
+</html>

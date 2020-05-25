@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Phoenix&#8217;s Basics :: Phoenix Beginner&#x27;s Guide</title>
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/phoenix-basics.html">
+    <meta name="generator" content="Antora 2.3.1">
+    <link rel="stylesheet" href="../../antora-assets/css/site.css">
+    <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
+  </head>
+  <body class="article">
+<header class="header" role="banner">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="/">Wintermeyer Consulting</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Phoenix Links</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Phoenix Framework</strong></div>
+            <a class="navbar-item" href="https://www.phoenixframework.org">Phoenix Homepage</a>
+            <a class="navbar-item" href="https://github.com/phoenixframework/phoenix">GitHub Repository</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Elixir</strong></div>
+            <a class="navbar-item" href="https://elixir-lang.org">Elixir Homepage</a>
+            <a class="navbar-item" href="https://github.com/elixir-lang/elixir">GitHub Repository</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">Stefan Wintermeyer</div>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Work related</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer-consulting.de">Training and Consulting</a>
+            <a class="navbar-item"
+              href="https://speakerdeck.com/wintermeyer">SpeakerDeck</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Phoenix projects</strong></div>
+            <a class="navbar-item"
+              href="https://www.vutuv.de/users/stefan.wintermeyer">vutuv</a>
+            <a class="navbar-item"
+              href="https://www.mehr-schulferien.de">Schulferien Deutschland</a>
+            <div class="navbar-item"><strong>Private</strong></div>
+            <a class="navbar-item" href="https://www.wintermeyer.de">Personal Homepage</a>
+            <div class="navbar-item"><strong>Social Media</strong></div>
+            <a class="navbar-item" href="https://twitter.com/wintermeyer">Twitter</a>
+            <a class="navbar-item" href="https://www.facebook.com/stefan.wintermeyer">Facebook</a>
+            <a class="navbar-item"
+              href="https://www.instagram.com/wintermeyer/">Instagram</a>
+          </div>
+        </div>
+        <a class="navbar-item" href="https://twitter.com/wintermeyer">
+          <span class="icon">
+            <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="phoenix" data-version="1.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Phoenix Beginner&#x27;s Guide</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#preface">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="elixir-introduction.html">Elixir Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-basics.html">Phoenix Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#the-base-setup">The Base Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#hello-world">Hello World!</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#conn-struct">The conn Struct</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#static-clock">Static Clock</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#links">Links</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#static-files">Static files</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#images">Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#css">CSS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="phoenix-liveview-basics.html">LiveView Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#light-switch">Light Switch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#clock">Clock</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#counter">Counter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#aiport-code-search">Airport Code Search</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="phoenix-liveview-basics.html#autocomplete">Autocomplete</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="router.html">Router</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#mix-phx-routes">Display all existing routes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-params">Params</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-query-string">Query Strings</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-multilevel-paths">Multilevel Paths</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html#router-wildcards">Wildcards</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html#training">Remote Training</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Phoenix Beginner&#x27;s Guide</span>
+    <span class="version">1.5</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Phoenix Beginner's Guide</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.5</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Phoenix Beginner's Guide</a></li>
+    <li><a href="phoenix-basics.html">Phoenix Basics</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Phoenix&#8217;s Basics</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Phoenix follows the
+<a href="https://en.wikipedia.org/wiki/Model–view–controller">Model-View-Controller</a> (MVC)
+architecture. If you are not familiar with that: Just follow my lead. MVC is
+just a set of rules of what goes where so that everybody knows where stuff is.
+You are not forced to follow it but it makes live easier if you do. After a
+couple of examples you&#8217;ll get a feeling for it. Same goes for the directory
+structure and the file names.</p>
+</div>
+<div class="paragraph">
+<p>In this chapter I&#8217;ll show you how you can create simple webpages which have some
+programming logic. But we will not touch the database yet. Step by step!</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Phoenix version</div>
+<div class="paragraph">
+<p>The code examples of this book are written and tested for Phoenix
+version 1.5.1 or above. Please make sure that you have a 1.5.x version
+installed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new --version
+Phoenix v1.5.1</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <code>mix phx.new</code>. That is outdated. Since Phoenix version 1.3 the syntax is <code>mix phx.whatever</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development_environment"><a class="anchor" href="#_development_environment"></a>Development Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default Phoenix offers three different environments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Development</p>
+</li>
+<li>
+<p>Testing</p>
+</li>
+<li>
+<p>Production</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In this chapter we are only going to use the development environment. It offers some pleasantries which make the life of a developer easier (e.g. more verbose error messages and auto reload after code changes).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-base-setup"><a class="anchor" href="#the-base-setup"></a>The Base Setup</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The base of every Phoenix application is created with the command
+<code>mix phx.new application_name</code> which generates all needed files and the
+directory structure.</p>
+</div>
+<div class="paragraph">
+<p>We call our new application <code>demo</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --no-ecto <i class="conum" data-value="1"></i><b>(1)</b>
+* creating demo/config/config.exs
+* creating demo/config/dev.exs
+[...]
+Fetch and install dependencies? [Yn] Y <i class="conum" data-value="2"></i><b>(2)</b>
+[...]
+We are almost there! The following steps are missing:
+
+    $ cd demo
+
+Start your Phoenix app with:
+
+    $ mix phx.server
+
+You can also run your app inside IEx (Interactive Elixir) as:
+
+    $ iex -S mix phx.server</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>'--no-ecto' creates a fresh application without the Ecto (database connector) part. We don&#8217;t need a database for the basic examples.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>You always want to press <code>Y</code> here. And yes, it sometimes takes for ever.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After that we <code>cd demo</code> into the new directory and fire up the Phoenix server
+with <code>mix phx.server</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cd demo
+$ mix phx.server
+Compiling 13 files (.ex) <i class="conum" data-value="1"></i><b>(1)</b>
+Generated demo app
+[info] Running DemoWeb.Endpoint with cowboy 2.7.0 at 0.0.0.0:4000 (http)
+[info] Access DemoWeb.Endpoint at http://localhost:4000 <i class="conum" data-value="2"></i><b>(2)</b>
+
+webpack is watching the files…
+
+Hash: f3ee21a2f5780f52f176
+Version: webpack 4.41.5
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Source-Code which hasn&#8217;t been compiled yet is compiled.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The URL which service the development website: <a href="http://localhost:4000" class="bare">http://localhost:4000</a></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please open the URL <a href="http://localhost:4000" class="bare">http://localhost:4000</a> in your webbrowser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/hello-world-first-view.png" alt="http://localhost:4000">
+</div>
+</div>
+<div class="paragraph">
+<p>On the terminal you can see the server log:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[info] GET /
+[debug] Processing with DemoWeb.PageController.index/2
+  Parameters: %{}
+  Pipelines: [:browser]
+[info] Sent 200 in 22ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Do a reload in the browser and watch the log output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[info] GET /
+[debug] Processing with DemoWeb.PageController.index/2
+  Parameters: %{}
+  Pipelines: [:browser]
+[info] Sent 200 in 426µs</code></pre>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+The log says that the request was answered in 426µs. WOW!
+<a href="https://en.wikipedia.org/wiki/Microsecond">Microseconds</a>! That is on my old
+development laptop. That must be the famous speed of Phoenix/Elixir everybody is
+talking about.
+</div>
+</div>
+<div class="paragraph">
+<p>What we see is the default <code>index.html.eex</code> page. The file extension <code>eex</code> stands for <a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> and means that this is a mix of static HTML and dynamic Elixir code which generated HTML. These files are called templates and are located in the <code>lib/demo_web/templates/</code> directory. A fresh Phoenix application has two templates:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ tree lib/demo_web/templates/
+lib/demo_web/templates/
+├── layout
+│   └── app.html.eex
+└── page
+    └── index.html.eex</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is no coincedence that the subdirectory is called <code>demo_web</code>. Because
+we named our application <code>demo</code> that name will be used at multiple places.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s have a look into <code>index.html.eex</code> which contains the core part of the page.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/page/index.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;section class="phx-hero"&gt;
+  &lt;h1&gt;&lt;%= gettext "Welcome to %{name}!", name: "Phoenix" %&gt;&lt;/h1&gt;
+  &lt;p&gt;Peace-of-mind from prototype to production&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section class="row"&gt;
+  &lt;article class="column"&gt;
+    &lt;h2&gt;Resources&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a href="https://hexdocs.pm/phoenix/overview.html"&gt;Guides &amp;amp; Docs&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href="https://github.com/phoenixframework/phoenix"&gt;Source&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md"&gt;v1.5 Changelog&lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/article&gt;
+  &lt;article class="column"&gt;
+    &lt;h2&gt;Help&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a href="https://elixirforum.com/c/phoenix-forum"&gt;Forum&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href="https://webchat.freenode.net/?channels=elixir-lang"&gt;#elixir-lang on Freenode IRC&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href="https://twitter.com/elixirphoenix"&gt;Twitter @elixirphoenix&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href="https://elixir-slackin.herokuapp.com/"&gt;Elixir on Slack&lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/article&gt;
+&lt;/section&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But a bit of HTML boilerplate is missing and can be found in <code>lib/demo_web/templates/layout/app.html.eex</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/layout/app.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+  &lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;
+    &lt;title&gt;Demo · Phoenix Framework&lt;/title&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;link rel="stylesheet" href="&lt;%= Routes.static_path(@conn, "/css/app.css") %&gt;"/&gt; <i class="conum" data-value="3"></i><b>(3)</b>
+    &lt;script defer type="text/javascript" src="&lt;%= Routes.static_path(@conn, "/js/app.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;header&gt; <i class="conum" data-value="4"></i><b>(4)</b>
+      &lt;section class="container"&gt;
+        &lt;nav role="navigation"&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;a href="https://hexdocs.pm/phoenix/overview.html"&gt;Get Started&lt;/a&gt;&lt;/li&gt;
+            &lt;%= if function_exported?(Routes, :live_dashboard_path, 2) do %&gt;
+              &lt;li&gt;&lt;%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %&gt;&lt;/li&gt;
+            &lt;% end %&gt;
+          &lt;/ul&gt;
+        &lt;/nav&gt;
+        &lt;a href="https://phoenixframework.org/" class="phx-logo"&gt;
+          &lt;img src="&lt;%= Routes.static_path(@conn, "/images/phoenix.png") %&gt;" alt="Phoenix Framework Logo"/&gt;
+        &lt;/a&gt;
+      &lt;/section&gt;
+    &lt;/header&gt;
+    &lt;main role="main" class="container"&gt;
+      &lt;p class="alert alert-info" role="alert"&gt;&lt;%= get_flash(@conn, :info) %&gt;&lt;/p&gt; <i class="conum" data-value="5"></i><b>(5)</b>
+      &lt;p class="alert alert-danger" role="alert"&gt;&lt;%= get_flash(@conn, :error) %&gt;&lt;/p&gt;
+      &lt;%= @inner_content %&gt; <i class="conum" data-value="6"></i><b>(6)</b>
+    &lt;/main&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>You might want to change the language here in case this webpage is going to be in an other language than English.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>You probably want to change this to a better <code>&lt;title&gt;</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Phoenix&#8217;s asset management takes care of the CSS and JavaScript. No need to worry about it for now.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This is the boilerplate header part you are seeing on the top of every page.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>This part renders so called flash messages. We&#8217;ll get to that later.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>This is the line where the template&#8217;s content gets included.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> (<code>.eex</code>) uses the <code>&lt;% %&gt;</code> syntax to embedd Elixir code in HTML. <code>&lt;% %&gt;</code> runs the Elixir code within. <code>&lt;%= %&gt;</code> runs the Elixir code and includes the result of that as HTML in the template.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Feel free to change the content of <code>app.html.eex</code> and <code>index.html.eex</code> while
+having <a href="http://localhost:4000" class="bare">http://localhost:4000</a> opened in a browser. In development mode each save
+of those files triggers a reload of the page in the browser.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hello-world"><a class="anchor" href="#hello-world"></a>Hello World!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The aim of this section is to create a new dynamic page which is available at
+<a href="http://localhost:4000/hello" class="bare">http://localhost:4000/hello</a> and displays the text "Hello World!". We start with
+the base setup:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --no-ecto
+[...]
+$ cd demo
+$ mix phx.server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Routes are defined in <code>lib/demo_web/router.ex</code>. Let&#8217;s have a look and add a new
+route for our hello world page.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.Router do
+  use DemoWeb, :router
+
+  [...]
+
+  scope "/", DemoWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/hello", PageController, :hello <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+
+  [...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We use the same <code>PageController</code> as the <code>:index</code> action for our new <code>:hello</code> action (function).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Because the route calls the <code>:hello</code> action in the <code>PageController</code> we have to
+add a <code>hello/2</code> function in <code>page_controller.ex</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/page_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.PageController do
+  use DemoWeb, :controller
+
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
+  def hello(conn, _params) do <i class="conum" data-value="1"></i><b>(1)</b>
+    render(conn, "hello.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The new <code>hello/2</code> function renders the <code>hello.html</code> template.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Last step: We have to create a template file. Please do so and include this
+source code into it:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/page/hello.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Hello World!&lt;/h1&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now open <a href="http://localhost:4000/hello" class="bare">http://localhost:4000/hello</a> in your browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/hello-world.png" alt="http://localhost:4000/hello">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hello_world_with_its_own_controller"><a class="anchor" href="#_hello_world_with_its_own_controller"></a>Hello World with it&#8217;s own controller</h3>
+<div class="paragraph">
+<p>In the last section we added the <code>:hello</code> action to the already existing <code>PageController</code>. But in many case it makes sense to create a seperate controller. Let&#8217;s do that so you know how to.</p>
+</div>
+<div class="paragraph">
+<p>We start with changing the route:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.Router do
+  use DemoWeb, :router
+
+  [...]
+
+  scope "/", DemoWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/hello", ExampleController, :hello <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+
+  [...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Yes, <code>ExampleController</code> is not a candiate for best controller name of the year. Good catch!</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s be lazy and ask Phoenix what to do next. We open <a href="http://localhost:4000/hello" class="bare">http://localhost:4000/hello</a> in the browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/hello-world-examplecontroller-is-undefined.png" alt="http://localhost:4000/hello">
+</div>
+</div>
+<div class="paragraph">
+<p>It says <code>function DemoWeb.ExampleController.init/1 is undefined</code> which leads us to the next missing piece: A controller. That file needs to be named <code>example_controller.ex</code> and is has to be saved in the <code>lib/demo_web/controllers</code> directory. Here is the content of it:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/example_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.ExampleController do <i class="conum" data-value="1"></i><b>(1)</b>
+  use DemoWeb, :controller
+
+  def hello(conn, _params) do
+    render(conn, "hello.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Important: <code>DemoWeb.ExampleController</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After a reload we get a new error message: <code>function DemoWeb.ExampleView.render/2 is undefined</code>. So we need to create a view file:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/views/example_view.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.ExampleView do <i class="conum" data-value="1"></i><b>(1)</b>
+  use DemoWeb, :view
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Important to use the right name here (e.g. 'ExampleView').</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A reload and we get our final error message:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/hello-world-could-not-render-hello-html.png" alt="http://localhost:4000/hello">
+</div>
+</div>
+<div class="paragraph">
+<p>The template is missing. But that is an easy fix:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/example/hello.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Hello World!&lt;/h1&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And here is our good to go webpage:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/hello-world.png" alt="http://localhost:4000/hello">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_checklist_for_a_new_page"><a class="anchor" href="#_checklist_for_a_new_page"></a>Checklist for a new page</h3>
+<div class="paragraph">
+<p>Everytime you want to create a new action in a new controller you have to take care of these steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a route in <code>lib/demo_web/router.ex</code></p>
+</li>
+<li>
+<p>Create a controller with the name <code>lib/demo_web/controllers/example_controller.ex</code></p>
+</li>
+<li>
+<p>Create an action in that controller which matches the route</p>
+</li>
+<li>
+<p>Create a view with the name <code>lib/demo_web/views/example_view.ex</code></p>
+</li>
+<li>
+<p>Create a template with the name <code>lib/demo_web/templates/page/hello.html.eex</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Phoenix will always lead you through the way. If something is missing it will say so in the error message.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Obviously <code>demo_web</code>, <code>example_controller.ex</code>, <code>example_view.ex</code> and <code>hello.html.eex</code> are just names which fit for our "Hello World!" example. You have to adjust them for your case.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For our example the directory and file structure looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ tree lib/demo_web/{cont*,temp*,view*}
+lib/demo_web/controllers
+├── example_controller.ex
+└── page_controller.ex
+lib/demo_web/templates
+├── example
+│   └── hello.html.eex
+├── layout
+│   └── app.html.eex
+└── page
+    └── index.html.eex
+lib/demo_web/views
+├── error_helpers.ex
+├── error_view.ex
+├── example_view.ex
+├── layout_view.ex
+└── page_view.ex</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conn-struct"><a class="anchor" href="#conn-struct"></a>The <code>conn</code> Struct</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>According to the
+<a href="https://en.wikipedia.org/wiki/Model–view–controller">Model-View-Controller</a> (MVC)
+architecture we do our programming stuff in the controller and use the template
+just to display the results. Therefor we need a mechanism to transport this data
+from the controller into the template. That mechanism is the <code>conn</code> struct. Let&#8217;s have a look into it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --no-ecto
+[...]
+$ cd demo
+$ mix phx.server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A new route to inspect the content of <code>conn</code> and we add a second route for a playground page:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.Router do
+  use DemoWeb, :router
+
+  [...]
+
+  scope "/", DemoWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/inspect", PageController, :inspect <i class="conum" data-value="1"></i><b>(1)</b>
+    get "/playground", PageController, :playground
+  end
+
+  [...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>For now we put it into the <code>PageController</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the page controller we add an <code>inspect</code> and a <code>playground</code> action:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/page_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.PageController do
+  use DemoWeb, :controller
+
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
+  def inspect(conn, _params) do
+    render(conn, "inspect.html")
+  end
+
+  def playground(conn, _params) do
+    render(conn, "playground.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And finally this piece of code into the <code>inspect.html.eex</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/page/inspect.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;pre&gt;
+&lt;%= inspect(@conn, pretty: true) %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/pre&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We have access to <code>conn</code> in the template by calling it <code>@conn</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please open <a href="http://localhost:4000/inspect" class="bare">http://localhost:4000/inspect</a> in your browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/inspect_conn.png" alt="http://localhost:4000/inspect">
+</div>
+</div>
+<div class="paragraph">
+<p>That is quite a bit of information in the <code>@conn</code> struct. Here is the complete content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">%Plug.Conn{
+  adapter: {Plug.Cowboy.Conn, :...},
+  assigns: %{layout: {DemoWeb.LayoutView, "app.html"}},
+  before_send: [#Function&lt;0.39862366/1 in Plug.CSRFProtection.call/2&gt;,
+   #Function&lt;2.67121911/1 in Phoenix.Controller.fetch_flash/2&gt;,
+   #Function&lt;0.29283909/1 in Plug.Session.before_send/2&gt;,
+   #Function&lt;0.24098476/1 in Plug.Telemetry.call/2&gt;,
+   #Function&lt;0.67312369/1 in Phoenix.LiveReloader.before_send_inject_reloader/2&gt;],
+  body_params: %{},
+  cookies: %{},
+  halted: false,
+  host: "localhost",
+  method: "GET",
+  owner: #PID&lt;0.855.0&gt;,
+  params: %{},
+  path_info: ["inspect"],
+  path_params: %{},
+  port: 4000,
+  private: %{
+    DemoWeb.Router =&gt; {[], %{}},
+    :phoenix_action =&gt; :inspect,
+    :phoenix_controller =&gt; DemoWeb.PageController,
+    :phoenix_endpoint =&gt; DemoWeb.Endpoint,
+    :phoenix_flash =&gt; %{},
+    :phoenix_format =&gt; "html",
+    :phoenix_layout =&gt; {DemoWeb.LayoutView, :app},
+    :phoenix_request_logger =&gt; {"request_logger", "request_logger"},
+    :phoenix_router =&gt; DemoWeb.Router,
+    :phoenix_template =&gt; "inspect.html",
+    :phoenix_view =&gt; DemoWeb.PageView,
+    :plug_session =&gt; %{},
+    :plug_session_fetch =&gt; :done
+  },
+  query_params: %{},
+  query_string: "",
+  remote_ip: {127, 0, 0, 1},
+  req_cookies: %{},
+  req_headers: [
+    {"accept",
+     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"},
+    {"accept-encoding", "gzip, deflate, br"},
+    {"accept-language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7"},
+    {"connection", "keep-alive"},
+    {"host", "localhost:4000"},
+    {"sec-fetch-dest", "document"},
+    {"sec-fetch-mode", "navigate"},
+    {"sec-fetch-site", "none"},
+    {"sec-fetch-user", "?1"},
+    {"upgrade-insecure-requests", "1"},
+    {"user-agent",
+     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"}
+  ],
+  request_path: "/inspect",
+  resp_body: nil,
+  resp_cookies: %{},
+  resp_headers: [
+    {"cache-control", "max-age=0, private, must-revalidate"},
+    {"x-request-id", "FhBrYjjxnpjbwzAAAAxD"},
+    {"x-frame-options", "SAMEORIGIN"},
+    {"x-xss-protection", "1; mode=block"},
+    {"x-content-type-options", "nosniff"},
+    {"x-download-options", "noopen"},
+    {"x-permitted-cross-domain-policies", "none"},
+    {"cross-origin-window-policy", "deny"}
+  ],
+  scheme: :http,
+  script_name: [],
+  secret_key_base: :...,
+  state: :unset,
+  status: nil
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use the <code>playground.html.eex</code> to display specific parts of that:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/templates/page/playground.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;table&gt;
+  &lt;tr&gt;&lt;td&gt;Host:&lt;/td&gt;&lt;td&gt;&lt;%= @conn.host %&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Port:&lt;/td&gt;&lt;td&gt;&lt;%= @conn.port %&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Please open <a href="http://localhost:4000/playground" class="bare">http://localhost:4000/playground</a> to see the result.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/playground-0.png" alt="http://localhost:4000/playground">
+</div>
+</div>
+<div class="paragraph">
+<p>Let me show you now how to use <code>conn</code> to transport additional data:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/demo_web/controllers/page_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DemoWeb.PageController do
+  use DemoWeb, :controller
+
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
+  def inspect(conn, _params) do
+    conn
+    |&gt; assign(:headline, "This is a test headline") <i class="conum" data-value="1"></i><b>(1)</b>
+    |&gt; render("inspect.html")
+  end
+
+  def playground(conn, _params) do
+    headline = "This is a test headline"
+
+    conn
+    |&gt; assign(:headline, headline) <i class="conum" data-value="2"></i><b>(2)</b>
+    |&gt; render("playground.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>With <code>assign/3</code> we can add new variables to the conn struct.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Same result but a different coding style.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On <a href="http://localhost:4000/inspect" class="bare">http://localhost:4000/inspect</a> we see this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">%Plug.Conn{
+  adapter: {Plug.Cowboy.Conn, :...},
+  assigns: %{
+    headline: "This is a test headline",
+    layout: {DemoWeb.LayoutView, "app.html"}
+  },
+[...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access that we change the <code>playground.html.eex</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/templates/page/playground.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;&lt;%= @headline %&gt;&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;@conn.assigns.headline&lt;/td&gt;
+    &lt;td&gt;&lt;%= @conn.assigns.headline %&gt;&lt;/td&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;@headline&lt;/td&gt;
+    &lt;td&gt;&lt;%= @headline %&gt;&lt;/td&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We can access the value of <code>headline</code> through the longer <code>@conn.assigns.headline</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>But normaly we access it via the shortform <code>@headline</code>. The <code>@</code>-version is accessable for all subcontent of <code>@conn.assigns</code>.</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/playground-conn-assigns-headline.png" alt="http://localhost:4000/playground">
+</div>
+</div>
+<div class="sect2">
+<h3 id="static-clock"><a class="anchor" href="#static-clock"></a>Static Clock</h3>
+<div class="paragraph">
+<p>The current application always displays the same content. The easiest way to
+change that is to display the time. For that we add a <code>timestamp</code> variable in the controller and display it in the template:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/controllers/page_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+def playground(conn, _params) do
+  headline = "This is a test headline"
+  {:ok, timestamp} = DateTime.now("Etc/UTC")
+
+  conn
+  |&gt; assign(:headline, headline)
+  |&gt; assign(:timestamp, timestamp)
+  |&gt; render("playground.html")
+end
+[...]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/templates/page/playground.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;&lt;%= @headline %&gt;&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Etc/UTC&lt;/td&gt;
+    &lt;td&gt;&lt;%= @timestamp %&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/playground-timestamp.png" alt="http://localhost:4000/playground">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="links"><a class="anchor" href="#links"></a>Links</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The web consists of webpages which link to each other. So the next step on our
+venture for the ultimate Phoenix application is a game of ping-pong. <code><a href="http://localhost:4000/ping" class="bare">http://localhost:4000/ping</a></code> will display a link to
+<code><a href="http://localhost:4000/pong" class="bare">http://localhost:4000/pong</a></code> and vice versa.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new game --no-ecto
+[...]
+$ cd game
+$ mix phx.server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First we have to set the routes for ping and pong:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/game_web/router.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule GameWeb.Router do
+  [...]
+
+  scope "/", GameWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/ping", PageController, :ping <i class="conum" data-value="1"></i><b>(1)</b>
+    get "/pong", PageController, :pong <i class="conum" data-value="2"></i><b>(2)</b>
+  end
+
+  [...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sets the route for <code><a href="http://localhost:4000/ping" class="bare">http://localhost:4000/ping</a></code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Sets the route for <code><a href="http://localhost:4000/pong" class="bare">http://localhost:4000/pong</a></code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Next we add the actions to the PageController:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/game_web/controllers/page_controller.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule GameWeb.PageController do
+  use GameWeb, :controller
+
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
+  def ping(conn, _params) do
+    render(conn, "ping.html")
+  end
+
+  def pong(conn, _params) do
+    render(conn, "pong.html")
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the <code>ping.html.eex</code> template:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/templates/page/ping.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Ping&lt;/h1&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Perfect. What a nice ping we have created page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ping.png" alt="http://localhost:4000/ping">
+</div>
+</div>
+<div class="paragraph">
+<p>The missing pong counter part is easy:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/templates/page/pong.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Pong&lt;/h1&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But for Ping-Pong we need a <code>href</code> link between both pages. We could add
+one manually with <code>&lt;a href="/pong"&gt;Pong&lt;/a&gt;</code> but that would not be very clean.
+Since we have a router in Phoenix we can use that to create clean routes for
+our links.</p>
+</div>
+<div class="paragraph">
+<p>We either have to stop the Phoenix server (<code>CTRL-C</code> twice!) or open a new terminal with the same direction to run a <code>mix phx.routes</code> which returns all known routes.
+Because we are only interested in the routes for <code>PageController</code> we <code>grep</code> for those:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.routes | grep PageController
+  page_path  GET  /       GameWeb.PageController :index
+  page_path  GET  /ping   GameWeb.PageController :ping <i class="conum" data-value="1"></i><b>(1)</b>
+  page_path  GET  /pong   GameWeb.PageController :pong</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>For us important is the <code>page_path</code> and the <code>:ping</code> and <code>:pong</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With that information we can use the
+<a href="https://hexdocs.pm/phoenix_html/Phoenix.HTML.Link.html">link helper</a> to create that link:
+</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/game_web/templates/page/ping.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Ping&lt;/h1&gt;
+
+&lt;p&gt;
+&lt;%= link "Pong!", to: Routes.page_path(@conn, :pong) %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>page_path</code> and <code>:pong</code> action become <code>Routes.page_path(@conn, :pong)</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We do the same on the pong page:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/game_web/templates/page/pong.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Pong&lt;/h1&gt;
+
+&lt;p&gt;
+&lt;%= link "Ping!", to: Routes.page_path(@conn, :ping) %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ping_with_pong_link.png" alt="http://localhost:4000/ping">
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can play HTML Ping-Pong.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You&#8217;ll find the syntax for links with specific params or queries in the
+<a href="router.html" class="page">Router chapter</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_link_class"><a class="anchor" href="#_link_class"></a>Link Class</h3>
+<div class="paragraph">
+<p>Sometimes your design team wants to add a specific CSS class to a link. Here&#8217;s how you do that:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/game_web/templates/page/pong.html.eex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Pong&lt;/h1&gt;
+
+&lt;p&gt;
+&lt;%= link "Ping!", to: Routes.page_path(@conn, :ping, class: "btn") %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Just add a <code>class: "whatever"</code> to the link helper.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="static-files"><a class="anchor" href="#static-files"></a>Static files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Of course any webapplication doesn&#8217;t only have dynamic webpages but also
+some static files. The best example would be a <code>robots.txt`or a `favicon.ico</code>
+file. There is the <code>assets/static/</code> directory where we can put those files.
+By default the following files are already in that directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ tree assets/static/
+assets/static/
+├── favicon.ico
+├── images
+│   └── phoenix.png
+└── robots.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>They get delivered by the production webserver without any additional
+interaction with the Phoenix application. In development there is obviously some
+interaction but that has a small footprint.</p>
+</div>
+<div class="paragraph">
+<p>But adding a file to that directory is not enough. You have to whitelist it
+otherwise Phoenix doesn&#8217;t know what you want. Assuming we add a <code>ads.txt</code> file
+into the <code>assets/static/</code> directory. Than we have to update the
+<code>lib/hello_world_web/endpoint.ex</code> file accordingly:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/hello_world_web/endpoint.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+
+plug Plug.Static,
+  at: "/",
+  from: :hello_world,
+  gzip: false,
+  only: ~w(css fonts images js favicon.ico robots.txt ads.txt) <i class="conum" data-value="1"></i><b>(1)</b>
+
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>All static files or directories have to be whitelisted in this list.</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="images"><a class="anchor" href="#images"></a>Images</h3>
+<div class="paragraph">
+<p>Images are a special case of static files. They can be stored in the
+<code>assets/static/images/</code> directory which is by default whitelisted to include
+static files.</p>
+</div>
+<div class="paragraph">
+<p>In every fresh Phoenix installation you&#8217;ll find the Phoenix logo file stored at
+<code>assets/static/images/phoenix.png</code>. That image is used in the default <code>app.html.eex</code> and there we can have a look how to access that image from within <code>.eex</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ grep "phoenix.png" lib/demo_web/templates/layout/app.html.eex
+&lt;img src="&lt;%= Routes.static_path(@conn, "/images/phoenix.png") %&gt;" alt="Phoenix Framework Logo"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use <code>Routes.static_path(@conn, "/images/phoenix.png")</code> to address the image in any <code>.eex</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="css"><a class="anchor" href="#css"></a>CSS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As written in the <a href="index.html#preface" class="page">Preface</a>: We do not waste time in this
+book with making our webpages pretty. But in case you want to add some CSS into
+your demo application you can do so by consulting the file <code>assets/css/app.scss</code></p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
+  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+</footer>
+<script src="../../antora-assets/js/site.js"></script>
+<script async src="../../antora-assets/js/vendor/highlight.js"></script>
+  </body>
+</html>
