@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Phoenix LiveView Basics :: Phoenix Beginner&#x27;s Guide</title>
-    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/phoenix-liveview-basics.html">
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/1.5/phoenix/1.5/phoenix-liveview-basics.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../antora-assets/css/site.css">
     <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
@@ -164,6 +164,39 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html">Ecto Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-database">Create a Database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-table">Create a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-dataset">Create a Dataset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html#validations">Validations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ecto-basics.html#ecto-uniqueness">Uniqueness Validations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-seeds">Seeds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-list">Return all Entries of a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-get">Return one Entry of a Table by ID</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html#training">Remote Training</a>
   </li>
 </ul>
@@ -200,6 +233,7 @@
     <li><a href="phoenix-liveview-basics.html">LiveView Basics</a></li>
   </ul>
 </nav>
+  <div class="edit-this-page"><a href="file:///Users/stefan/Github/phoenix-book/modules/ROOT/pages/phoenix-liveview-basics.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
@@ -207,13 +241,8 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>LiveView is an interesting alternative to single-page application (SPA) written
-with JavaScript which communicate with the server via JSON and change the
-content of the page by themself. Adding a JavaScript Framework to create a SPA
-is adding an other element to your technology stack which has consequences.
-Creating the same functionality with LiveView keeps your technology stack light
-and you don&#8217;t add one more programming language (JavaScript) to your development
-process.</p>
+<p>LiveView is an exciting alternative to a single-page application (SPA) written with JavaScript which communicates with the server via JSON and changes the content of the page by themself. Adding a JavaScript Framework to create a SPA adds another element to your technology stack, which has consequences.
+Creating the same functionality with LiveView keeps your technology stack light, and you don&#8217;t add one more programming language (JavaScript) to your development process.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -222,30 +251,21 @@ process.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Feel free to skip this chapter if you are not interested in single-page
-applications. You can come back any time.
+Feel free to skip this chapter if you are not interested in single-page applications. You can come back at any time.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Of course LiveView does use JavaScript to do it&#8217;s magic but that is done for
-you. You don&#8217;t have to code any JavaScript yourself. The good to go LiveView
-JavaScript connects via a websocket to your Phoenix application and both
-communicate with each other. On the JavaScript side this is as light weighted
-as possible and uses much less client resources than most JavaScript frameworks.</p>
+<p>Of course, LiveView does use JavaScript to do its magic, but that is done for you. You don&#8217;t have to code any JavaScript yourself. The good to go LiveView
+JavaScript connects via a WebSocket to your Phoenix application and both communicate with each other. On the JavaScript side, this is as light weighted as possible and uses much fewer client resources than most JavaScript frameworks.</p>
 </div>
 <div class="paragraph">
-<p>One need thing about LiveView is that on the initial request Phoenix delivers
-a normal HTML page which includes all the design and content you want it to have.
-So the user doesn&#8217;t have to wait for JavaScript to do it&#8217;s work to have a
-usable webpage. As a sideeffect all search engines can use it right away without
-having to rely on JavaScript.</p>
+<p>One need thing about LiveView is that on the initial request Phoenix delivers a regular HTML page which includes all the design and content you want it to have.
+So the user doesn&#8217;t have to wait for JavaScript to do its work to have a good webpage. As a side effect, all search engines can use it right away without having to rely on JavaScript.</p>
 </div>
 <div class="paragraph">
-<p>During this chapter I&#8217;ll show you a couple of examples. They are meant to give
-you an idea of the possiblities. If LiveView is the right choice for your
-project you&#8217;ll have to invest more time afterwards with experiements and the
+<p>During this chapter, I&#8217;ll show you a couple of examples. They are meant to give you an idea of the possibilities. If LiveView is the right choice for your project, you&#8217;ll have to invest more time afterwards with experiments and the
 lecture of</p>
 </div>
 <div class="ulist">
@@ -273,7 +293,7 @@ lecture of</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-I stole the light switch idea from the great Pragmatic Studio online
+I stole the light switch idea from Pragmatic Studio&#8217;s online
 course at <a href="https://online.pragmaticstudio.com/courses/liveview" class="bare">https://online.pragmaticstudio.com/courses/liveview</a>
 </td>
 </tr>
@@ -312,7 +332,7 @@ You can also run your app inside IEx (Interactive Elixir) as:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>'--live' adds all the needed stuff to use LiveView out of the box. For this example we don&#8217;t need Ecto.</td>
+<td>'--live' adds all the needed stuff to use LiveView out of the box. For this example, we don&#8217;t need Ecto.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -350,7 +370,7 @@ light bulb. All this without reloading the page and without any JavaScript.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Because we created the app with the <code>--live</code> switch the default root path is already a live view. Therefor the <code>live</code> macro is used here (at the beginning of the line) instead of the traditional <code>get</code>.</td>
+<td>Because we created the app with the <code>--live</code> switch the default root path is already a live view. Therefore the <code>live</code> macro is used here (at the beginning of the line) instead of the traditional <code>get</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -386,11 +406,10 @@ end
 <td class="content">
 <div class="paragraph">
 <p>We use the <code>~L</code> sigil to store the template code in this controller. It is
-easier for the purpose of this document. For bigger templates it makes more
-sense to store them in their own file. That would be a LiveEEx Templates
+easier for this document. For bigger templates, it makes more
+sense to store them in their file. That would be a LiveEEx Templates
 (<code>.leex</code> extension) and would be named <code>lib/demo_web/live/light_live.html.leex</code>
-in this case and include <code>&lt;h1&gt;The light is off.&lt;/h1&gt;</code>. When you have that file
-you don&#8217;t need the <code>render/1</code> function at all.</p>
+in this case and include <code>&lt;h1&gt;The light is off.&lt;/h1&gt;</code>. When you have that file, you don&#8217;t need the <code>render/1</code> function at all.</p>
 </div>
 <div class="paragraph">
 <p>Have a look at <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html" class="bare">https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html</a> for more information.</p>
@@ -411,10 +430,7 @@ you don&#8217;t need the <code>render/1</code> function at all.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Our aim is to change the world <code>off</code> to <code>on</code> and trigger that by a button. For that to
-happen we first have to replace the current word with a variable and we have to assign
-that variable to the socket struct (which is used to transport that information). We assign
-the initial state of the variable <code>light_bulb_status</code> in the <code>mount/3</code> function.</p>
+<p>We aim to change the world <code>off</code> to <code>on</code> and trigger that by a button. For that to happen, we first have to replace the current word with a variable, and we have to assign that variable to the socket struct (which is used to transport that information). We assign the initial state of the variable <code>light_bulb_status</code> in the <code>mount/3</code> function.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/live/light_live.ex</div>
@@ -448,8 +464,7 @@ end</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>The browser automatically reloads but the page&#8217;s content hasn&#8217;t changed. Only we know that the <code>off</code>
-is not a static content any more.</p>
+<p>The browser automatically reloads, but the page&#8217;s content hasn&#8217;t changed. Only we know that the <code>off</code> is not a static content any more.</p>
 </div>
 <div class="paragraph">
 <p>To turn on the light bulb we need a button:
@@ -557,7 +572,7 @@ end</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>No we can load the page having the light <code>off</code>. After clicking on the button
+<p>No, we can load the page having the light <code>off</code>. After clicking on the button
 the text updates to <code>on</code>.</p>
 </div>
 <div class="imageblock">
@@ -566,8 +581,7 @@ the text updates to <code>on</code>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>But it would be nice to add a second button so that we can switch the light off
-again. In addition we have to add an other event handler for the <code>off</code> event:</p>
+<p>But it would be nice to add a second button so that we can switch the light off again. Also, we have to add another event handler for the <code>off</code> event:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/live/light_live.ex</div>
@@ -661,7 +675,7 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We assign a value for the <code>on_button_status</code> and <code>off_button_status</code> to make the on button active and the off button inactive at the start.</td>
+<td>We assign a value for the <code>on_button_status</code> and <code>off_button_status</code> in order to make the on button active and the off button inactive at the start.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -789,7 +803,7 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>mount/3</code> gets called twice. The first time when the inital HTTP-Request gets answered. That would be the initial webpage. And a second time when the LiveView JavaScript client has connected to the websocket. We want to start our timer at that second request.</td>
+<td><code>mount/3</code> gets called twice. The first time when the initial HTTP-Request gets answered. That would be the initial webpage. And a second time when the LiveView JavaScript client has connected to the WebSocket. We want to start our timer at that second request.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -801,7 +815,7 @@ end</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td><code>handle_info/2</code> gets called by the 1 second timer to update the value of <code>now</code>.</td>
+<td><code>handle_info/2</code> gets called by the 1-second timer to update the value of <code>now</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -831,8 +845,7 @@ end</code></pre>
 <h2 id="counter"><a class="anchor" href="#counter"></a>Counter</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This LiveView example will generate a counter website. It starts with 0 and each
-time you click on a button it will increase by one.</p>
+<p>This LiveView example will generate a counter website. It starts at 0, and each time you click on a button, it will increase by one.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -964,8 +977,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Both versions work fine. Of course the <code>update/3</code> is a bit more elegant. But you
-will get no medal for using it. Use the function you feel more comfortable with.</p>
+<p>Both versions work fine. Of course, <code>update/3</code> is a bit more elegant. But you will get no medal for using it. Use the function you feel more comfortable with.</p>
 </div>
 </div>
 </div>
@@ -974,7 +986,7 @@ will get no medal for using it. Use the function you feel more comfortable with.
 <h2 id="aiport-code-search"><a class="anchor" href="#aiport-code-search"></a>Airport Code Search</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this LiveView example we create a search field for airport codes.</p>
+<p>In this LiveView example, we create a search field for airport codes.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -999,8 +1011,7 @@ end
 </div>
 </div>
 <div class="paragraph">
-<p>Next we need to create a module which holds that list of airports and a search
-function. We&#8217;ll put this into <code>lib/travelagent/airports.ex</code></p>
+<p>Next, we need to create a module which holds that list of airports and a search function. We&#8217;ll put this into <code>lib/travelagent/airports.ex</code></p>
 </div>
 <div class="listingblock">
 <div class="title">lib/travelagent/airports.ex</div>
@@ -1050,7 +1061,7 @@ end</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>We hardcode a list of German airports here. In a real application this would be longer and probably database driven.</td>
+<td>We hardcode a list of German airports here. In a real application, this would be longer and probably database driven.</td>
 </tr>
 </table>
 </div>
@@ -1154,11 +1165,11 @@ end</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>We auto upcase the search string.</td>
+<td>We auto-uppercased each letter in the search string.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The upcased search string gets returned to the view.</td>
+<td>The uppercased search string gets returned to the view.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -1179,7 +1190,7 @@ end</code></pre>
 <div class="paragraph">
 <p>It would be nice to have some sort of autocomplete functionality for the airport
 code search. So that when I start to enter an <code>h</code> I&#8217;ll get all airports which
-codes start with an <code>h</code>. Without having to click on the <code>Search Airport</code> button.
+codes begin with an <code>h</code>. Without having to click on the <code>Search Airport</code> button.
 Lucky us we only have to do a couple of changes in the LiveEEx Template file.</p>
 </div>
 <div class="paragraph">
@@ -1245,7 +1256,7 @@ Lucky us we only have to do a couple of changes in the LiveEEx Template file.</p
 </div>
 <footer class="footer">
   <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
-  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+  <p>This webpage was built with <a href="https://antora.org">Antora</a>.</p>
 </footer>
 <script src="../../antora-assets/js/site.js"></script>
 <script async src="../../antora-assets/js/vendor/highlight.js"></script>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Ecto Introduction :: Phoenix Beginner&#x27;s Guide</title>
-    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/ecto-basics.html">
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/1.5/phoenix/1.5/ecto-basics.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../antora-assets/css/site.css">
     <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
@@ -163,6 +163,39 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html">Ecto Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-create-database">Create a Database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-create-table">Create a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-create-dataset">Create a Dataset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#validations">Validations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#ecto-uniqueness">Uniqueness Validations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-seeds">Seeds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-list">Return all Entries of a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-get">Return one Entry of a Table by ID</a>
+  </li>
+</ul>
+  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html#training">Remote Training</a>
   </li>
@@ -197,9 +230,10 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Phoenix Beginner's Guide</a></li>
-    <li><a href="ecto-basics.html">Ecto Introduction</a></li>
+    <li><a href="ecto-basics.html">Ecto Basics</a></li>
   </ul>
 </nav>
+  <div class="edit-this-page"><a href="file:///Users/stefan/Github/phoenix-book/modules/ROOT/pages/ecto-basics.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
@@ -209,7 +243,38 @@
 <div class="paragraph">
 <p>Ecto is a persistence framework for Elixir. That is a fancy way of saying that
 we use Ecto to talk to a SQL database. This chapter will introduce you to the
-basics of Ecto in the Phoenix context.</p>
+very basics of Ecto in the Phoenix context. Which means that whenever available, we use functions that were created by Phoenix generators.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll learn:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How to create a database and a table.</p>
+</li>
+<li>
+<p>How to insert data into that table.</p>
+</li>
+<li>
+<p>How to list all data from that table.</p>
+</li>
+<li>
+<p>How to get a dataset from that table by its ID.</p>
+</li>
+<li>
+<p>How to update a dataset.</p>
+</li>
+<li>
+<p>How to delete a dataset.</p>
+</li>
+<li>
+<p>Basic search queries.</p>
+</li>
+<li>
+<p>Basic associations (e.g. one-to-many)</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -221,7 +286,7 @@ basics of Ecto in the Phoenix context.</p>
 <div class="paragraph">
 <p>We are going to use a <a href="https://www.postgresql.org">PostgreSQL</a> database. Ecto
 works fine with other databases too (e.g. <a href="https://mariadb.com">MariaDB</a>) but most
-Phoenix developers prefer PostgreSQL. For this book we assume that you have a
+Phoenix developers prefer PostgreSQL. For this book, we assume that you have a
 PostgreSQL user on your development system which was granted the right to create
 a database and which has the following credentials:</p>
 </div>
@@ -236,38 +301,11 @@ a database and which has the following credentials:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Because those are the default values for the development system in Phoenix.</p>
+<p>These are the default values for the development system in Phoenix.</p>
 </div>
 </td>
 </tr>
 </table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_create_data"><a class="anchor" href="#_create_data"></a>Create Data</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before we can query data we have to create it and before that we have to tell
-Ecto what data model we are using. Because we are ending up using Ecto in
-Phoenix anyway I am using a basic Phoenix application to walk you through the
-process. Let&#8217;s create a small bookstore:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new bookstore
-[...]
-$ cd bookstore</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To generate the needed files we can use the <code>mix phx.gen.context</code> generator
-(more info about it at
-<a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html" class="bare">https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html</a>).</p>
-</div>
-<div class="paragraph">
-<p>As a first resource we want to create a table with authors. In the Phoenix world
-we have to put that new resource <code>authors</code> into a context.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -276,49 +314,47 @@ we have to put that new resource <code>authors</code> into a context.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-A context is an API boundary for one or more resources. It was included in
-Phoenix with version 1.3. Don&#8217;t loose any sleep on the question what a context
-is. You&#8217;ll get a feeling about it. Good naming of contexts is important but not
-at this stadium of your Ecto learning process.
+Ecto is a vast topic. In one chapter, I can only scratch its
+surface. If you want to dive into it more in-depth, you should read the book
+<a href="https://pragprog.com/book/wmecto/programming-ecto">Programming Ecto</a> by
+<a href="https://twitter.com/darinwilson">Darin Wilson</a>. Also
+<a href="https://www.youtube.com/results?search_query=Darin+Wilson+Ecto+Elixir">search for Darin&#8217;s Ecto talks on YouTube</a>.
 </td>
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.gen.context Store Author authors first_name last_name twitter_account
-* creating lib/bookstore/store/author.ex
-* creating priv/repo/migrations/20200516093442_create_authors.exs
-* creating lib/bookstore/store.ex
-* injecting lib/bookstore/store.ex
-* creating test/bookstore/store_test.exs
-* injecting test/bookstore/store_test.exs
-
-Remember to update your repository by running migrations:
-
-    $ mix ecto.migrate</code></pre>
 </div>
 </div>
+<div class="sect1">
+<h2 id="ecto-create-database"><a class="anchor" href="#ecto-create-database"></a>Create a Database</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The last output of that command is a bit misleading right now. If we do a <code>mix ecto.migrate</code> we get this repeating error message:</p>
+<p>Before we can do anything, we have to create a database. Let&#8217;s create a small
+bookstore database:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.migrate
-Compiling 16 files (.ex)
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new bookstore
+[...]
+$ cd bookstore
+$ mix ecto.create
+Compiling 14 files (.ex)
 Generated bookstore app
-
-11:42:00.676 [error] Postgrex.Protocol (#PID&lt;0.384.0&gt;) failed to connect: ** (Postgrex.Error) FATAL 3D000 (invalid_catalog_name) database "bookstore_dev" does not exist</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Ecto wants to connect to a database but there is none. We have to create it first with the comment <code>mix ecto.create</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.create
 The database for Bookstore.Repo has been created</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In case you want to drop this database (e.g. to re-run the
+<code>mix ecto.create</code> command) you can do so with the command <code>mix ecto.drop</code>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The configuration for this development database can be found in the file
@@ -341,31 +377,106 @@ config :bookstore, Bookstore.Repo,
 [...]</code></pre>
 </div>
 </div>
-<div class="admonitionblock tip">
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-create-table"><a class="anchor" href="#ecto-create-table"></a>Create a Table</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The generator <code>mix phx.gen.context</code> (<a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html" class="bare">https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html</a>) can be used to create a context with a couple of useful functions around an Ecto schema.</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In case you want to drop this database (e.g. to re-run the
-<code>mix ecto.create</code> command) you can do so with the command <code>mix ecto.drop</code>
+You can do everything a generator does manually, but it is faster and results in fewer errors if you use a generator.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Now we can run the migration.</p>
+<p>As a first resource, we want to create a table with authors. In the Phoenix world
+we have to put that new resource <code>authors</code> into a context.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A context is an API boundary for one or more resources. It was included in
+Phoenix with version 1.3. Don&#8217;t lose any sleep on the question of what a context is. You&#8217;ll get a feeling about it soon. Good naming of contexts is
+essential but not at this stadium of your Ecto learning process.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.gen.context Store Author authors first_name last_name twitter_account
+* creating lib/bookstore/store/author.ex
+* creating priv/repo/migrations/20200526112425_create_authors.exs
+* creating lib/bookstore/store.ex
+* injecting lib/bookstore/store.ex
+* creating test/bookstore/store_test.exs
+* injecting test/bookstore/store_test.exs
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Migrations are used to keep track of the process of generating or changing your database. If you are in a team of multiple developers, migrations are the tool so that you don&#8217;t pull each other&#8217;s carpets.</p>
+</div>
+<div class="paragraph">
+<p>The migration the generator created is stored in the file <code>priv/repo/migrations/20200526112425_create_authors.exs</code>. What is does is pretty clear once you have a look into it:</p>
+</div>
+<div class="listingblock">
+<div class="title">priv/repo/migrations/20200526112425_create_authors.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Repo.Migrations.CreateAuthors do
+  use Ecto.Migration
+
+  def change do
+    create table(:authors) do
+      add :first_name, :string
+      add :last_name, :string
+      add :twitter_account, :string
+
+      timestamps() <i class="conum" data-value="1"></i><b>(1)</b>
+    end
+
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>timestamps()</code> generates the fields <code>updated_at</code> and <code>inserted_at</code>. Both are updated with the current timestamp during the creation of a dataset. Afterwards, only <code>updated_at</code> is updated with the current timestamp whenever Ecto changes that dataset.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To run the migration, we call <code>mix ecto.migrate</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.migrate
+Compiling 2 files (.ex)
+Generated bookstore app
 
-11:53:48.162 [info]  == Running 20200516093442 Bookstore.Repo.Migrations.CreateAuthors.change/0 forward
+13:30:35.437 [info]  == Running 20200526112425 Bookstore.Repo.Migrations.CreateAuthors.change/0 forward
 
-11:53:48.164 [info]  create table authors
+13:30:35.440 [info]  create table authors
 
-11:53:48.177 [info]  == Migrated 20200516093442 in 0.0s</code></pre>
+13:30:35.458 [info]  == Migrated 20200526112425 in 0.0s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -396,7 +507,7 @@ bookstore_dev=# \q <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>psql</code> is the command line client for PostgreSQL. If you are not familiar with it: Don&#8217;t try this at home!</td>
+<td><code>psql</code> is the command-line client for PostgreSQL. If you are not familiar with it: Don&#8217;t try this at home!</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -404,39 +515,276 @@ bookstore_dev=# \q <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>\q</code> is the command to quit the command line client.</td>
+<td><code>\q</code> is the command to quit the command-line client.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The migration created that table and added columns. But it added more columns
-than we asked for. It added <code>id</code>, <code>inserted_at</code> and <code>updated_at</code>. But that is
-all right. We will see what they are for in a minute.</p>
+<p>The migration created that table and added the columns.</p>
 </div>
-<div class="sect2">
-<h3 id="_create_an_author"><a class="anchor" href="#_create_an_author"></a>Create an author</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>The module <code>Bookstore.Store</code> was created by <code>mix phx.gen.context</code>. It contains a couple of useful functions. One of it is <code>create_author/1</code>. Here is the code for that function:</p>
+<p>You can undo a migration with a rollback:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.rollback
+
+12:48:54.388 [info]  == Running 20200526112425 Bookstore.Repo.Migrations.CreateAuthors.change/0 backward
+
+12:48:54.390 [info]  drop table authors
+
+12:48:54.398 [info]  == Migrated 20200526112425 in 0.0s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case you test the rollback now you have to run the migration again
+afterwards.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>phx.gen.context</code> generated in addition to the migration the schema in <code>lib/bookstore/store/author.ex</code> and the context module <code>lib/bookstore/store.ex</code>. We&#8217;ll tackle both in the next section.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Migration filenames include a timestamp. Obviously, you are doing this at a later time than I. So you have to adjust the filenames in this chapter
+accordingly. No copy and paste for migration filenames!
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-create-dataset"><a class="anchor" href="#ecto-create-dataset"></a>Create a Dataset</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We have a database and a table. But we still need to create our first set of
+data. To do that we have to open the <code>iex</code>. Within a Phoenix project, we can do
+this with the command <code>iex -S mix phx.server</code>. It loads the whole Phoenix
+project. It starts the webserver too (you see it sorting out the assets
+during startup) but right now we only use the <code>iex</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ iex -S mix phx.server
+Erlang/OTP 22 [erts-10.6.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe]
+
+[info] Running BookstoreWeb.Endpoint with cowboy 2.7.0 at 0.0.0.0:4000 (http)
+[info] Access BookstoreWeb.Endpoint at http://localhost:4000
+Interactive Elixir (1.10.2) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Actually you will see a couple of more messages here which are related to the asset pipeline (e.g. CSS and JavaScript). No need to bother with that now.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The context module <code>lib/bookstore/store.ex</code> includes the <code>create_author/1</code> function which we use to create a new author:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(2)&gt; Bookstore.Store.create_author(%{first_name: "Dave", last_name: "Thomas", twitter_account: "pragdave"})
+[debug] QUERY OK db=3.8ms decode=1.5ms queue=2.5ms idle=1355.7ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["Dave", "Thomas", "pragdave", ~N[2020-05-26 11:54:37], ~N[2020-05-26 11:54:37]]
+{:ok,
+ %Bookstore.Store.Author{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+   first_name: "Dave",
+   id: 1,
+   inserted_at: ~N[2020-05-26 11:54:37],
+   last_name: "Thomas",
+   twitter_account: "pragdave",
+   updated_at: ~N[2020-05-26 11:54:37]
+ }}</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Use <code>alias Bookstore.Store</code> at the beginning of an <code>iex</code> session and
+afterwards <code>Store.create_author()</code> to save typing time. Often makes code easier
+to read.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you wander what <code>create_author/1</code> exactly does:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/bookstore/store.ex</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">@doc """
-Creates a author.
-
-## Examples
-
-    iex&gt; create_author(%{field: value}) <i class="conum" data-value="1"></i><b>(1)</b>
-    {:ok, %Author{}}
-
-    iex&gt; create_author(%{field: bad_value})
-    {:error, %Ecto.Changeset{}}
-
-"""
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+alias Bookstore.Repo
+alias Bookstore.Store.Author
+[...]
 def create_author(attrs \\ %{}) do
   %Author{}
-  |&gt; Author.changeset(attrs)
-  |&gt; Repo.insert()
+  |&gt; Author.changeset(attrs) <i class="conum" data-value="1"></i><b>(1)</b>
+  |&gt; Repo.insert() <i class="conum" data-value="2"></i><b>(2)</b>
+end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Creates a new Author changeset with the attributes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Uses <code>Repo</code> to insert the changeset into the table.</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the insert in the table was successful, the function returns a
+<code>{:ok, %Bookstore.Store.Author{}}</code> tuple.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Assuming you&#8217;d like to assign the new author to the variable <code>author</code>. How would you do that? <code>create_author/1</code> results in a tuple and not an Author. Pattern matching for the rescue! Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(2)&gt; {:ok, author} = Bookstore.Store.create_author(%{first_name: "Dave", last_name: "Thomas", twitter_account: "pragdave"})
+[debug] QUERY OK db=3.4ms decode=1.5ms queue=1.3ms idle=1013.5ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["Dave", "Thomas", "pragdave", ~N[2020-05-27 11:00:19], ~N[2020-05-27 11:00:19]]
+{:ok,
+ %Bookstore.Store.Author{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+   first_name: "Dave",
+   id: 1,
+   inserted_at: ~N[2020-05-27 11:00:19],
+   last_name: "Thomas",
+   twitter_account: "pragdave",
+   updated_at: ~N[2020-05-27 11:00:19]
+ }}
+iex(3)&gt; author
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-05-27 11:00:19],
+  last_name: "Thomas",
+  twitter_account: "pragdave",
+  updated_at: ~N[2020-05-27 11:00:19]
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-validations"><a class="anchor" href="#ecto-validations"></a>Validations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If we try to create an empty dataset this happens:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(3)&gt; Bookstore.Store.create_author(%{})
+{:error,
+ #Ecto.Changeset&lt;
+   action: :insert,
+   changes: %{},
+   errors: [
+     first_name: {"can't be blank", [validation: :required]},
+     last_name: {"can't be blank", [validation: :required]},
+     twitter_account: {"can't be blank", [validation: :required]}
+   ],
+   data: #Bookstore.Store.Author&lt;&gt;,
+   valid?: false
+ &gt;}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>create_author/1</code> function returns a <code>{:error, #Ecto.Changeset &#8230;&#8203;}</code> tuple
+and it lists the reasons in the <code>errors</code> list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>first_name: {"can&#8217;t be blank", [validation: :required]}</code></p>
+</li>
+<li>
+<p><code>last_name: {"can&#8217;t be blank", [validation: :required]}</code></p>
+</li>
+<li>
+<p><code>twitter_account: {"can&#8217;t be blank", [validation: :required]}</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It seems that some sort of data validation happens. To understand that we have
+to look into <code>lib/bookstore/store/author.ex</code></p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/author.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Store.Author do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  schema "authors" do <i class="conum" data-value="1"></i><b>(1)</b>
+    field :first_name, :string
+    field :last_name, :string
+    field :twitter_account, :string
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(author, attrs) do <i class="conum" data-value="2"></i><b>(2)</b>
+    author
+    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account]) <i class="conum" data-value="3"></i><b>(3)</b>
+    |&gt; validate_required([:first_name, :last_name, :twitter_account]) <i class="conum" data-value="4"></i><b>(4)</b>
+  end
 end</code></pre>
 </div>
 </div>
@@ -444,13 +792,827 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Very useful documentation for the function. While browsing through <code>Bookstore.Store</code> your should always read the <code>@doc</code> documentation.</td>
+<td>This is the schema of the <code>authors</code> model.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><a href="https://hexdocs.pm/ecto/Ecto.Changeset.html">Ecto.Changeset</a> is a mechanism to filter, cast and validate the data.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#cast/4">cast/4</a> casts the input. Only fields which are listed in the list can make it through. Everything else is thrown away right there.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Here&#8217;s the reason why <code>Bookstore.Store.create_author(%{})</code> resulted in an error. The function <a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#validate_required/3">validate_required/3</a> checks weather all the list items are included.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><mark>Work in progess</mark></p>
+<p>Changesets are the gatekeepers of Ecto. Let&#8217;s add some validations to our author changeset as an example:</p>
 </div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/author.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def changeset(author, attrs) do
+    author
+    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account])
+    |&gt; validate_required([:last_name]) <i class="conum" data-value="1"></i><b>(1)</b>
+    |&gt; validate_length(:first_name, max: 255) <i class="conum" data-value="2"></i><b>(2)</b>
+    |&gt; validate_length(:last_name, max: 255) <i class="conum" data-value="3"></i><b>(3)</b>
+    |&gt; validate_length(:twitter_account, max: 15) <i class="conum" data-value="4"></i><b>(4)</b>
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We make sure that a dataset has a <code>last_name</code>. But it doesn&#8217;t have to have a <code>first_name</code> or a <code>twitter_account</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If a <code>first_name</code> is used, it can not be longer than 255 characters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A <code>last_name</code> can not be longer than 255 characters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If a <code>twitter_account</code> is used, it can not be longer than 15 characters (the max limit for Twitter handles).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we get a different error message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elxir hljs" data-lang="elxir">iex(4)&gt; Bookstore.Store.create_author(%{})
+{:error,
+ #Ecto.Changeset&lt;
+   action: :insert,
+   changes: %{},
+   errors: [last_name: {"can't be blank", [validation: :required]}],
+   data: #Bookstore.Store.Author&lt;&gt;,
+   valid?: false
+ &gt;}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But let&#8217;s try to add an author with a missing <code>first_name</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elxir hljs" data-lang="elxir">iex(6)&gt; Bookstore.Store.create_author(%{last_name: "Thomas", twitter_account: "pragdave"})
+[debug] QUERY OK db=1.0ms queue=0.5ms idle=1349.0ms
+INSERT INTO "authors" ("last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4) RETURNING "id" ["Thomas", "pragdave", ~N[2020-05-27 05:37:46], ~N[2020-05-27 05:37:46]]
+{:ok,
+ %Bookstore.Store.Author{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+   first_name: nil,
+   id: 3,
+   inserted_at: ~N[2020-05-27 05:37:46],
+   last_name: "Thomas",
+   twitter_account: "pragdave",
+   updated_at: ~N[2020-05-27 05:37:46]
+ }}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>No surprise here. It works.</p>
+</div>
+<div class="paragraph">
+<p>A list of available validations can be found at <a href="https://hexdocs.pm/ecto/Ecto.Changeset.html" class="bare">https://hexdocs.pm/ecto/Ecto.Changeset.html</a></p>
+</div>
+<div class="sect2">
+<h3 id="ecto-uniqueness"><a class="anchor" href="#ecto-uniqueness"></a>Uniqueness Validation</h3>
+<div class="paragraph">
+<p>In the last section, we created two datasets with the same Twitter account. That
+shouldn&#8217;t happen because it is unique. We have to add a validation for that.</p>
+</div>
+<div class="paragraph">
+<p>A uniqueness validation needs a uniqueness database index. Since we haven&#8217;t
+added an index during the creation of the <code>authors</code> table we have to add a
+migration to do it now:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.gen.migration add_twitter_account_index
+Compiling 1 file (.ex)
+* creating priv/repo/migrations/20200527054827_add_twitter_account_index.exs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The generator created the migration file. But we have to fill it with live:</p>
+</div>
+<div class="listingblock">
+<div class="title">priv/repo/migrations/20200527054827_add_twitter_account_index.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Repo.Migrations.AddTwitterAccountIndex do
+  use Ecto.Migration
+
+  def change do
+    create unique_index(:authors, [:twitter_account])
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the migration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.migrate
+
+07:55:14.846 [info]  == Running 20200527054827 Bookstore.Repo.Migrations.AddTwitterAccountIndex.change/0 forward
+
+07:55:14.849 [info]  create index authors_twitter_account_index
+** (Postgrex.Error) ERROR 23505 (unique_violation) could not create unique index "authors_twitter_account_index"
+
+    table: authors
+    constraint: authors_twitter_account_index
+
+Key (twitter_account)=(pragdave) is duplicated.
+[...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ups! Because we have two entries with the same <code>twitter_account</code> the unique
+index can not be created. We can solve this in the following ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Delete one entry in the table and re-run the migration.</p>
+</li>
+<li>
+<p>Do a <code>mix ecto.drop</code>, <code>mix ecto.create</code> and <code>mix ecto.migrate</code>. That destroys the existing data. Since this is a development system, there is little harm.</p>
+</li>
+<li>
+<p>Do a <code>mix ecto.reset</code> which does all the above. Plus it populates the database with seeds if you have them. We don&#8217;t have seeds yet.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We take the shortcut <code>mix ecto.reset</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.reset
+The database for Bookstore.Repo has been dropped <i class="conum" data-value="1"></i><b>(1)</b>
+The database for Bookstore.Repo has been created <i class="conum" data-value="2"></i><b>(2)</b>
+
+08:02:33.469 [info]  == Running 20200526112425 Bookstore.Repo.Migrations.CreateAuthors.change/0 forward
+
+08:02:33.471 [info]  create table authors
+
+08:02:33.481 [info]  == Migrated 20200526112425 in 0.0s <i class="conum" data-value="3"></i><b>(3)</b>
+
+08:02:33.540 [info]  == Running 20200527054827 Bookstore.Repo.Migrations.AddTwitterAccountIndex.change/0 forward
+
+08:02:33.541 [info]  create index authors_twitter_account_index
+
+08:02:33.543 [info]  == Migrated 20200527054827 in 0.0s <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>mix ecto.drop</code> drops the database.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>mix ecto.create</code> creates a new database.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Runs the first migration. The one with 20200526112425 in it&#8217;s filename.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Runs the second migration. The one with 20200527054827 in it&#8217;s filename. This one creates the index.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The uniqueness index in the table does make sure that we can&#8217;t add a second author with the same Twitter account to the table, but this constraint violation
+would raise an exception. Better than nothing but not what we want. We want an error to our changeset. So we have to add one more line to the changeset:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/author.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def changeset(author, attrs) do
+    author
+    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account])
+    |&gt; validate_required([:last_name])
+    |&gt; validate_length(:first_name, max: 255)
+    |&gt; validate_length(:last_name, max: 255)
+    |&gt; validate_length(:twitter_account, max: 15)
+    |&gt; unique_constraint(:twitter_account) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#unique_constraint/3">unique_constrain/3</a> validation which will add an error to our changeset.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Time to check our work. Please fire up <code>iex -S mix phx.server</code> and follow me:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">$ iex -S mix phx.server
+[...]
+iex(1)&gt; Bookstore.Store.create_author(%{first_name: "Dave", last_name: "Thomas", twitter_account: "pragdave"})
+[debug] QUERY OK db=3.0ms decode=1.4ms queue=1.4ms idle=1965.4ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["Dave", "Thomas", "pragdave", ~N[2020-05-27 06:17:18], ~N[2020-05-27 06:17:18]]
+{:ok,
+ %Bookstore.Store.Author{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+   first_name: "Dave",
+   id: 1,
+   inserted_at: ~N[2020-05-27 06:17:18],
+   last_name: "Thomas",
+   twitter_account: "pragdave",
+   updated_at: ~N[2020-05-27 06:17:18]
+ }} <i class="conum" data-value="1"></i><b>(1)</b>
+iex(2)&gt; Bookstore.Store.create_author(%{first_name: "Dave", last_name: "Thomas", twitter_account: "pragdave"})
+[debug] QUERY ERROR db=8.1ms queue=2.3ms idle=1590.4ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["Dave", "Thomas", "pragdave", ~N[2020-05-27 06:17:20], ~N[2020-05-27 06:17:20]]
+{:error,
+ #Ecto.Changeset&lt;
+   action: :insert,
+   changes: %{
+     first_name: "Dave",
+     last_name: "Thomas",
+     twitter_account: "pragdave"
+   },
+   errors: [
+     twitter_account: {"has already been taken",
+      [constraint: :unique, constraint_name: "authors_twitter_account_index"]}
+   ],
+   data: #Bookstore.Store.Author&lt;&gt;,
+   valid?: false
+ &gt;} <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Works nicely. It results in a <code>{:ok, %Bookstore.Store.Author()}</code> which tells
+us that the dataset is saved.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Works too. The second attempt to create an entry with the same data results in <code>{:error, #Ecto.Changeset}</code>. The <code>errors</code> tell us that <code>twitter_account: {"has already been taken", [constraint: :unique, constraint_name: "authors_twitter_account_index"]}</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_uniqueness_over_multiple_fields"><a class="anchor" href="#_uniqueness_over_multiple_fields"></a>Uniqueness over multiple fields</h3>
+<div class="paragraph">
+<p>Sometimes you need to assure a uniqueness not just over one but over multiple fields. To show how this is done, I assume that our <code>authors</code> table should not contain two authors with the same full name (e.g. no two <code>Dave Thomas</code> or <code>Stefan Wintermeyer</code>). To achieve that we have to check <code>fist_name</code> and <code>last_name</code> in combination. We have to do that in the database with a combined index.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.gen.migration add_full_name_index
+* creating priv/repo/migrations/20200527071855_add_full_name_index.exs</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">priv/repo/migrations/20200527071855_add_full_name_index.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Repo.Migrations.AddFullNameIndex do
+  use Ecto.Migration
+
+  def change do
+    create unique_index(:authors, [:first_name, :last_name]) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Creates a concatinated index of the fields <code>first_name</code> and <code>last_name</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/author.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def changeset(author, attrs) do
+    author
+    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account])
+    |&gt; validate_required([:last_name])
+    |&gt; validate_length(:first_name, max: 255)
+    |&gt; validate_length(:last_name, max: 255)
+    |&gt; validate_length(:twitter_account, max: 15)
+    |&gt; unique_constraint(:twitter_account)
+    |&gt; unique_constraint([:first_name, :last_name]) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This <code>unique_constraint/1</code> will trigger an error message instead of an exception without it.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">$ mix ecto.reset <i class="conum" data-value="1"></i><b>(1)</b>
+Compiling 1 file (.ex)
+The database for Bookstore.Repo has been dropped
+The database for Bookstore.Repo has been created.
+[...]
+09:45:21.380 [info]  create index authors_first_name_last_name_index
+
+09:45:21.382 [info]  == Migrated 20200527071855 in 0.0s
+
+$ iex -S mix phx.server
+[...]
+iex(1)&gt; alias Bookstore.Store <i class="conum" data-value="2"></i><b>(2)</b>
+Bookstore.Store
+iex(2)&gt; Store.create_author(%{first_name: "Dave", last_name: "Thomas"}) <i class="conum" data-value="3"></i><b>(3)</b>
+[debug] QUERY OK db=5.2ms decode=2.6ms queue=1.5ms idle=1377.6ms
+INSERT INTO "authors" ("first_name","last_name","inserted_at","updated_at") VALUES ($1,$2,$3,$4) RETURNING "id" ["Dave", "Thomas", ~N[2020-05-27 08:35:29], ~N[2020-05-27 08:35:29]]
+{:ok,
+ %Bookstore.Store.Author{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+   first_name: "Dave",
+   id: 1,
+   inserted_at: ~N[2020-05-27 08:35:29],
+   last_name: "Thomas",
+   twitter_account: nil,
+   updated_at: ~N[2020-05-27 08:35:29]
+ }}
+iex(3)&gt; Store.create_author(%{first_name: "Dave", last_name: "Thomas"}) <i class="conum" data-value="4"></i><b>(4)</b>
+[debug] QUERY ERROR db=9.1ms queue=1.3ms idle=1548.4ms
+INSERT INTO "authors" ("first_name","last_name","inserted_at","updated_at") VALUES ($1,$2,$3,$4) RETURNING "id" ["Dave", "Thomas", ~N[2020-05-27 08:35:31], ~N[2020-05-27 08:35:31]]
+{:error,
+ #Ecto.Changeset&lt;
+   action: :insert,
+   changes: %{first_name: "Dave", last_name: "Thomas"},
+   errors: [
+     first_name: {"has already been taken",
+      [
+        constraint: :unique,
+        constraint_name: "authors_first_name_last_name_index"
+      ]}
+   ],
+   data: #Bookstore.Store.Author&lt;&gt;,
+   valid?: false
+ &gt;}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Reset our database.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set a <code>Bookstore.Store</code> alias to saves us some precious time to type the command.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The first Dave Thomas is created.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>A second Dave Thomas can not be created.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Here&#8217;s a slightly different approach for those of you who say that an error for
+<code>:first_name</code> is not ideal.</p>
+</div>
+<div class="listingblock">
+<div class="title">priv/repo/migrations/20200527071855_add_full_name_index.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Repo.Migrations.AddFullNameIndex do
+  use Ecto.Migration
+
+  def change do
+    create unique_index(:authors, [:first_name, :last_name], name: :full_name) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We tell Ecto which name the index should have.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/author.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def changeset(author, attrs) do
+    author
+    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account])
+    |&gt; validate_required([:last_name])
+    |&gt; validate_length(:first_name, max: 255)
+    |&gt; validate_length(:last_name, max: 255)
+    |&gt; validate_length(:twitter_account, max: 15)
+    |&gt; unique_constraint(:twitter_account)
+    |&gt; unique_constraint(:full_name, name: :full_name) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The unique_constraint uses <code>:full_name</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(3)&gt; Bookstore.Store.create_author(%{first_name: "Dave", last_name: "Thomas"})
+[debug] QUERY ERROR db=2.1ms queue=0.7ms idle=1.5e3ms
+INSERT INTO "authors" ("first_name","last_name","inserted_at","updated_at") VALUES ($1,$2,$3,$4) RETURNING "id" ["Dave", "Thomas", ~N[2020-05-27 11:19:42], ~N[2020-05-27 11:19:42]]
+{:error,
+ #Ecto.Changeset&lt;
+   action: :insert,
+   changes: %{first_name: "Dave", last_name: "Thomas"},
+   errors: [
+     full_name: {"has already been taken",
+      [constraint: :unique, constraint_name: "full_name"]} <i class="conum" data-value="1"></i><b>(1)</b>
+   ],
+   data: #Bookstore.Store.Author&lt;&gt;,
+   valid?: false
+ &gt;}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We get an error for <code>full_name</code>.</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-seeds"><a class="anchor" href="#ecto-seeds"></a>Seeds</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Often you need the database prefilled with data for your application. That&#8217;s
+what seeds are for. By default, they are in the file <code>priv/repo/seeds.exs</code>. For
+our bookstore we can work with these seeds:</p>
+</div>
+<div class="listingblock">
+<div class="title">priv/repo/seeds.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">alias Bookstore.Store
+
+Store.create_author(%{
+  first_name: "Dave",
+  last_name: "Thomas",
+  twitter_account: "pragdave"
+})
+Store.create_author(%{
+  first_name: "James",
+  last_name: "Gray",
+  twitter_account: "jeg2"
+})
+Store.create_author(%{
+  first_name: "Ulisses",
+  last_name: "Almeida",
+  twitter_account: "ulissesalmeida"
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To populate the database we call.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">$ mix run priv/repo/seeds.exs
+[debug] QUERY ERROR db=11.1ms queue=1.1ms idle=5.3ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["Dave", "Thomas", "pragdave", ~N[2020-05-27 11:47:40], ~N[2020-05-27 11:47:40]]
+[debug] QUERY OK db=1.9ms queue=1.4ms idle=36.1ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["James", "Gray", "jeg2", ~N[2020-05-27 11:47:40], ~N[2020-05-27 11:47:40]]
+[debug] QUERY OK db=1.0ms queue=0.7ms idle=39.8ms
+INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at","updated_at") VALUES ($1,$2,$3,$4,$5) RETURNING "id" ["Ulisses", "Almeida", "ulissesalmeida", ~N[2020-05-27 11:47:40], ~N[2020-05-27 11:47:40]]</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+During development, the command <code>mix ecto.reset</code> is often very useful. It resets the database (drop, create and migrate) and runs the seeds.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-list"><a class="anchor" href="#ecto-list"></a>Return all Entries of a Table</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The generated <code>Bookstore.Store</code> offers a <code>list_authors</code> function which simply
+returns a list of all authors in the table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">$ iex -S mix phx.server
+[...]
+iex(2)&gt; Bookstore.Store.list_authors
+[debug] QUERY OK source="authors" db=11.5ms decode=1.3ms queue=1.2ms idle=889.7ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 []
+[
+  %Bookstore.Store.Author{
+    __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+    first_name: "Dave",
+    id: 1,
+    inserted_at: ~N[2020-05-27 11:48:17],
+    last_name: "Thomas",
+    twitter_account: "pragdave",
+    updated_at: ~N[2020-05-27 11:48:17]
+  },
+  %Bookstore.Store.Author{
+    __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+    first_name: "James",
+    id: 2,
+    inserted_at: ~N[2020-05-27 11:48:17],
+    last_name: "Gray",
+    twitter_account: "jeg2",
+    updated_at: ~N[2020-05-27 11:48:17]
+  },
+  %Bookstore.Store.Author{
+    __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+    first_name: "Ulisses",
+    id: 3,
+    inserted_at: ~N[2020-05-27 11:48:17],
+    last_name: "Almeida",
+    twitter_account: "ulissesalmeida",
+    updated_at: ~N[2020-05-27 11:48:17]
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use all the mechanisms of a list with this result:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(2)&gt; authors = Bookstore.Store.list_authors
+[...]
+iex(3)&gt; [first_author | _] = authors <i class="conum" data-value="1"></i><b>(1)</b>
+[...]
+iex(4)&gt; first_author
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-05-27 11:48:17],
+  last_name: "Thomas",
+  twitter_account: "pragdave",
+  updated_at: ~N[2020-05-27 11:48:17]
+}
+iex(5)&gt; for author &lt;- authors do
+...(5)&gt; IO.puts author.last_name
+...(5)&gt; end
+Thomas
+Gray
+Almeida
+[:ok, :ok, :ok]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>With pattern matching we take the first item of the list (the head) and assign it to <code>first_author</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-get"><a class="anchor" href="#ecto-get"></a>Fetch one Entry of a Table by ID</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you know the <code>id</code> an dataset and you want to fetch it use <code>get_author!/1</code> which got generated in the <code>Bookstore.Store</code> module. Let me first show you how to use it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(2)&gt; Bookstore.Store.get_author!(1)
+[debug] QUERY OK source="authors" db=16.1ms decode=1.5ms queue=6.3ms idle=1543.4ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."id" = $1) [1]
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-05-27 11:48:17],
+  last_name: "Thomas",
+  twitter_account: "pragdave",
+  updated_at: ~N[2020-05-27 11:48:17]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And here is the concise code of it:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Store do
+[...]
+  alias Bookstore.Repo
+  alias Bookstore.Store.Author
+
+[...]
+  def get_author!(id), do: Repo.get!(Author, id)
+[...]</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+One can argue that <code>get_author!(id)</code> is not easier/better than <code>Repo.get!(Author, id)</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Functions which end with a <code>!</code> (exclamation point) raise an exception if something goes wrong. Let me show you this with <code>get/2</code> and <code>get!/2</code> for an <code>id</code> we don&#8217;t have in our table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(5)&gt; Repo.get(Author, 10000) <i class="conum" data-value="1"></i><b>(1)</b>
+nil
+[debug] QUERY OK source="authors" db=3.7ms idle=132.4ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."id" = $1) [10000]
+iex(6)&gt; Repo.get!(Author, 10000) <i class="conum" data-value="2"></i><b>(2)</b>
+[debug] QUERY OK source="authors" db=3.6ms idle=1004.2ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."id" = $1) [10000]
+** (Ecto.NoResultsError) expected at least one result but got none in query:
+
+from a0 in Bookstore.Store.Author,
+  where: a0.id == ^10000
+
+    (ecto 3.4.4) lib/ecto/repo/queryable.ex:122: Ecto.Repo.Queryable.one!/3</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Nothing happens. The ID 10000 doesn&#8217;t exist in the table. The function returns <code>nil</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>All hell breaks loose. As dramatic as an exception sounds, it is often the better way because it will result in a 404 page for your web application. It&#8217;s easier to catch bugs, and you can be sure not to display something wrong.</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecto-update"><a class="anchor" href="#ecto-update"></a>Update an Entry</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you want to change a dataset, you&#8217;d have to assign it to a variable first. Assuming
+we want to update the <code>twitter_account</code> or the dataset with the <code>id</code> 1 with nil we&#8217;d do the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">$ iex -S mix phx.server
+[...]
+iex(2)&gt; alias Bookstore.Store <i class="conum" data-value="1"></i><b>(1)</b>
+Bookstore.Store
+iex(3)&gt; alias Bookstore.Store.Author
+Bookstore.Store.Author
+iex(4)&gt; author = Store.get_author!(1) <i class="conum" data-value="2"></i><b>(2)</b>
+[debug] QUERY OK source="authors" db=8.3ms decode=1.1ms queue=0.9ms idle=1955.5ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."id" = $1) [1]
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-05-27 11:48:17],
+  last_name: "Thomas",
+  twitter_account: "pragdave",
+  updated_at: ~N[2020-05-27 11:48:17]
+}
+iex(5)&gt; Store.update_author(author, %{twitter_account: nil}) <i class="conum" data-value="3"></i><b>(3)</b>
+[debug] QUERY OK db=2.2ms queue=3.6ms idle=1569.2ms
+UPDATE "authors" SET "twitter_account" = $1, "updated_at" = $2 WHERE "id" = $3 [nil, ~N[2020-05-28 10:54:55], 1]
+{:ok,
+ %Bookstore.Store.Author{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+   first_name: "Dave",
+   id: 1,
+   inserted_at: ~N[2020-05-27 11:48:17],
+   last_name: "Thomas",
+   twitter_account: nil,
+   updated_at: ~N[2020-05-28 10:54:55]
+ }}
+iex(6)&gt; Store.get_author!(1) <i class="conum" data-value="4"></i><b>(4)</b>
+[debug] QUERY OK source="authors" db=4.8ms idle=659.0ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."id" = $1) [1]
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-05-27 11:48:17],
+  last_name: "Thomas",
+  twitter_account: nil,
+  updated_at: ~N[2020-05-28 10:54:55]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We set these aliases to make our lives a bit easier. No technical reason.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We fetch the dataset with the ID 1 and assign it to the variable <code>author</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>update_author/2</code> updates the <code>twitter_account</code> field in the database. You can read the SQL command.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Just checking if it worked.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_accociations"><a class="anchor" href="#_accociations"></a>Accociations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://hexdocs.pm/ecto/2.2.11/associations.html" class="bare">https://hexdocs.pm/ecto/2.2.11/associations.html</a></p>
+</div>
+<div class="paragraph">
+<p><mark>Work in progess</mark></p>
 </div>
 </div>
 </div>
@@ -463,7 +1625,7 @@ end</code></pre>
 </div>
 <footer class="footer">
   <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
-  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+  <p>This webpage was built with <a href="https://antora.org">Antora</a>.</p>
 </footer>
 <script src="../../antora-assets/js/site.js"></script>
 <script async src="../../antora-assets/js/vendor/highlight.js"></script>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Router :: Phoenix Beginner&#x27;s Guide</title>
-    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/router.html">
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/1.5/phoenix/1.5/router.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../antora-assets/css/site.css">
     <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
@@ -164,6 +164,39 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html">Ecto Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-database">Create a Database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-table">Create a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-dataset">Create a Dataset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html#validations">Validations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ecto-basics.html#ecto-uniqueness">Uniqueness Validations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-seeds">Seeds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-list">Return all Entries of a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-get">Return one Entry of a Table by ID</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html#training">Remote Training</a>
   </li>
 </ul>
@@ -200,6 +233,7 @@
     <li><a href="router.html">Router</a></li>
   </ul>
 </nav>
+  <div class="edit-this-page"><a href="file:///Users/stefan/Github/phoenix-book/modules/ROOT/pages/router.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
@@ -225,7 +259,7 @@ $ cd demo</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We don&#8217;t include the <a href="https://hexdocs.pm/phoenix_live_dashboard/Phoenix.LiveDashboard.html">Phoenix.LiveDashboard</a> (--no-dashboard) to keep our router setup tidy. Otherwise a million routes would leave just to the real-time performance monitoring dashboard which is not a topic in this chapter.</td>
+<td>We don&#8217;t include the <a href="https://hexdocs.pm/phoenix_live_dashboard/Phoenix.LiveDashboard.html">Phoenix.LiveDashboard</a> (--no-dashboard) to keep our router setup tidy. Otherwise, a million routes would leave just to the real-time performance monitoring dashboard, which is not a topic in this chapter.</td>
 </tr>
 </table>
 </div>
@@ -259,7 +293,7 @@ end</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For us relevant is just the last <code>/</code> part.</p>
+<p>For us, relevant is just the last <code>/</code> part.</p>
 </div>
 </div>
 </div>
@@ -297,7 +331,7 @@ websocket  WS   /socket/websocket    DemoWeb.UserSocket <i class="conum" data-va
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In more complex applications with a dashboard the output of <code>mix phx.routes</code> gets quite a bit longer. Then <code>mix phx.routes | grep "whatever-you-search"</code> becomes a very handy tool on the command line.
+In more complex applications with a dashboard, the output of <code>mix phx.routes</code> gets quite a bit longer. Then <code>mix phx.routes | grep "whatever-you-search"</code> becomes a convenient tool on the command line.
 </td>
 </tr>
 </table>
@@ -308,11 +342,10 @@ In more complex applications with a dashboard the output of <code>mix phx.routes
 <h2 id="router-params"><a class="anchor" href="#router-params"></a>Params</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Often you have some sort of ID in the URL or other params you need to access in your application. And sometimes you want that to be handled in the router.</p>
+<p>Often you have some sort of ID in the URL or other params you need to access in your application. And sometimes you want that to handle that in the router.</p>
 </div>
 <div class="paragraph">
-<p>We create a product view in our <code>demo</code> application to show how it&#8217;s working. We
-have to touch/create three files to make this happen:</p>
+<p>We create a product view of our <code>demo</code> application to show how it&#8217;s working. We have to touch/create three files to make this happen:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/router.ex</div>
@@ -405,8 +438,7 @@ log entry:</p>
 <div class="sect2">
 <h3 id="router-query-string"><a class="anchor" href="#router-query-string"></a>Query String</h3>
 <div class="paragraph">
-<p>Query Strings don&#8217;t belong in the router but are handled very similar to the
-above params in the controller.</p>
+<p>Query Strings don&#8217;t belong in the router but are handled very similarly to the above params in the controller.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s assume we want to add the query string "color=blue" to our product request:
@@ -433,7 +465,7 @@ above params in the controller.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Without doing anything in the router the query string parameter <code>color</code> finds it&#8217;s way into the controller. But we have to change the the controller a bit:</p>
+<p>Without doing anything in the router, the query string parameter <code>color</code> finds it&#8217;s way into the controller. But we have to change the controller a bit:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/controllers/product_controller.ex</div>
@@ -479,7 +511,7 @@ end</code></pre>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The order of the <code>show/2</code> functions in the controller is very important. If we use the other order for this specific example the <code>%{"id" &#8658; id, "color" &#8658; color}</code> would never match because <code>%{"id" &#8658; id}</code> always matches first if it&#8217;s the first function.
+The order of the <code>show/2</code> functions in the controller is significant. If we use the other order for this specific example the <code>%{"id" &#8658; id, "color" &#8658; color}</code> would never match because <code>%{"id" &#8658; id}</code> always matches first if it&#8217;s the first function.
 </td>
 </tr>
 </table>
@@ -580,8 +612,8 @@ product_path  GET  /products/:id                          DemoWeb.ProductControl
 <h2 id="router-multilevel-paths"><a class="anchor" href="#router-multilevel-paths"></a>Multilevel Paths</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the previous easy code examples we always put the routes on the first level.
-But of course you can use sublevel paths too. Here&#8217;s an example:</p>
+<p>In the previous easy code examples, we always put the routes on the first level.
+But of course, you can use sublevel paths too. Here&#8217;s an example:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/router.ex</div>
@@ -611,7 +643,7 @@ page_path  GET  /an-other-test/abc/def    DemoWeb.PageController :index</code></
 <h2 id="router-wildcards"><a class="anchor" href="#router-wildcards"></a>Wildcards</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You don&#8217;t have to define the route excactly. You can use the <code>*</code> wildcard too.</p>
+<p>You don&#8217;t have to define the route precisely. You can use the <code>*</code> wildcard too.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/router.ex</div>
@@ -656,7 +688,7 @@ end
 <h2 id="_misc"><a class="anchor" href="#_misc"></a>Misc</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>No need to replicate the official documentation in this chapter. By now you understand the concept of <code>Phoenix.Router</code>. You&#8217;ll find solutions for all the special cases which are not handled in this chapter in the official documentation at <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html" class="bare">https://hexdocs.pm/phoenix/Phoenix.Router.html</a></p>
+<p>There&#8217;s no need to replicate the official documentation in this chapter. By now, you understand the concept of <code>Phoenix.Router</code>. You&#8217;ll find solutions for all the exceptional cases which are not handled in this chapter in the official documentation at <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html" class="bare">https://hexdocs.pm/phoenix/Phoenix.Router.html</a></p>
 </div>
 </div>
 </div>
@@ -669,7 +701,7 @@ end
 </div>
 <footer class="footer">
   <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
-  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+  <p>This webpage was built with <a href="https://antora.org">Antora</a>.</p>
 </footer>
 <script src="../../antora-assets/js/site.js"></script>
 <script async src="../../antora-assets/js/vendor/highlight.js"></script>

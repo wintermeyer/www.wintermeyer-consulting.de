@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Phoenix&#8217;s Basics :: Phoenix Beginner&#x27;s Guide</title>
-    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/phoenix-basics.html">
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/1.5/phoenix/1.5/phoenix-basics.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../antora-assets/css/site.css">
     <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
@@ -164,6 +164,39 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html">Ecto Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-database">Create a Database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-table">Create a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-dataset">Create a Dataset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html#validations">Validations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ecto-basics.html#ecto-uniqueness">Uniqueness Validations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-seeds">Seeds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-list">Return all Entries of a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-get">Return one Entry of a Table by ID</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html#training">Remote Training</a>
   </li>
 </ul>
@@ -200,6 +233,7 @@
     <li><a href="phoenix-basics.html">Phoenix Basics</a></li>
   </ul>
 </nav>
+  <div class="edit-this-page"><a href="file:///Users/stefan/Github/phoenix-book/modules/ROOT/pages/phoenix-basics.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
@@ -211,12 +245,12 @@
 <a href="https://en.wikipedia.org/wiki/Model–view–controller">Model-View-Controller</a> (MVC)
 architecture. If you are not familiar with that: Just follow my lead. MVC is
 just a set of rules of what goes where so that everybody knows where stuff is.
-You are not forced to follow it but it makes live easier if you do. After a
-couple of examples you&#8217;ll get a feeling for it. Same goes for the directory
+No one expects you to follow it, but it makes life easier if you do. After a
+couple of examples, you&#8217;ll get a feeling for it. Same goes for the directory
 structure and the file names.</p>
 </div>
 <div class="paragraph">
-<p>In this chapter I&#8217;ll show you how you can create simple webpages which have some
+<p>In this chapter, I&#8217;ll show you how you can create simple webpages which have some
 programming logic. But we will not touch the database yet. Step by step!</p>
 </div>
 <div class="admonitionblock important">
@@ -260,7 +294,7 @@ In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <
 <h2 id="_development_environment"><a class="anchor" href="#_development_environment"></a>Development Environment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default Phoenix offers three different environments:</p>
+<p>By default, Phoenix offers three different environments:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -276,7 +310,7 @@ In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <
 </ul>
 </div>
 <div class="paragraph">
-<p>In this chapter we are only going to use the development environment. It offers some pleasantries which make the life of a developer easier (e.g. more verbose error messages and auto reload after code changes).</p>
+<p>In this chapter, we are only going to use the development environment. It offers some pleasantries which make the life of a developer easier (e.g. more verbose error messages and auto-reload after code changes).</p>
 </div>
 </div>
 </div>
@@ -284,8 +318,7 @@ In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <
 <h2 id="the-base-setup"><a class="anchor" href="#the-base-setup"></a>The Base Setup</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The base of every Phoenix application is created with the command
-<code>mix phx.new application_name</code> which generates all needed files and the
+<p>The <code>mix phx.new application_name</code> command creates the foundation of every Phoenix application which generates all needed files and the
 directory structure.</p>
 </div>
 <div class="paragraph">
@@ -316,16 +349,16 @@ You can also run your app inside IEx (Interactive Elixir) as:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>'--no-ecto' creates a fresh application without the Ecto (database connector) part. We don&#8217;t need a database for the basic examples.</td>
+<td>'--no-ecto' creates a new application without the Ecto (database connector) part. We don&#8217;t need a database for the basic examples.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>You always want to press <code>Y</code> here. And yes, it sometimes takes for ever.</td>
+<td>You always want to press <code>Y</code> here. And yes, it sometimes takes forever.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>After that we <code>cd demo</code> into the new directory and fire up the Phoenix server
+<p>After that, we <code>cd demo</code> into the new directory and fire up the Phoenix server
 with <code>mix phx.server</code></p>
 </div>
 <div class="listingblock">
@@ -352,12 +385,12 @@ Version: webpack 4.41.5
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The URL which service the development website: <a href="http://localhost:4000" class="bare">http://localhost:4000</a></td>
+<td>The URL which serves the development website: <a href="http://localhost:4000" class="bare">http://localhost:4000</a></td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Please open the URL <a href="http://localhost:4000" class="bare">http://localhost:4000</a> in your webbrowser:</p>
+<p>Please open the URL <a href="http://localhost:4000" class="bare">http://localhost:4000</a> in your web browser:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -392,12 +425,11 @@ Version: webpack 4.41.5
 <div class="content">
 The log says that the request was answered in 426µs. WOW!
 <a href="https://en.wikipedia.org/wiki/Microsecond">Microseconds</a>! That is on my old
-development laptop. That must be the famous speed of Phoenix/Elixir everybody is
-talking about.
+development laptop. That must be the great speed of Phoenix/Elixir everybody is talking about.
 </div>
 </div>
 <div class="paragraph">
-<p>What we see is the default <code>index.html.eex</code> page. The file extension <code>eex</code> stands for <a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> and means that this is a mix of static HTML and dynamic Elixir code which generated HTML. These files are called templates and are located in the <code>lib/demo_web/templates/</code> directory. A fresh Phoenix application has two templates:</p>
+<p>What we see is the default <code>index.html.eex</code> page. The file extension <code>eex</code> stands for <a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> and means that this is a mix of static HTML and dynamic Elixir code which generated HTML. These files are called templates and are located in the <code>lib/demo_web/templates/</code> directory. A new Phoenix application has two templates:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -416,8 +448,7 @@ lib/demo_web/templates/
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-It is no coincedence that the subdirectory is called <code>demo_web</code>. Because
-we named our application <code>demo</code> that name will be used at multiple places.
+It is no coincidence that the subdirectory is called <code>demo_web</code>. Because we named our application <code>demo</code> that name will be used in multiple places.
 </td>
 </tr>
 </table>
@@ -544,15 +575,14 @@ we named our application <code>demo</code> that name will be used at multiple pl
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-<a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> (<code>.eex</code>) uses the <code>&lt;% %&gt;</code> syntax to embedd Elixir code in HTML. <code>&lt;% %&gt;</code> runs the Elixir code within. <code>&lt;%= %&gt;</code> runs the Elixir code and includes the result of that as HTML in the template.
+<a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> (<code>.eex</code>) uses the <code>&lt;% %&gt;</code> syntax to embed Elixir code in HTML. <code>&lt;% %&gt;</code> runs the Elixir code within. <code>&lt;%= %&gt;</code> runs the Elixir code and includes the result of that as HTML in the template.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>Feel free to change the content of <code>app.html.eex</code> and <code>index.html.eex</code> while
-having <a href="http://localhost:4000" class="bare">http://localhost:4000</a> opened in a browser. In development mode each save
-of those files triggers a reload of the page in the browser.</p>
+having <a href="http://localhost:4000" class="bare">http://localhost:4000</a> opened in a browser. In development mode, each save of those files triggers a reload of the page in the browser.</p>
 </div>
 </div>
 </div>
@@ -560,7 +590,7 @@ of those files triggers a reload of the page in the browser.</p>
 <h2 id="hello-world"><a class="anchor" href="#hello-world"></a>Hello World!</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The aim of this section is to create a new dynamic page which is available at
+<p>This section aims to create a new dynamic page which is available at
 <a href="http://localhost:4000/hello" class="bare">http://localhost:4000/hello</a> and displays the text "Hello World!". We start with
 the base setup:</p>
 </div>
@@ -649,9 +679,9 @@ source code into it:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_hello_world_with_its_own_controller"><a class="anchor" href="#_hello_world_with_its_own_controller"></a>Hello World with it&#8217;s own controller</h3>
+<h3 id="_hello_world_with_its_controller"><a class="anchor" href="#_hello_world_with_its_controller"></a>Hello World with its controller</h3>
 <div class="paragraph">
-<p>In the last section we added the <code>:hello</code> action to the already existing <code>PageController</code>. But in many case it makes sense to create a seperate controller. Let&#8217;s do that so you know how to.</p>
+<p>In the last section, we added the <code>:hello</code> action to the already existing <code>PageController</code>. But in many cases, it makes sense to create a separate controller. Let&#8217;s do that, so you know how to.</p>
 </div>
 <div class="paragraph">
 <p>We start with changing the route:</p>
@@ -678,7 +708,7 @@ source code into it:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Yes, <code>ExampleController</code> is not a candiate for best controller name of the year. Good catch!</td>
+<td>Yes, <code>ExampleController</code> is not a candidate for best controller name of the year. Good catch!</td>
 </tr>
 </table>
 </div>
@@ -733,7 +763,7 @@ end</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>A reload and we get our final error message:</p>
+<p>A reload, and we get our final error message:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -761,7 +791,7 @@ end</code></pre>
 <div class="sect2">
 <h3 id="_checklist_for_a_new_page"><a class="anchor" href="#_checklist_for_a_new_page"></a>Checklist for a new page</h3>
 <div class="paragraph">
-<p>Everytime you want to create a new action in a new controller you have to take care of these steps:</p>
+<p>Every time you want to create a new action in a new controller, you have to take care of these steps:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -831,7 +861,7 @@ lib/demo_web/views
 <p>According to the
 <a href="https://en.wikipedia.org/wiki/Model–view–controller">Model-View-Controller</a> (MVC)
 architecture we do our programming stuff in the controller and use the template
-just to display the results. Therefor we need a mechanism to transport this data
+just to display the results. Therefore we need a mechanism to transport this data
 from the controller into the template. That mechanism is the <code>conn</code> struct. Let&#8217;s have a look into it:</p>
 </div>
 <div class="listingblock">
@@ -1172,7 +1202,7 @@ $ mix phx.server</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>First we have to set the routes for ping and pong:</p>
+<p>First, we have to set the routes for ping and pong:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/game_web/router.ex</div>
@@ -1253,10 +1283,9 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>But for Ping-Pong we need a <code>href</code> link between both pages. We could add
+<p>But for Ping-Pong, we need a <code>href</code> link between both pages. We could add
 one manually with <code>&lt;a href="/pong"&gt;Pong&lt;/a&gt;</code> but that would not be very clean.
-Since we have a router in Phoenix we can use that to create clean routes for
-our links.</p>
+Since we have a router in Phoenix, we can use that to create clean routes for our links.</p>
 </div>
 <div class="paragraph">
 <p>We either have to stop the Phoenix server (<code>CTRL-C</code> twice!) or open a new terminal with the same direction to run a <code>mix phx.routes</code> which returns all known routes.
@@ -1279,7 +1308,7 @@ Because we are only interested in the routes for <code>PageController</code> we 
 </table>
 </div>
 <div class="paragraph">
-<p>With that information we can use the
+<p>With that information, we can use the
 <a href="https://hexdocs.pm/phoenix_html/Phoenix.HTML.Link.html">link helper</a> to create that link:
 </p>
 </div>
@@ -1368,9 +1397,8 @@ You&#8217;ll find the syntax for links with specific params or queries in the
 <p></p>
 </div>
 <div class="paragraph">
-<p>Of course any webapplication doesn&#8217;t only have dynamic webpages but also
-some static files. The best example would be a <code>robots.txt`or a `favicon.ico</code>
-file. There is the <code>assets/static/</code> directory where we can put those files.
+<p>Of course, any web application doesn&#8217;t only have dynamic webpages but also
+some static files. The best example would be a <code>robots.txt</code> or a <code>favicon.ico</code> file. There is the <code>assets/static/</code> directory where we can put those files.
 By default the following files are already in that directory:</p>
 </div>
 <div class="listingblock">
@@ -1384,14 +1412,12 @@ assets/static/
 </div>
 </div>
 <div class="paragraph">
-<p>They get delivered by the production webserver without any additional
-interaction with the Phoenix application. In development there is obviously some
-interaction but that has a small footprint.</p>
+<p>They get delivered by the production web server without any additional
+interaction with the Phoenix application. In development, there is some
+interaction, but that has a small footprint.</p>
 </div>
 <div class="paragraph">
-<p>But adding a file to that directory is not enough. You have to whitelist it
-otherwise Phoenix doesn&#8217;t know what you want. Assuming we add a <code>ads.txt</code> file
-into the <code>assets/static/</code> directory. Than we have to update the
+<p>But adding a file to that directory is not enough. You have to whitelist it else, Phoenix won&#8217;t know what you want. Assuming we add an <code>ads.txt</code> file into the <code>assets/static/</code> directory. Then we have to update the
 <code>lib/hello_world_web/endpoint.ex</code> file accordingly:</p>
 </div>
 <div class="listingblock">
@@ -1419,7 +1445,7 @@ plug Plug.Static,
 <div class="sect2">
 <h3 id="images"><a class="anchor" href="#images"></a>Images</h3>
 <div class="paragraph">
-<p>Images are a special case of static files. They can be stored in the
+<p>Images are a particular case of static files. They can be stored in the
 <code>assets/static/images/</code> directory which is by default whitelisted to include
 static files.</p>
 </div>
@@ -1443,9 +1469,7 @@ static files.</p>
 <h2 id="css"><a class="anchor" href="#css"></a>CSS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As written in the <a href="index.html#preface" class="page">Preface</a>: We do not waste time in this
-book with making our webpages pretty. But in case you want to add some CSS into
-your demo application you can do so by consulting the file <code>assets/css/app.scss</code></p>
+<p>As written in the <a href="index.html#preface" class="page">Preface</a>: We&#8217;ll not waste time in this book by making our webpages pretty. But in case you want to add some CSS into your demo application, you can do so by referencing the <code>assets/css/app.scss</code> file.</p>
 </div>
 </div>
 </div>
@@ -1458,7 +1482,7 @@ your demo application you can do so by consulting the file <code>assets/css/app.
 </div>
 <footer class="footer">
   <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
-  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+  <p>This webpage was built with <a href="https://antora.org">Antora</a>.</p>
 </footer>
 <script src="../../antora-assets/js/site.js"></script>
 <script async src="../../antora-assets/js/vendor/highlight.js"></script>

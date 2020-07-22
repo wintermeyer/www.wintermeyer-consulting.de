@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Elixir Introduction :: Phoenix Beginner&#x27;s Guide</title>
-    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/phoenix/1.5/elixir-introduction.html">
+    <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/1.5/phoenix/1.5/elixir-introduction.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../antora-assets/css/site.css">
     <link rel="stylesheet" href="../../antora-assets/css/site-extra.css">
@@ -164,6 +164,39 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html">Ecto Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-database">Create a Database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-table">Create a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-create-dataset">Create a Dataset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="ecto-basics.html#validations">Validations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="ecto-basics.html#ecto-uniqueness">Uniqueness Validations</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-seeds">Seeds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-list">Return all Entries of a Table</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-get">Return one Entry of a Table by ID</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="index.html#training">Remote Training</a>
   </li>
 </ul>
@@ -200,6 +233,7 @@
     <li><a href="elixir-introduction.html">Elixir Introduction</a></li>
   </ul>
 </nav>
+  <div class="edit-this-page"><a href="file:///Users/stefan/Github/phoenix-book/modules/ROOT/pages/elixir-introduction.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
@@ -207,12 +241,11 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter will teach you the absolut basics of Elixir. Just enough to become
-productive with Phoenix. There is a lot more to learn and to understand about
-Elixir.</p>
+<p>This chapter will teach you the absolute basics of Elixir, just enough for you
+to become productive with Phoenix.</p>
 </div>
 <div class="paragraph">
-<p>Buckle up. It is going to be a bumpy and sometimes boring ride. It&#8217;s tough to
+<p>Buckle up. It is going to be a bumpy and sometimes dull ride. It&#8217;s tough to
 teach all the needed Elixir knowledge in just one chapter.</p>
 </div>
 <div class="admonitionblock important">
@@ -245,9 +278,9 @@ Elixir 1.10.2 (compiled with Erlang/OTP 21)</code></pre>
 <h2 id="elixir-introduction-iex"><a class="anchor" href="#elixir-introduction-iex"></a>Elixir&#8217;s Interactive Shell (iex)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Your Elixir installation comes with an Elixir&#8217;s Interactive Shell (<code>iex</code>) which we
-will use for most examples in this chapter. Please go to your command line and
-fire it up:
+<p>Your Elixir installation comes with Elixir&#8217;s Interactive Shell (<code>iex</code>), which
+we will use for most of the examples in this chapter. Please go to your command
+line and fire it up:
 </p>
 </div>
 <div class="listingblock">
@@ -274,17 +307,17 @@ iex(1)&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-You have to press <code>CTRL-C</code> twice(!) to stop the <code>iex</code>.
+You have to press <code>CTRL-C</code> twice (or <code>CTRL-\</code> once) to exit <code>iex</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>The <code>iex</code> will be your trusted friend during the work with this book and later
-while working with Phoenix. While programming in development mode you can use it
-to dive into the core of your Phoenix application. You can do so too while
-being in production mode but that is the equivalent to an open heard surgery. It can
-be a life saver but you really need to know what you are doing.</p>
+while working with Phoenix. While programming in development mode, you can use
+it for diving into the core of your Phoenix application. You can do so too while
+being in production mode but that is the equivalent to open-heart surgery. It
+can be a lifesaver, but you need to know what you are doing.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -293,7 +326,7 @@ be a life saver but you really need to know what you are doing.</p>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The iex offers autocomplete when possible. So when in doubt press <code>TAB</code>.
+iex offers autocomplete when possible. So when in doubt press <code>TAB</code>.
 </td>
 </tr>
 </table>
@@ -305,15 +338,16 @@ The iex offers autocomplete when possible. So when in doubt press <code>TAB</cod
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The iex offers a history too. To recycle the last command just press on the arrow-up key.
+iex offers a history too. To access the last command, just press on the
+arrow-up key.
 </td>
 </tr>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_help_in_the_iex"><a class="anchor" href="#_help_in_the_iex"></a>Help in the iex</h3>
+<h3 id="_help_in_the_iex_shell"><a class="anchor" href="#_help_in_the_iex_shell"></a>Help in the iex shell</h3>
 <div class="paragraph">
-<p>The iex has a build in help function <code>h/1</code> which gives you access to some
+<p>iex has a built-in help function <code>h/1</code> which gives you access to some
 basic documentation:</p>
 </div>
 <div class="listingblock">
@@ -326,7 +360,7 @@ basic documentation:</p>
 
 guard: true
 
-Returns the length of list.
+Returns the length of the list.
 
 Allowed in guard tests. Inlined by the compiler.
 
@@ -335,18 +369,6 @@ Allowed in guard tests. Inlined by the compiler.
     iex&gt; length([1, 2, 3, 4, 5, 6, 7, 8, 9])
     9</code></pre>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_run_the_code_examples_not_in_iex"><a class="anchor" href="#_run_the_code_examples_not_in_iex"></a>Run the code examples not in iex</h3>
-<div class="paragraph">
-<p>If you prefer to run all code examples not in the <code>iex</code> you can do so. Just put
-them in a file with the ending <code>.exs</code> and call that file from the command file
-with <code>elixir example.exs</code>.</p>
-</div>
-<div class="paragraph">
-<p>When tackling deployment I&#8217;ll discuss how to compile the code.
-<code>elixir example.exs</code> does not compile it.</p>
 </div>
 </div>
 </div>
@@ -369,8 +391,12 @@ Hello world!
 <p></p>
 </div>
 <div class="paragraph">
-<p>Strings are always encapsuled within double quotes. In case you need to have
-double quotes within a string you have to escape them with backslashes:</p>
+<p>You should always enclose strings within double quotes. If you use single
+quotes, that creates a charlist, which is a different type.</p>
+</div>
+<div class="paragraph">
+<p>In case there are double quotes within a string you have to escape them with
+backslashes:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -387,9 +413,9 @@ BREAK: (a)bort (c)ontinue (p)roc info (i)nfo (l)oaded
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Don&#8217;t be afraid of the <code>BREAK</code> menue. With the first <code>Ctrl+C</code> the <code>iex</code>
+<td>Don&#8217;t be afraid of the <code>BREAK</code> menu. With the first <code>Ctrl+C</code> the <code>iex</code>
 displays this list of choices (the <code>BREAK</code> menu) and with the second <code>Ctrl+C</code>
-you end the <code>iex</code>.
+you end the <code>iex</code> session.
 </td>
 </tr>
 </table>
@@ -400,9 +426,9 @@ you end the <code>iex</code>.
 <h2 id="elixir-introduction-basic-calculations"><a class="anchor" href="#elixir-introduction-basic-calculations"></a>Basic Calculations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We can use the types <code>integer</code> (Integer numbers) and <code>float</code> (Real numbers) to
-do all sorts of calcuations. We can use the usual operators. I&#8217;ll show you a
-couple of examples:</p>
+<p>We can use the types <code>integer</code> (integer numbers) and <code>float</code> (real numbers) to
+do all sorts of calculations. We can use the usual operators (+, -, etc.). Here
+are a few examples:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -419,88 +445,7 @@ iex(3)&gt; 2 - 1
 iex(4)&gt; 10 * 1000000000000000
 10000000000000000
 iex(5)&gt; 23 / 3
-7.666666666666667
-iex(6)&gt;
-BREAK: (a)bort (c)ontinue (p)roc info (i)nfo (l)oaded
-       (v)ersion (k)ill (D)b-tables (d)istribution
-^C</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If it&#8217;s OK with you I&#8217;ll skip the <code>iex</code> and the <code>BREAK</code> part in the rest
-of this chapter. By that we get more real estate for the essential stuff and less trees
-have to die to get the book version printed.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="elixir-introduction-atoms"><a class="anchor" href="#elixir-introduction-atoms"></a>Atoms</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>An atom just consists of it&#8217;s own name. In some other programming languages they
-are called symbols. Atoms start with a <code>:</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; :red
-:red
-iex(2)&gt; :blue
-:blue</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Atom names can be written in snake_case or in CamelCase. But the usual Elixir
-convention is to use snake_case.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_booleans_are_atoms_too"><a class="anchor" href="#_booleans_are_atoms_too"></a>Booleans are atoms too</h3>
-<div class="paragraph">
-<p>Booleans are a good example for the use of atoms. But they are special because
-you don&#8217;t have to prefix them with a <code>:</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; false == :false <i class="conum" data-value="1"></i><b>(1)</b>
-true
-iex(2)&gt; is_atom(false) <i class="conum" data-value="2"></i><b>(2)</b>
-true
-iex(3)&gt; is_boolean(:false) <i class="conum" data-value="3"></i><b>(3)</b>
-true</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We haven&#8217;t talked about logical expressions yet. But you know how '==' works.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The function <code>is_atom()</code> can be used to check if something is an atom.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The function <code>is_boolean()</code> can be used to check if something is a boolean.</td>
-</tr>
-</table>
+7.666666666666667</code></pre>
 </div>
 </div>
 </div>
@@ -509,8 +454,8 @@ true</code></pre>
 <h2 id="elixir-introduction-logical-expressions"><a class="anchor" href="#elixir-introduction-logical-expressions"></a>Logical Expressions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A type <code>boolean</code> can store the values <code>true</code> and <code>false</code>. Together with <code>and</code>,
-<code>or</code> and <code>not</code> those can create expressions:</p>
+<p>A type <code>boolean</code> can store the values <code>true</code> or <code>false</code>. These can be used with
+the operators <code>and</code>, <code>or</code> and <code>not</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -528,8 +473,9 @@ false</code></pre>
 <p></p>
 </div>
 <div class="paragraph">
-<p>The operators <code>and</code>, <code>or</code> and <code>not</code> can only work with boolean values. The operators
-<code>&amp;&amp;</code> (and), <code>||</code> (or) and <code>!</code> (not) basically do the same but are a bit more free spirited and accept <strong>truthy</strong> and <strong>falsy</strong> values. We will get to that later if needed.</p>
+<p>The operators <code>and</code>, <code>or</code> and <code>not</code> can only work with boolean values. The
+operators <code>&amp;&amp;</code> (and), <code>||</code> (or) and <code>!</code> (not) do the same but are a bit more
+free-spirited and accept <strong>truthy</strong> and <strong>falsy</strong> values (false or nil).</p>
 </div>
 </div>
 </div>
@@ -541,7 +487,7 @@ false</code></pre>
 </div>
 <div class="paragraph">
 <p>You already know how variables work from experiences in other programming
-languages. Therefor we can dive right into it. Variable names follow the
+languages. Therefore we can dive right into it. Variable names follow the
 <a href="https://en.wikipedia.org/wiki/Snake_case">snake_case</a> format and start with a
 lower case. Some examples:</p>
 </div>
@@ -564,7 +510,7 @@ iex(3)&gt; area = length * width
 </table>
 </div>
 <div class="paragraph">
-<p>If you start a variable name with a capital error you&#8217;ll get an error:</p>
+<p>If you start a variable name with a capital error you will get an error:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -577,7 +523,7 @@ iex(3)&gt; area = length * width
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>Yes, <code>MatchError</code> is a rather strange error message here. It will make more
-sense later. Binding values in variables is a bit more complicated than it seems
+sense later. Binding values to variables is a bit more complicated than it seems
 right now.</td>
 </tr>
 </table>
@@ -585,466 +531,33 @@ right now.</td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="elixir-introduction-strings"><a class="anchor" href="#elixir-introduction-strings"></a>Strings</h2>
+<h2 id="_modules_and_functions"><a class="anchor" href="#_modules_and_functions"></a>Modules and Functions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p></p>
 </div>
 <div class="paragraph">
-<p>We already used a string in the <a href="#elixir-introduction-hello-world">Hello World</a> example.
-The use is for variables is straight forward:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; first_name = "Stefan" <i class="conum" data-value="1"></i><b>(1)</b>
-"Stefan"
-iex(2)&gt; last_name = "Wintermeyer"
-"Wintermeyer"
-iex(3)&gt; name = first_name &lt;&gt; " " &lt;&gt; last_name <i class="conum" data-value="2"></i><b>(2)</b>
-"Stefan Wintermeyer"
-iex(4)&gt; greeting = "Hello #{first_name}!" <i class="conum" data-value="3"></i><b>(3)</b>
-"Hello Stefan!"
-iex(5)&gt; counter = 23
-23
-iex(6)&gt; "Count: #{counter}" <i class="conum" data-value="4"></i><b>(4)</b>
-"Count: 23"</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We assign the string "Stefan" to the variable with the name <code>first_name</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>&lt;&gt;</code> operator can be used to concatinate strings.
-</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>#{}</code> is Elixir&#8217;s expressive string-interpolation.
-It can be used to inject a variable into a string which is encapsuled
-within double quotes.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Elixir&#8217;s expressive string-interpolation even works with integers.
-String-interpolation is done by the <code>Kernel.to_string/1</code> macro which evokes
-<code>String.Chars</code>. It can handle integers, floats, some lists (later more on lists)
-and atoms (later more on atoms) out of the box.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_anonymous_functions"><a class="anchor" href="#_anonymous_functions"></a>Anonymous Functions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p></p>
+<p>So far, we have looked at basic calculations and types in isolation. However, if
+we want to create an application, we will need to combine these calculations and
+types in a structured way. To see how this is done, we need to look at modules
+and functions.</p>
 </div>
 <div class="paragraph">
-<p>Functions are the method in a functional programming language to handle subprograms.
-Let me show you an example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; greeting = fn name -&gt; "Hello #{name}!" end <i class="conum" data-value="1"></i><b>(1)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(2)&gt; greeting.("Bob") <i class="conum" data-value="2"></i><b>(2)</b>
-"Hello Bob!"
-iex(3)&gt; greeting.("Alice")
-"Hello Alice!"
-iex(4)&gt; square_area = fn(a) -&gt; a * a end <i class="conum" data-value="3"></i><b>(3)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(5)&gt; square_area.(10)
-100</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We create a function and bind it to the variable <code>greeting</code>.
-<div class="ulist">
-<ul>
-<li>
-<p><code>fn</code> tells Elixir that you want to define a function.</p>
-</li>
-<li>
-<p><code>name</code> is a parameter we can use to inject values.</p>
-</li>
-<li>
-<p><code>&#8594;</code> is the operator to indicate the the following expression is the body of the function.</p>
-</li>
-<li>
-<p><code>end</code> indicates the end of the function.</p>
-</li>
-</ul>
-</div></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>We use the <code>.</code> (dot) operator to pass a value to the function.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Feel free to use parentheses: <code>fn(a)</code></td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>These simple functions are called <strong>anonymous functions</strong>. They have no global
-name and must be bound to a variable.</p>
-</div>
-<div class="paragraph">
-<p>Most times anonmous functions are simple one liners. But they don&#8217;t have to be:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; circular_area = fn radius -&gt;
-...(1)&gt;   pi = 3.14159265359
-...(1)&gt;   pi * radius * radius
-...(1)&gt; end
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(2)&gt; circular_area.(3)
-28.274333882310003</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Sometimes it makes sense to create a function without an argument:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; tomorrow = fn -&gt; Date.add(Date.utc_today(), 1) end <i class="conum" data-value="1"></i><b>(1)</b>
-#Function&lt;21.126501267/0 in :erl_eval.expr/5&gt;
-iex(2)&gt; tomorrow.() <i class="conum" data-value="2"></i><b>(2)</b>
-~D[2020-05-07]
-iex(3)&gt; Date.utc_today() <i class="conum" data-value="3"></i><b>(3)</b>
-~D[2020-05-06]
-iex(4)&gt; tomorrow <i class="conum" data-value="4"></i><b>(4)</b>
-#Function&lt;21.126501267/0 in :erl_eval.expr/5&gt;</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Yes, we haven&#8217;t discussed <code>Date.add</code> or <code>Date.utc_today()</code> yet. But you are smart enough to figure out what they do.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Call the function <code>tomorrow</code> without a parameter.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Just double check.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Calling <code>tomorrow</code> without the <code>.</code> (dot) operator will not trigger the function.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Sometimes you need a function with multiple arguments. Those are seperated by commas:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; area = fn a, b -&gt; a * b end <i class="conum" data-value="1"></i><b>(1)</b>
-#Function&lt;13.126501267/2 in :erl_eval.expr/5&gt;
-iex(2)&gt; area.(2,8)
-16
-iex(3)&gt; volumne = fn a, b, c -&gt; a * b * c end
-#Function&lt;19.126501267/3 in :erl_eval.expr/5&gt;
-iex(4)&gt; volumne.(10,10,10) <i class="conum" data-value="2"></i><b>(2)</b>
-1000</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Two parameters (a and b).</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Three parameters (a, b and c).</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-A function can not have more than 255 parameters. As a rule of thumb I suggest you never
-use more than 5 parameters. That is always an indicator that you should refactor your code.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_functions_are_first_class_citizens"><a class="anchor" href="#_functions_are_first_class_citizens"></a>Functions are First-Class Citizens</h3>
-<div class="paragraph">
-<p>In Elixir a function is a value of the type <code>function</code>. So they are just like any
-other value. That means you can programm a function that expects an other function as
-a parameter.</p>
-</div>
-<div class="paragraph">
-<p>It&#8217;s hard to find a somehow meaningful example for this with our current Elixir
-know-how. Germany has two kinds of value added taxes (VAT). The default is 19%
-and the reduced one (e.g. for some foods) is 7%.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; food_vat = fn price -&gt; price * 0.07 end <i class="conum" data-value="1"></i><b>(1)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(2)&gt; vat = fn price -&gt; price * 0.19 end <i class="conum" data-value="2"></i><b>(2)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(3)&gt; total_price = fn price, vat -&gt; price + vat.(price) end <i class="conum" data-value="3"></i><b>(3)</b>
-#Function&lt;13.126501267/2 in :erl_eval.expr/5&gt;
-iex(4)&gt; total_price.(10, food_vat) <i class="conum" data-value="4"></i><b>(4)</b>
-10.7
-iex(5)&gt; total_price.(10, vat)
-11.9</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This function calculates the 7% VAT.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>This function calculates the 19% VAT.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This function calculates the total price which includes the tax. You see that the second parameter is a function.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Example calculation which uses the <code>food_vat</code> function as the second parameter.</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_the_operator"><a class="anchor" href="#_the_operator"></a>The &amp; operator</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>It is likely that you will stumble upon the <code>&amp;</code> operator while searching
-solutions for Elixir problems. It is a so called <strong>capture operator</strong>. It
-is a syntactical shortcut for anonymous functions.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; square_area = fn a -&gt; a * a end <i class="conum" data-value="1"></i><b>(1)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(2)&gt; square_area2 = &amp;(&amp;1 * &amp;1) <i class="conum" data-value="2"></i><b>(2)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(3)&gt; square_area.(8)
-64
-iex(4)&gt; square_area2.(9)
-81
-iex(5)&gt; rectangle_area = &amp;(&amp;1 * &amp;2) <i class="conum" data-value="3"></i><b>(3)</b>
-&amp;:erlang.*/2
-iex(6)&gt; rectangle_area.(7,8)
-56</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>A normal anonymous function to calculate the area of a square.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The same calculation but a different syntax. We use the &amp; operator. No need for a <code>fn</code> and <code>end</code> with this operator.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Multiple parameter can be used too (e.g. <code>&amp;1</code>, <code>&amp;2</code>).</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Sometimes it is easier to read code which uses the <code>&amp;</code> operator. Sometimes it is not.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_variable_scopes"><a class="anchor" href="#_variable_scopes"></a>Variable Scopes</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>In every programming language variables have some sort of scope. Let&#8217;s have a look
-into some code to figure out how variables in Elixr are scoped:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; area = 5 <i class="conum" data-value="1"></i><b>(1)</b>
-5
-iex(2)&gt; IO.puts(area)
-5
-:ok
-iex(3)&gt; square_area = fn a -&gt; <i class="conum" data-value="2"></i><b>(2)</b>
-...(3)&gt;   area = a * a <i class="conum" data-value="3"></i><b>(3)</b>
-...(3)&gt;   area
-...(3)&gt; end
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(4)&gt; square_area.(10) <i class="conum" data-value="4"></i><b>(4)</b>
-100
-iex(5)&gt; IO.puts(area) <i class="conum" data-value="5"></i><b>(5)</b>
-5
-:ok</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We bind the value of 5 to the variable <code>area</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>We define an anonymous function.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Within this function we bind the result of our calculation to an other variable <code>area</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Run the function with the parameter 10. That would mean that the <code>area</code> in the function gets set to the value 100.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The original <code>area</code> hasn&#8217;t changed a bit. Because it is in a different scope.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The <code>area</code> within the function is in an inner scope. The original <code>area</code> is in an outer scope.</p>
-</div>
-<div class="paragraph">
-<p>But it gets a bit more complex:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; pi = 3.14159265359 <i class="conum" data-value="1"></i><b>(1)</b>
-3.14159265359
-iex(2)&gt; circular_area = fn radius -&gt; pi * radius * radius end <i class="conum" data-value="2"></i><b>(2)</b>
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(3)&gt; circular_area.(10)
-314.15926535899996</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We bind the value 3.14159265359 to the variable with the name <code>pi</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>We create an anonymous function which uses the variable <code>pi</code> to make the calculation.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>So we can read the outer scope variable from within the function. So lets check if we can change it too:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; pi = 3.14159265359 <i class="conum" data-value="1"></i><b>(1)</b>
-3.14159265359
-iex(2)&gt; circular_area = fn radius -&gt;
-...(2)&gt;   pi = 3.14 <i class="conum" data-value="2"></i><b>(2)</b>
-...(2)&gt;   pi * radius * radius
-...(2)&gt; end
-#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
-iex(3)&gt; circular_area.(10) <i class="conum" data-value="3"></i><b>(3)</b>
-314.0
-iex(4)&gt; IO.puts(pi) <i class="conum" data-value="4"></i><b>(4)</b>
-3.14159265359
-:ok</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We bind the value 3.14159265359 to the variable with the name <code>pi</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>We bind the inner scoped variable <code>pi</code> with the value 3.14.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The 3.14 and not the 3.14159265359 gets used.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The outer scoped <code>pi</code> is not changed.</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You can not change the value of an outer scoped variable but you can read
-it. And you can create a new inner scope variable with the same name without
-interacting with the outer scoped one.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_functions_and_modules"><a class="anchor" href="#_functions_and_modules"></a>Functions and Modules</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Anonymous functions are useful but using just them to build a big software
-project would become messy very fast. We need a better way to structure our
-code. Let me introduce you to Modules which are used to organize a collection of
+<p>In Elixir, code is organized into modules, and each module is a collection of
 functions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; defmodule Store do <i class="conum" data-value="1"></i><b>(1)</b>
 ...(1)&gt;   def total_price(price, amount) do <i class="conum" data-value="2"></i><b>(2)</b>
-...(1)&gt;     price * amount
+...(1)&gt;     price * amount <i class="conum" data-value="3"></i><b>(3)</b>
 ...(1)&gt;   end
 ...(1)&gt; end
 {:module, Store,
  &lt;&lt;70, 79, 82, 49, 0, 0, 5, 4, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 133, 0,
    0, 0, 14, 12, 69, 108, 105, 120, 105, 114, 46, 83, 116, 111, 114, 101, 8, 95,
-   95, 105, 110, 102, 111, 95, 95, 7, ...&gt;&gt;, {:total_price, 2}}
-iex(2)&gt; Store.total_price(10,7) <i class="conum" data-value="3"></i><b>(3)</b>
+   95, 105, 110, 102, 111, 95, 95, 7, ...&gt;&gt;, {:total_price, 2}} <i class="conum" data-value="4"></i><b>(4)</b>
+iex(2)&gt; Store.total_price(10,7) <i class="conum" data-value="5"></i><b>(5)</b>
 70</code></pre>
 </div>
 </div>
@@ -1052,7 +565,7 @@ iex(2)&gt; Store.total_price(10,7) <i class="conum" data-value="3"></i><b>(3)</b
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>defmodule</code> is the keyword to define a module. The name of a modul starts with a capital letter.</td>
+<td><code>defmodule</code> is the keyword to define a module. The name of a module starts with a capital letter.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1060,6 +573,16 @@ iex(2)&gt; Store.total_price(10,7) <i class="conum" data-value="3"></i><b>(3)</b
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The return value of a function is the return value of the last expression in
+the function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The return value of creating the module. To save space, we will abbreviate
+this output in the next examples.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>A function of a given module can be called from outside the module with this syntax.</td>
 </tr>
 </table>
@@ -1074,50 +597,43 @@ iex(2)&gt; Store.total_price(10,7) <i class="conum" data-value="3"></i><b>(3)</b
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Moduel names use CamelCase which start with a capital letter. Function names use snake_case which start with a lower case letter.
+Module names use CamelCase starting with a capital letter. Function
+names use snake_case.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Normaly a module contains more than one function:</p>
+<p>You can also define a module in a separate file (with the <code>.exs</code> extension),
+and then call the function with <code>iex <em>filename</em>.exs</code>.</p>
+</div>
+<div class="paragraph">
+<p>As an example, save the following module to <code>math.exs</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; defmodule Area do <i class="conum" data-value="1"></i><b>(1)</b>
-...(1)&gt;   def rectangle(a, b) do <i class="conum" data-value="2"></i><b>(2)</b>
-...(1)&gt;     a * b
-...(1)&gt;   end
-...(1)&gt;
-...(1)&gt;   def square(a) do <i class="conum" data-value="3"></i><b>(3)</b>
-...(1)&gt;     a * a
-...(1)&gt;   end
-...(1)&gt; end
-{:module, Area,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 156, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 137,
-   0, 0, 0, 15, 11, 69, 108, 105, 120, 105, 114, 46, 65, 114, 101, 97, 8, 95,
-   95, 105, 110, 102, 111, 95, 95, 7, 99, ...&gt;&gt;, {:square, 1}}
-iex(2)&gt; Area.rectangle(4,5)
-20
-iex(3)&gt; Area.square(4)
-16</code></pre>
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Math do
+  def sum(x, y) do
+    x + y
+  end
+
+  def difference(x, y) do
+    x - y
+  end
+end</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We call this module 'Area'.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The function rectangle/2 calculates the area of a rectangle.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The function square/1 calculates the area of a square.</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Then, if you run <code>iex math.exs</code>, you can access the functions in the Math module
+in iex.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; Math.sum(1, 2)
+3
+iex(2)&gt; Math.difference(3, 1)
+2</code></pre>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_private_functions"><a class="anchor" href="#_private_functions"></a>Private Functions</h3>
@@ -1125,8 +641,9 @@ iex(3)&gt; Area.square(4)
 <p></p>
 </div>
 <div class="paragraph">
-<p>Sometimes you want to define a function within a module without exposing it to the outside world.
-This can be done with a private functions which gets declared with <code>devp</code>:</p>
+<p>Sometimes you want to define a function within a module without exposing it to
+the outside world. You can do this with a private function which gets declared
+with <code>defp</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1139,10 +656,7 @@ This can be done with a private functions which gets declared with <code>devp</c
 ...(1)&gt;     3.14
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Area,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 104, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 130,
-   0, 0, 0, 15, 11, 69, 108, 105, 120, 105, 114, 46, 65, 114, 101, 97, 8, 95,
-   95, 105, 110, 102, 111, 95, 95, 7, 99, ...&gt;&gt;, {:pi, 0}}
+{:module, Area, ...
 iex(2)&gt; Area.circle(10) <i class="conum" data-value="2"></i><b>(2)</b>
 314.0
 iex(3)&gt; Area.pi <i class="conum" data-value="3"></i><b>(3)</b>
@@ -1158,11 +672,12 @@ iex(3)&gt; Area.pi <i class="conum" data-value="3"></i><b>(3)</b>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The function <code>circle/1</code> can be called from the outsite. It can use the private function <code>pi/0</code> from within the module.</td>
+<td>The function <code>circle/1</code> can be called from outside the module. It can use
+the private function <code>pi/0</code> from within the module.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The function <code>pi/0</code> can not be called from the outsite.</td>
+<td>The function <code>pi/0</code> can not be called from outside the module.</td>
 </tr>
 </table>
 </div>
@@ -1173,12 +688,13 @@ iex(3)&gt; Area.pi <i class="conum" data-value="3"></i><b>(3)</b>
 <p></p>
 </div>
 <div class="paragraph">
-<p>In the last couple of sentences you probably recognized the names of a functions
-with the number of parameters following. <code>pi/0</code> let to <code>defp pi do</code> and
-<code>circle/1</code> to <code>circle(radius)</code>. This number or arguments or parameters is called
+<p>In the last couple of sentences, you probably recognized that the names of
+functions were followed by the number of parameters. We refer to the <code>pi</code>
+function as <code>pi/0</code> and the <code>circle</code> function as <code>circle/1</code>. We call this number
 <strong>arity</strong>. Arity is kind of a big thing in Elixir. Why? Because not just the
-function name but also the arity defines a function. If we want to create a
-module which calculates the area of rectangles it could look like this:</p>
+function name but also the arity defines a function. For example, the
+<code>Rectangle</code> module below has two functions with the same name, but different
+arity, and so they are treated as different functions:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1191,13 +707,10 @@ module which calculates the area of rectangles it could look like this:</p>
 ...(1)&gt;     a * b
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Rectangle,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 108, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 130,
-   0, 0, 0, 14, 16, 69, 108, 105, 120, 105, 114, 46, 82, 101, 99, 116, 97, 110,
-   103, 108, 101, 8, 95, 95, 105, 110, 102, ...&gt;&gt;, {:area, 2}}
+{:module, Rectangle, ...
 iex(2)&gt; Rectangle.area(9) <i class="conum" data-value="3"></i><b>(3)</b>
 81
-iex(3)&gt; Rectangle.area(4,5) <i class="conum" data-value="4"></i><b>(4)</b>
+iex(3)&gt; Rectangle.area(4, 5) <i class="conum" data-value="4"></i><b>(4)</b>
 20</code></pre>
 </div>
 </div>
@@ -1205,11 +718,12 @@ iex(3)&gt; Rectangle.area(4,5) <i class="conum" data-value="4"></i><b>(4)</b>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The function ´area/1´ with the arity of 1 accepts one parameter.</td>
+<td>The function <code>area/1</code> with an arity of 1 accepts one parameter.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The function ´area/2´ with the arity of 2 accepts two parameters.</td>
+<td>The function <code>area/2</code> with an arity of 2 accepts two parameters. This is
+essentially a different function from <code>area/1</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -1223,9 +737,9 @@ iex(3)&gt; Rectangle.area(4,5) <i class="conum" data-value="4"></i><b>(4)</b>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_hierachical_modules"><a class="anchor" href="#_hierachical_modules"></a>Hierachical Modules</h3>
+<h3 id="_hierarchical_modules"><a class="anchor" href="#_hierarchical_modules"></a>Hierarchical Modules</h3>
 <div class="paragraph">
-<p>In a big project you will have multiple layers of Module namespaces to keep everything in
+<p>In a big project, you will have multiple layers of Module namespaces to keep everything in
 some sort of structure.</p>
 </div>
 <div class="paragraph">
@@ -1238,10 +752,7 @@ some sort of structure.</p>
 ...(1)&gt;     a * a
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Calculator.Area,
- &lt;&lt;70, 79, 82, 49, 0, 0, 4, 232, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 138,
-   0, 0, 0, 14, 22, 69, 108, 105, 120, 105, 114, 46, 67, 97, 108, 99, 117, 108,
-   97, 116, 111, 114, 46, 65, 114, 101, 97, ...&gt;&gt;, {:square, 1}}
+{:module, Calculator.Area, ...
 iex(2)&gt; Calculator.Area.square(5)
 25</code></pre>
 </div>
@@ -1258,14 +769,7 @@ iex(2)&gt; Calculator.Area.square(5)
 ...(1)&gt;     end
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Calculator,
- &lt;&lt;70, 79, 82, 49, 0, 0, 3, 164, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 124,
-   0, 0, 0, 12, 17, 69, 108, 105, 120, 105, 114, 46, 67, 97, 108, 99, 117, 108,
-   97, 116, 111, 114, 8, 95, 95, 105, 110, ...&gt;&gt;,
- {:module, Calculator.Area,
-  &lt;&lt;70, 79, 82, 49, 0, 0, 4, 232, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 138,
-    0, 0, 0, 14, 22, 69, 108, 105, 120, 105, 114, 46, 67, 97, 108, 99, 117, 108,
-    97, 116, 111, 114, 46, ...&gt;&gt;, {:square, 1}}}
+{:module, Calculator, ...
 iex(2)&gt; Calculator.Area.square(5)
 25</code></pre>
 </div>
@@ -1291,10 +795,7 @@ have to use their fully qualified name.</p>
 ...(1)&gt;     a * b
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Rectangle,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 108, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 130,
-   0, 0, 0, 14, 16, 69, 108, 105, 120, 105, 114, 46, 82, 101, 99, 116, 97, 110,
-   103, 108, 101, 8, 95, 95, 105, 110, 102, ...&gt;&gt;, {:area, 2}}
+{:module, Rectangle, ...
 iex(2)&gt; import Rectangle <i class="conum" data-value="1"></i><b>(1)</b>
 Rectangle
 iex(3)&gt; area(5) <i class="conum" data-value="2"></i><b>(2)</b>
@@ -1335,7 +836,7 @@ iex(7)&gt; area(1,5) <i class="conum" data-value="3"></i><b>(3)</b>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>I try to run <code>area/1</code> but that throughts an error because I didn&#8217;t import it.</td>
+<td>I try to run <code>area/1</code>, but that triggered an error because I didn&#8217;t import it.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -1350,9 +851,9 @@ iex(7)&gt; area(1,5) <i class="conum" data-value="3"></i><b>(3)</b>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-When ever you just use a given function without a module name before
-that module has already been imported by Elixir (e.g. the <code>Kernel</code> modul gets
-imported automatically).
+Whenever you just use a given function without a module name before it,
+that means that the module has already been imported by Elixir (e.g. the
+<code>Kernel</code> module gets imported automatically).
 </td>
 </tr>
 </table>
@@ -1369,10 +870,7 @@ imported automatically).
 ...(1)&gt;     a * a
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Calculator.Area,
- &lt;&lt;70, 79, 82, 49, 0, 0, 4, 232, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 138,
-   0, 0, 0, 14, 22, 69, 108, 105, 120, 105, 114, 46, 67, 97, 108, 99, 117, 108,
-   97, 116, 111, 114, 46, 65, 114, 101, 97, ...&gt;&gt;, {:square, 1}}
+{:module, Calculator.Area, ...
 iex(2)&gt; import Calculator.Area
 Calculator.Area
 iex(3)&gt; square(5)
@@ -1387,7 +885,7 @@ iex(3)&gt; square(5)
 <p></p>
 </div>
 <div class="paragraph">
-<p><code>alias</code> offers the possiblity to set an alias to a module name.</p>
+<p><code>alias</code> sets an alias for a module.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1396,10 +894,7 @@ iex(3)&gt; square(5)
 ...(1)&gt;     a * a
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Calculator.Area,
- &lt;&lt;70, 79, 82, 49, 0, 0, 4, 232, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 138,
-   0, 0, 0, 14, 22, 69, 108, 105, 120, 105, 114, 46, 67, 97, 108, 99, 117, 108,
-   97, 116, 111, 114, 46, 65, 114, 101, 97, ...&gt;&gt;, {:square, 1}}
+{:module, Calculator.Area, ...
 iex(2)&gt; alias Calculator.Area, as: Area <i class="conum" data-value="1"></i><b>(1)</b>
 Calculator.Area
 iex(3)&gt; Area.square(99)
@@ -1424,7 +919,172 @@ iex(5)&gt; Area.square(99)
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_pipe_operator"><a class="anchor" href="#_the_pipe_operator"></a>The Pipe Operator (|&gt;)</h3>
+<h3 id="_use"><a class="anchor" href="#_use"></a>Use</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p><code>use</code> allows a module to inject code into the current module, such as importing
+modules, defining new functions, setting a module&#8217;s state, etc.</p>
+</div>
+<div class="paragraph">
+<p>In many of the tests in your Phoenix application, you will see <code>use
+ExUnit.Case</code>, which performs certain checks, sets some module attributes and
+imports needed modules.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="elixir-introduction-atoms"><a class="anchor" href="#elixir-introduction-atoms"></a>Atoms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An atom is a constant whose name is its value. In some other programming
+languages, these are known as symbols. Atoms start with a <code>:</code></p>
+</div>
+<div class="paragraph">
+<p>Atoms are often used to tag values and messages. For example, functions that
+might fail often have the return values <code>{:ok, value}</code> or <code>{:error, message}</code>.</p>
+</div>
+<div class="paragraph">
+<p>Atoms are also used to reference modules from Erlang libraries.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; :red
+:red
+iex(2)&gt; :blue
+:blue
+iex(3)&gt; is_atom(:blue) <i class="conum" data-value="1"></i><b>(1)</b>
+true</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The function <code>is_atom()</code> can be used to check if something is an atom.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You should write atoms in snake_case or CamelCase. The usual Elixir convention is to use snake_case.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="elixir-introduction-strings"><a class="anchor" href="#elixir-introduction-strings"></a>Strings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>We already used a string in the <a href="#elixir-introduction-hello-world">Hello World</a> example.
+The following examples show how strings can be used with variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; first_name = "Stefan" <i class="conum" data-value="1"></i><b>(1)</b>
+"Stefan"
+iex(2)&gt; last_name = "Wintermeyer"
+"Wintermeyer"
+iex(3)&gt; name = first_name &lt;&gt; " " &lt;&gt; last_name <i class="conum" data-value="2"></i><b>(2)</b>
+"Stefan Wintermeyer"
+iex(4)&gt; greeting = "Hello #{first_name}!" <i class="conum" data-value="3"></i><b>(3)</b>
+"Hello Stefan!"
+iex(5)&gt; counter = 23
+23
+iex(6)&gt; "Count: #{counter}" <i class="conum" data-value="4"></i><b>(4)</b>
+"Count: 23"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We assign the string "Stefan" to the variable with the name <code>first_name</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>&lt;&gt;</code> operator can be used to concatinate strings.
+</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>#{}</code> is used to interpolate strings. It can be used to inject a variable
+into a string.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Elixir&#8217;s string interpolation also works with integers.
+By default, it can handle integers, floats, some lists (later more on lists) and
+atoms.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_string_functions"><a class="anchor" href="#_string_functions"></a>String Functions</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://hexdocs.pm/elixir/String.html">String module</a> contains functions for
+working with strings. Here are some examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; String.downcase("SToP SHoutING!")
+"stop shouting!"
+iex(2)&gt; String.split("no fist is big enough to hide the sky") <i class="conum" data-value="1"></i><b>(1)</b>
+["no", "fist", "is", "big", "enough", "to", "hide", "the", "sky"]
+iex(3)&gt; String.split("mail@example.com", "@") <i class="conum" data-value="2"></i><b>(2)</b>
+["mail", "example.com"]
+iex(4)&gt; String.to_integer("555")
+555</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>String.split/1</code> divides a string into substrings at each whitespace.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>String.split/2</code> is similar to <code>String.split/1</code>, but it also allows you to
+define what pattern to use when splitting the string.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+remember that you can also access the documentation for the String module
+in iex by running <code>h String</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_pipe_operator"><a class="anchor" href="#_the_pipe_operator"></a>The Pipe Operator (|&gt;)</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p></p>
 </div>
@@ -1461,13 +1121,13 @@ iex(3)&gt; String.capitalize(String.reverse("house")) <i class="conum" data-valu
 </div>
 <div class="paragraph">
 <p>The problem with <code>String.capitalize(String.reverse("house"))</code> is the lack of
-readability. It kind of works with just two functions but what about one or two
-more functions in that line? Here comes the pipe operator <code>|&gt;</code> for the rescue.
+readability. It kind of works with just two functions, but what about one or two
+more functions in that line? Here comes the pipe operator <code>|&gt;</code> to the rescue.
 It is a piece of syntactic sugar. Have a look:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(4)&gt; String.reverse("house") |&gt; String.capitalize <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(4)&gt; String.reverse("house") |&gt; String.capitalize() <i class="conum" data-value="1"></i><b>(1)</b>
 "Esuoh"</code></pre>
 </div>
 </div>
@@ -1475,8 +1135,8 @@ It is a piece of syntactic sugar. Have a look:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The pipe operator <code>|&gt;</code> takes the result of the first function
-and puts it as the first parameter of the following function.</td>
+<td>The pipe operator <code>|&gt;</code> passes the result of the first function to the first
+parameter of the following function.</td>
 </tr>
 </table>
 </div>
@@ -1485,13 +1145,13 @@ and puts it as the first parameter of the following function.</td>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(5)&gt; String.reverse("house") |&gt; String.capitalize |&gt; String.downcase
-"esuoh"</code></pre>
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(5)&gt; String.reverse("house") |&gt; String.capitalize() |&gt; String.slice(0, 3)
+"Esu"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The pipe operator is just a way to make code more readable.</p>
-</div>
+<p>By using the pipe operator, the code becomes more readable and more
+maintainable.</p>
 </div>
 </div>
 </div>
@@ -1502,22 +1162,16 @@ and puts it as the first parameter of the following function.</td>
 <p></p>
 </div>
 <div class="paragraph">
-<p>Lists and tuples are used to store multiple elements in a sort of list. Both
-look alike but are quite different performance wise.</p>
+<p>We store multiple elements in lists and tuples. Lists and tuples look alike but
+are quite different performance-wise.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Tuples are fast when you have to access it&#8217;s data but slow when you want to
-change it&#8217;s data. They are stored contiguously in memory. Accessing one
-element of a tuple or getting the size of it is fast and always takes the same
-amount of time.</p>
+<p>Tuples are fast when you have to access its data but slow when you want to change its data. They are stored contiguously in memory. Accessing one element of a tuple or getting the size of it is fast and always takes the same amount of time.</p>
 </li>
 <li>
-<p>Lists are stored as linked lists in memory. One element holds it&#8217;s own value
-and a link to the next element. Accessing single elements and the length of a
-lists is a linear operation which takes more time. The longer the list the
-more time it takes. But it is fast to add a new element to the end of a list.</p>
+<p>Lists are stored as linked lists in memory. One element holds it&#8217;s own value and a link to the next element. Accessing single elements and the length of lists is a linear operation which takes more time. The longer the list, the more time it takes. But it is fast to add a new element to the end of a list.</p>
 </li>
 </ul>
 </div>
@@ -1528,9 +1182,9 @@ more time it takes. But it is fast to add a new element to the end of a list.</p
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Right now you don&#8217;t need to loose sleep over the decision which one to
-use. Over the course of the book you&#8217;ll get a feeling which one is best suited
-for what problem.
+Right now, you don&#8217;t need to lose sleep over the decision of which one to
+use. Throughout the book, you&#8217;ll get a feeling which one is best suited for what
+problem.
 </td>
 </tr>
 </table>
@@ -1541,8 +1195,8 @@ for what problem.
 <p></p>
 </div>
 <div class="paragraph">
-<p>List store multiple values or different types.
-A list is encapsuled in <code>[]</code>:</p>
+<p>Lists store multiple values, and they can contain different types. A list is
+enclosed in brackets (<code>[]</code>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1551,8 +1205,7 @@ A list is encapsuled in <code>[]</code>:</p>
 iex(2)&gt; ["a", "b", "c"]
 ["a", "b", "c"]
 iex(3)&gt; [1, "b", true, false, :blue, "house"]
-[1, "b", true, false, :blue, "house"]
-iex(4)&gt;</code></pre>
+[1, "b", true, false, :blue, "house"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1572,7 +1225,7 @@ iex(3)&gt; [1, "a", 2, false, true] -- ["a", 2] <i class="conum" data-value="3">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Makes totally sense.</td>
+<td>Makes total sense.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1580,7 +1233,7 @@ iex(3)&gt; [1, "a", 2, false, true] -- ["a", 2] <i class="conum" data-value="3">
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>A bit trickier. The second and third element of the first list get substracted.</td>
+<td>A bit trickier. The second and third element of the first list get subtracted.</td>
 </tr>
 </table>
 </div>
@@ -1590,9 +1243,9 @@ iex(3)&gt; [1, "a", 2, false, true] -- ["a", 2] <i class="conum" data-value="3">
 <p></p>
 </div>
 <div class="paragraph">
-<p>A lot of times Elixir developers want to work with the head and tail of a list. Head
-is the first element (counting from the left side) and the tail is the rest. There
-are too functions for that:</p>
+<p>A lot of times Elixir developers want to work with the head (the first element)
+and tail (the rest) of a list. The following examples show how the functions
+<code>hd/1</code> and <code>tl/1</code> can be used to return these values:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1655,11 +1308,11 @@ iex(7)&gt; tl(["grapefruit"]) <i class="conum" data-value="4"></i><b>(4)</b>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>There is a head of a list with one element.</td>
+<td>There is a "head" of a list with one element.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The tail of a list with one element is an empty list.</td>
+<td>The "tail" of a file with one element is an empty list.</td>
 </tr>
 </table>
 </div>
@@ -1685,6 +1338,53 @@ iex(4)&gt; length([])
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_list_functions"><a class="anchor" href="#_list_functions"></a>List Functions</h4>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>When working with lists, you will often use functions from the
+<a href="https://hexdocs.pm/elixir/Enum.html">Enum module</a>. There is also a
+<a href="https://hexdocs.pm/elixir/Enum.html">List module</a>, which contains a few useful
+list functions.</p>
+</div>
+<div class="paragraph">
+<p>Here are a few examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; numbers = [1, 5, 3, 7, 2, 3, 9, 5, 3]
+[1, 5, 3, 7, 2, 3, 9, 5, 3]
+iex(2)&gt; Enum.max(numbers) <i class="conum" data-value="1"></i><b>(1)</b>
+9
+iex(3)&gt; Enum.sort(numbers) <i class="conum" data-value="2"></i><b>(2)</b>
+[1, 2, 3, 3, 3, 5, 5, 7, 9]
+iex(4)&gt; words = ["nothing", "like", "the", "sun"]
+["nothing", "like", "the", "sun"]
+iex(5)&gt; Enum.join(words, " ")
+"nothing like the sun"
+iex(6)&gt; List.last(words)
+"sun"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>Enum.max/1</code> returns the maximum value in a list.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>Enum.sort/1</code> returns a new list with the values sorted in ascending order.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We will see more examples from the <code>Enum</code> module when we look at higher-order
+functions later in this introduction.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_tuples"><a class="anchor" href="#_tuples"></a>Tuples</h3>
@@ -1692,8 +1392,8 @@ iex(4)&gt; length([])
 <p></p>
 </div>
 <div class="paragraph">
-<p>Like Lists tuples can hold multiple elements of different types. The
-elements are encapsuled with '{}':</p>
+<p>Like lists, tuples can hold multiple elements of different types. The
+elements are enclosed in curly braces (<code>{}</code>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1713,18 +1413,18 @@ iex(3)&gt; {true, :apple, 234, "house", 3.14} <i class="conum" data-value="3"></
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>A tuple which contains one atom which represents a status and one string.
-Is is actually something very common in Elixir. You will see that a lot.</td>
+<td>A tuple which contains one atom that represents the status and a string.
+It is something prevalent in Elixir. You will see this a lot.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>A tuple with a mix of all sorts of values.</td>
+<td>A tuple with values of different types.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>We don&#8217;t use the head and tail idea with tuples. But we can access every element
-of a tuple with an index:</p>
+<p>We can access an element of a tuple with by passing the index to the <code>elem/2</code>
+function:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1754,7 +1454,8 @@ iex(3)&gt; elem(result, 0) <i class="conum" data-value="2"></i><b>(2)</b>
 <p></p>
 </div>
 <div class="paragraph">
-<p>The following functions are useful when you handle data with tuples:</p>
+<p>The <a href="https://hexdocs.pm/elixir/Tuple.html">Tuple module</a> contains functions for
+working with tuples. Here are some examples:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1803,11 +1504,442 @@ iex(6)&gt; tuple_size(d)
 </div>
 </div>
 <div class="sect1">
-<h2 id="_maps_and_structs"><a class="anchor" href="#_maps_and_structs"></a>Maps and Structs</h2>
+<h2 id="_higher_order_functions"><a class="anchor" href="#_higher_order_functions"></a>Higher-Order Functions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>List and Tuples don&#8217;t provide a functionality to access values with a key.
-That can be achieved with Maps and Structs.</p>
+<p>In Elixir, functions can be used like any other variable. For example, they can
+be passed to other functions as parameters.</p>
+</div>
+<div class="paragraph">
+<p>A function that takes another function as one of its parameters is called a
+higher-order function, and these are very commonly used in Elixir.</p>
+</div>
+<div class="paragraph">
+<p>When passing a function to a higher-order function, we need to use an anonymous
+function, and that is what we will look at next.</p>
+</div>
+<div class="sect2">
+<h3 id="_anonymous_functions"><a class="anchor" href="#_anonymous_functions"></a>Anonymous Functions</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Anonymous functions are functions that are defined without any name.</p>
+</div>
+<div class="paragraph">
+<p>You define anonymous functions using the <code>fn</code> keyword:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; greeting = fn(name) -&gt; "Hello #{name}!" end <i class="conum" data-value="1"></i><b>(1)</b>
+#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
+iex(2)&gt; greeting.("Bob") <i class="conum" data-value="2"></i><b>(2)</b>
+"Hello Bob!"
+iex(3)&gt; greeting.("Alice")
+"Hello Alice!"
+iex(4)&gt; square_area = fn a -&gt; a * a end <i class="conum" data-value="3"></i><b>(3)</b>
+#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
+iex(5)&gt; square_area.(10)
+100
+iex(6)&gt; area = fn width, length -&gt; width * length end <i class="conum" data-value="4"></i><b>(4)</b>
+#Function&lt;13.126501267/2 in :erl_eval.expr/5&gt;
+iex(7)&gt; area.(2,8)
+16</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We create an anonymous function and bind it to the variable <code>greeting</code>.
+<div class="ulist">
+<ul>
+<li>
+<p><code>fn</code> tells Elixir that you want to define a function.</p>
+</li>
+<li>
+<p><code>name</code> is a parameter we can use to inject values.</p>
+</li>
+<li>
+<p><code>&#8594;</code> is the operator to indicate the following expression is the body of the function.</p>
+</li>
+<li>
+<p><code>end</code> indicates the end of the function.</p>
+</li>
+</ul>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We need to use the <code>.</code> (dot) operator to run anonymous functions.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>You don&#8217;t have to surround the function arguments with parentheses. They
+are optional.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Like regular functions, anonymous functions can be called with multiple
+arguments. The arguments are separated by commas.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Most of the time anonymous functions are simple one liners. But they don&#8217;t have to be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; circular_area = fn radius -&gt;
+...(1)&gt;   pi = 3.14159265359
+...(1)&gt;   pi * radius * radius
+...(1)&gt; end
+#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
+iex(2)&gt; circular_area.(3)
+28.274333882310003</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s now look at using anonymous functions with higher-order functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; numbers = [1,2,3,4,5,6,7,8,9]
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+iex(2)&gt; Enum.filter(numbers, fn num -&gt; rem(num, 2) == 0 end) <i class="conum" data-value="1"></i><b>(1)</b>
+[2, 4, 6, 8]
+iex(6)&gt; Enum.map(numbers, fn x -&gt; x * x end) <i class="conum" data-value="2"></i><b>(2)</b>
+[1, 4, 9, 16, 25, 36, 49, 64, 81]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>Enum.filter/2</code> filters a list and returns those elements for which the
+function returns true. The <code>rem/2</code> function calculates the remainder after
+integer division.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>Enum.map/2</code> calls the given function for every item in the list and returns a
+new list.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_operator"><a class="anchor" href="#_the_operator"></a>The &amp; operator</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Another way of creating anonymous functions is to use the <code>&amp;</code> operator, which
+is called the <strong>capture operator</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; second = &amp;Enum.at(&amp;1, 1) <i class="conum" data-value="1"></i><b>(1)</b>
+#Function&lt;44.97283095/1 in :erl_eval.expr/5&gt;
+iex(2)&gt; second.([1,2,3,4]) <i class="conum" data-value="2"></i><b>(2)</b>
+2
+iex(3)&gt; is_negative? = &amp;(&amp;1 &lt; 0)
+#Function&lt;44.97283095/1 in :erl_eval.expr/5&gt;
+iex(4)&gt; is_negative?.(-1)
+true</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>&amp;1</code> refers to the first parameter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Again, we need to use the <code>.</code> (dot) operator to run anonymous functions.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>And here are examples of using the capture operator with higher-order functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; maybe_numbers = [1, nil, 4, nil, 5]
+[1, nil, 4, nil, 5]
+iex(2)&gt; Enum.filter(maybe_numbers, &amp;is_integer(&amp;1)) <i class="conum" data-value="1"></i><b>(1)</b>
+[1, 4, 5]
+iex(3)&gt; Enum.filter(maybe_numbers, &amp;is_integer/1) <i class="conum" data-value="2"></i><b>(2)</b>
+[1, 4, 5]
+iex(4)&gt; Enum.sort([1, 2, 3], &amp;(&amp;1 &gt;= &amp;2)) <i class="conum" data-value="3"></i><b>(3)</b>
+[3, 2, 1]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>&amp;1</code> refers to the first parameter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The same as the previous function, but with a different syntax. The <code>/1</code>
+after <code>is_integer</code> means that the function takes one parameter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>You can use multiple parameters too (e.g. <code>&amp;1</code>, <code>&amp;2</code>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Sometimes it is more convenient to use the <code>&amp;</code> operator, but there are times
+when it makes the expression more difficult to read.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variable_scopes"><a class="anchor" href="#_variable_scopes"></a>Variable Scopes</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>In every programming language variables have some sort of scope. Let&#8217;s have a
+look into some code to figure out how variables in Elixir are scoped:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; area = 5 <i class="conum" data-value="1"></i><b>(1)</b>
+5
+iex(2)&gt; IO.puts(area)
+5
+:ok
+iex(3)&gt; square_area = fn a -&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+...(3)&gt;   area = a * a <i class="conum" data-value="3"></i><b>(3)</b>
+...(3)&gt;   area
+...(3)&gt; end
+#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
+iex(4)&gt; square_area.(10) <i class="conum" data-value="4"></i><b>(4)</b>
+100
+iex(5)&gt; IO.puts(area) <i class="conum" data-value="5"></i><b>(5)</b>
+5
+:ok</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We bind the value of 5 to the variable <code>area</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We define an anonymous function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Within this function we bind the result of our calculation to another variable <code>area</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Run the function with an argument of 10. That would mean that the <code>area</code> in the function gets set to the value 100.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The original <code>area</code> hasn&#8217;t changed a bit. Because it is in a different scope.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>area</code> within the function is in an inner scope. The original <code>area</code> is in an outer scope.</p>
+</div>
+<div class="paragraph">
+<p>But it gets a bit more complex:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; pi = 3.14159265359 <i class="conum" data-value="1"></i><b>(1)</b>
+3.14159265359
+iex(2)&gt; circular_area = fn radius -&gt; pi * radius * radius end <i class="conum" data-value="2"></i><b>(2)</b>
+#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
+iex(3)&gt; circular_area.(10)
+314.15926535899996</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We bind the value 3.14159265359 to the variable with the name <code>pi</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We create an anonymous function which uses the variable <code>pi</code> to make the calculation.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>So we can read the outer scope variable from within the function. So lets check
+if we can change it too:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; pi = 3.14159265359 <i class="conum" data-value="1"></i><b>(1)</b>
+3.14159265359
+iex(2)&gt; circular_area = fn radius -&gt;
+...(2)&gt;   pi = 3.14 <i class="conum" data-value="2"></i><b>(2)</b>
+...(2)&gt;   pi * radius * radius
+...(2)&gt; end
+#Function&lt;7.126501267/1 in :erl_eval.expr/5&gt;
+iex(3)&gt; circular_area.(10) <i class="conum" data-value="3"></i><b>(3)</b>
+314.0
+iex(4)&gt; IO.puts(pi) <i class="conum" data-value="4"></i><b>(4)</b>
+3.14159265359
+:ok</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We bind the value 3.14159265359 to the variable with the name <code>pi</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We bind the inner scoped variable <code>pi</code> with the value 3.14.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The 3.14 and not the 3.14159265359 gets used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The outer scoped <code>pi</code> is not changed.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can not change the value of an outer scoped variable, but you can read
+it. And you can create a new inner scope variable with the same name without
+interacting with the outer scoped one.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_keyword_lists_maps_and_structs"><a class="anchor" href="#_keyword_lists_maps_and_structs"></a>Keyword Lists, Maps and Structs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>List and Tuples don&#8217;t provide the functionality to access values with a key. We
+can achieve that functionality with keyword lists, maps and structs.</p>
+</div>
+<div class="sect2">
+<h3 id="_keyword_lists"><a class="anchor" href="#_keyword_lists"></a>Keyword Lists</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Keyword lists are key-value data structures, in which keys are atoms and keys
+can appear more than once.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; user = [{:name, "joe"}, {:age, 23}] <i class="conum" data-value="1"></i><b>(1)</b>
+[name: "joe", age: 23]
+iex(2)&gt; user = [name: "joe", age: 23] <i class="conum" data-value="2"></i><b>(2)</b>
+[name: "joe", age: 23]
+iex(3)&gt; user[:name] <i class="conum" data-value="3"></i><b>(3)</b>
+"joe"
+iex(4)&gt; new_user = [name: "fred"] ++ user
+[name: "fred", name: "joe", age: 23]
+iex(5)&gt; new_user[:name] <i class="conum" data-value="4"></i><b>(4)</b>
+"fred"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keyword lists are lists of 2-item tuples, with the first item of each tuple
+being an atom.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This <code>[<em>key</em>: <em>value</em>]</code> syntax is more commonly used (this expression is
+the same as the list of tuples above).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The keyword list name followed by the key name in brackets returns a value
+for the given key.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If there are duplicate keys in a keyword list, the first one is fetched on
+lookup.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In your Phoenix application, you will see a keyword list used as the last
+argument in the <code>render/3</code> function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">render(conn, "show.html", message: "Hello", username: "Mary") <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>[message: "Hello", username: "Mary"]</code> is a keyword list. As you can see
+from this example, the brackets are optional.</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_keyword_list_functions"><a class="anchor" href="#_keyword_list_functions"></a>Keyword List Functions</h4>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://hexdocs.pm/elixir/Keyword.html">Keyword module</a> offers functions for
+working with keyword lists.</p>
+</div>
+<div class="paragraph">
+<p>Here are a few examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; Keyword.get([age: 34, height: 155], :height)
+155
+iex(2)&gt; Keyword.delete([length: 78, width: 104], :length)
+[width: 104] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>After deleting the <code>:length</code>, the keyword list just contains the <code>:width</code>
+key-value pair.</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_maps"><a class="anchor" href="#_maps"></a>Maps</h3>
@@ -1815,19 +1947,22 @@ That can be achieved with Maps and Structs.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>Maps provide a way to store and retrieve key-value pairs. A Map is created
-with a <code>%{}</code> syntax.</p>
+<p>Maps provide a way to store and retrieve key-value pairs. The <code>%{}</code> syntax
+creates a Map.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; product_prices = %{"Apple" =&gt; 0.5, "Orange" =&gt; 0.7} <i class="conum" data-value="1"></i><b>(1)</b>
 %{"Apple" =&gt; 0.5, "Orange" =&gt; 0.7}
-iex(2)&gt; Map.get(product_prices, "Orange") <i class="conum" data-value="2"></i><b>(2)</b>
+iex(2)&gt; product_prices["Orange"] <i class="conum" data-value="2"></i><b>(2)</b>
 0.7
-iex(3)&gt; Map.get(product_prices, "Banana") <i class="conum" data-value="3"></i><b>(3)</b>
+iex(3)&gt; product_prices["Banana"] <i class="conum" data-value="3"></i><b>(3)</b>
 nil
-iex(4)&gt; Map.has_key?(product_prices, "Banana") <i class="conum" data-value="4"></i><b>(4)</b>
-false</code></pre>
+iex(4)&gt; product_prices = %{"Apple" =&gt; 0.5, "Orange" =&gt; 0.7, "Apple" =&gt; 1}
+warning: key "Apple" will be overridden in map
+  iex:4
+
+%{"Apple" =&gt; 1, "Orange" =&gt; 0.7} <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1838,15 +1973,15 @@ false</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>Map.get/2</code> gets a value to a given key.</td>
+<td>The map name followed by the key name in brackets returns a value for the given key.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>Map.get/2</code> returns nil if a given key doesn&#8217;t exist.</td>
+<td>This returns nil if a given key doesn&#8217;t exist.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>If you need to check if a key exists you can do it with <code>Map.hay_key?/2</code></td>
+<td>Unlike keyword lists, maps cannot contain duplicate keys.</td>
 </tr>
 </table>
 </div>
@@ -1872,14 +2007,15 @@ warning: key true will be overridden in map
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>A key has to be unique within a Map. The last one will be the winner.</td>
+<td>A key has to be unique within a map. The last one overwrites the previous
+values. In this case, the key <code>true</code> will have a value of "z".</td>
 </tr>
 </table>
 </div>
 <div class="sect3">
 <h4 id="_atom_keys"><a class="anchor" href="#_atom_keys"></a>Atom keys</h4>
 <div class="paragraph">
-<p>Using Atoms as keys in Maps gives you access to some nifty features:</p>
+<p>Using atoms as keys in maps gives you access to some nifty features:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1895,15 +2031,15 @@ iex(3)&gt; product_prices.banana <i class="conum" data-value="3"></i><b>(3)</b>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>With Atoms as keys you can use this syntax which is a bit easier to read and less work to type.</td>
+<td>With atoms as keys you can use this syntax which is a bit easier to read and less work to type.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Again, this syntax is easier to work with but only works for Atom keys.</td>
+<td>When using atom keys, you can use the dot operator (<code>.</code>) to return the value of a given key.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Just checking what happens if the key doesn&#8217;t exist in the Map.</td>
+<td>If you use the dot operator and the key does not exist, an error is raised.</td>
 </tr>
 </table>
 </div>
@@ -1911,11 +2047,14 @@ iex(3)&gt; product_prices.banana <i class="conum" data-value="3"></i><b>(3)</b>
 <div class="sect3">
 <h4 id="_map_functions"><a class="anchor" href="#_map_functions"></a>Map Functions</h4>
 <div class="paragraph">
-<p>The Map module offers a bunch of useful functions. For a complete list have a
-look at <a href="https://hexdocs.pm/elixir/Map.html" class="bare">https://hexdocs.pm/elixir/Map.html</a></p>
+<p></p>
 </div>
 <div class="paragraph">
-<p>Here are just a couple of examples:</p>
+<p>The <a href="https://hexdocs.pm/elixir/Map.html">Map module</a> offers many useful functions
+for working with maps.</p>
+</div>
+<div class="paragraph">
+<p>Here are just a few examples:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1929,8 +2068,8 @@ iex(4)&gt; Map.split(product_prices, [:orange, :apple]) <i class="conum" data-va
 {%{apple: 0.5, orange: 0.7}, %{coconut: 1}}
 iex(5)&gt; a = Map.delete(product_prices, :orange) <i class="conum" data-value="4"></i><b>(4)</b>
 %{apple: 0.5, coconut: 1}
-iex(6)&gt; b = Map.drop(product_prices, [:apple, :organge]) <i class="conum" data-value="5"></i><b>(5)</b>
-%{coconut: 1, orange: 0.7}
+iex(6)&gt; b = Map.drop(product_prices, [:apple, :orange]) <i class="conum" data-value="5"></i><b>(5)</b>
+%{coconut: 1}
 iex(7)&gt; additional_prices = %{banana: 0.4, pineapple: 1.2}
 %{banana: 0.4, pineapple: 1.2}
 iex(8)&gt; Map.merge(product_prices, additional_prices) <i class="conum" data-value="6"></i><b>(6)</b>
@@ -1943,31 +2082,32 @@ iex(9)&gt; c = Map.put(product_prices, :potato, 0.2) <i class="conum" data-value
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>Map.to_list/1</code> converts a Map into a List.</td>
+<td><code>Map.to_list/1</code> converts a map into a keyword list.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>Map.values/1</code> returns the values of a Map.</td>
+<td><code>Map.values/1</code> returns the values of a map.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>Map.split/2</code> splits a given map into two new maps. The first one contains all the key-value pairs which are requested by a list (e.g. <code>[:orange, :apple]</code>)</td>
+<td><code>Map.split/2</code> splits a given map into two new maps. The first one contains
+all the key-value pairs which are requested by a list (e.g. <code>[:orange, :apple]</code>)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td><code>Map.delete/2</code> deletes a specific key-value pair in a Map.</td>
+<td><code>Map.delete/2</code> deletes a specific key-value pair from a map.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td><code>Map.drop/2</code> deletes a list of key-value pairs in a Map.</td>
+<td><code>Map.drop/2</code> deletes a list of key-value pairs from a map.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td><code>Map.merge/2</code> merges two Maps.</td>
+<td><code>Map.merge/2</code> merges two maps.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td><code>Map.put/2</code> adds a key-value pair to a Map.</td>
+<td><code>Map.put/2</code> adds a key-value pair to a map.</td>
 </tr>
 </table>
 </div>
@@ -1979,18 +2119,15 @@ iex(9)&gt; c = Map.put(product_prices, :potato, 0.2) <i class="conum" data-value
 <p></p>
 </div>
 <div class="paragraph">
-<p>A Struct is a fancy Map with a couple of extra features. To define a
-Struct you have to use the <code>defstruct</code> construct:</p>
+<p>A struct is a map that provides compile-time checks and default values. To
+define a struct you have to use the <code>defstruct</code> construct:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; defmodule Product do <i class="conum" data-value="1"></i><b>(1)</b>
 ...(1)&gt;   defstruct name: nil, price: 0 <i class="conum" data-value="2"></i><b>(2)</b>
 ...(1)&gt; end
-{:module, Product,
- &lt;&lt;70, 79, 82, 49, 0, 0, 6, 192, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 184,
-   0, 0, 0, 18, 14, 69, 108, 105, 120, 105, 114, 46, 80, 114, 111, 100, 117, 99,
-   116, 8, 95, 95, 105, 110, 102, 111, 95, ...&gt;&gt;, %Product{name: nil, price: 0}}
+{:module, Product, ...
 iex(2)&gt; %Product{}
 %Product{name: nil, price: 0}
 iex(3)&gt; apple = %Product{name: "Apple", price: 0.5} <i class="conum" data-value="3"></i><b>(3)</b>
@@ -1998,14 +2135,16 @@ iex(3)&gt; apple = %Product{name: "Apple", price: 0.5} <i class="conum" data-val
 iex(4)&gt; apple
 %Product{name: "Apple", price: 0.5}
 iex(5)&gt; apple.price
-0.5</code></pre>
+0.5
+iex(6)&gt; orange = %Product{name: "Orange"} <i class="conum" data-value="4"></i><b>(4)</b>
+%Product{name: "Orange", price: 0}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We define a new Struct with the name <code>Product</code> and the keys <code>name</code> and <code>price</code>.</td>
+<td>We define a new struct with the name <code>Product</code> and the keys <code>name</code> and <code>price</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -2013,34 +2152,39 @@ iex(5)&gt; apple.price
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>We define a new Product Struct and set all values.</td>
+<td>We define a new Product struct and set all values.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>We define a new Product struct and set only the name. The price is set to
+the default value.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>A Struct guarantees that only the defined fields are allowed:</p>
+<p>A struct guarantees that only the defined fields are allowed:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(6)&gt; apple.description <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(7)&gt; apple.description <i class="conum" data-value="1"></i><b>(1)</b>
 ** (KeyError) key :description not found in: %Product{name: "Apple", price: 0.5}
 
-iex(6)&gt; banana = %Product{name: "Banana", weight: 0.1} <i class="conum" data-value="2"></i><b>(2)</b>
+iex(7)&gt; banana = %Product{name: "Banana", weight: 0.1} <i class="conum" data-value="2"></i><b>(2)</b>
 ** (KeyError) key :weight not found
     expanding struct: Product.__struct__/1
-    iex:6: (file)
-iex(6)&gt;</code></pre>
+    iex:7: (file)
+iex(7)&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Since we didn&#8217;t define a <code>description</code> field in the Struct we can not access it.</td>
+<td>Since we didn&#8217;t define a <code>description</code> field in the Struct, we cannot access it.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Same with a new Struct. There is no <code>weight</code> field defined. Therefor we can not set it.</td>
+<td>Same with a new struct. There is no <code>weight</code> field defined. Therefore we can not set it.</td>
 </tr>
 </table>
 </div>
@@ -2051,7 +2195,8 @@ iex(6)&gt;</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Because Struct build on top of Maps they can be used with the same mechanisms.
+Because structs are built on top of maps, they can be used with the same
+functions.
 </td>
 </tr>
 </table>
@@ -2066,8 +2211,8 @@ Because Struct build on top of Maps they can be used with the same mechanisms.
 <p></p>
 </div>
 <div class="paragraph">
-<p>Pattern matching is super important in Elixir and we already used it without
-knowing so for binding values to variables.</p>
+<p>Pattern matching is essential in Elixir, and we have already used it, without
+knowing it, for binding values to variables.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2102,7 +2247,7 @@ iex(6)&gt; {d, e} = 100
 </table>
 </div>
 <div class="paragraph">
-<p>Since we don&#8217;t have much time I&#8217;ll fast forward to match a head and tail of a
+<p>Since we don&#8217;t have much time, I&#8217;ll fast forward to match a head and tail of a
 list. Because there is a special syntax for that:</p>
 </div>
 <div class="listingblock">
@@ -2141,7 +2286,7 @@ iex(12)&gt; [first_product | [second_product | tail]] = shopping_list <i class="
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>[head|tail]</code> is the special syntax to match a head and tail of a given list.</td>
+<td><code>[head | tail]</code> is the special syntax to match a head and tail of a given list.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -2158,7 +2303,7 @@ iex(12)&gt; [first_product | [second_product | tail]] = shopping_list <i class="
 </table>
 </div>
 <div class="paragraph">
-<p>Of course if we now that a list has a specific number of elements we can match
+<p>Of course, if we know that a list has a specific number of elements we can match
 it directly:</p>
 </div>
 <div class="listingblock">
@@ -2213,13 +2358,13 @@ iex(6)&gt; price2
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Or we can match multiples. But we don&#8217;t have to match the whole Map.</td>
+<td>Or we can match multiple values. But we don&#8217;t have to match the whole Map.</td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_matching_stringparts"><a class="anchor" href="#_matching_stringparts"></a>Matching Stringparts</h3>
+<h3 id="_matching_string_parts"><a class="anchor" href="#_matching_string_parts"></a>Matching String parts</h3>
 <div class="paragraph">
 <p></p>
 </div>
@@ -2244,7 +2389,7 @@ iex(3)&gt; last_name
 </td>
 <td class="content">
 The left side of a <code>&lt;&gt;</code> operator in a match should always be a string.
-Otherwise Elixir can&#8217;t verify it&#8217;s size.
+Otherwise, Elixir can&#8217;t verify it&#8217;s size.
 </td>
 </tr>
 </table>
@@ -2256,10 +2401,10 @@ Otherwise Elixir can&#8217;t verify it&#8217;s size.
 <p></p>
 </div>
 <div class="paragraph">
-<p>Sometimes you need the pattern matching to get a value but you don&#8217;t need all
-the potential values in the pattern. For those cases you can use <code>_</code> (alone or
-as a prefix to a variable name). It indicates to Elixir, das you don&#8217;t need that
-to be bind to anything.</p>
+<p>Sometimes you need pattern matching to get a value, but you don&#8217;t need all of
+the values in the pattern. For those cases, you can use <code>_</code> (alone or as a
+prefix to a variable name). It indicates to Elixir that you don&#8217;t need that
+variable to be bound to anything.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2269,10 +2414,7 @@ iex(2)&gt; [first_product | _tail] = shopping_list <i class="conum" data-value="
 ["apple", "orange", "banana", "pineapple"]
 iex(3)&gt; first_product
 "apple"
-iex(4)&gt; tail <i class="conum" data-value="2"></i><b>(2)</b>
-** (CompileError) iex:4: undefined function tail/0
-
-iex(4)&gt; [head | _] = shopping_list <i class="conum" data-value="3"></i><b>(3)</b>
+iex(4)&gt; [head | _] = shopping_list <i class="conum" data-value="2"></i><b>(2)</b>
 ["apple", "orange", "banana", "pineapple"]
 iex(5)&gt; head
 "apple"</code></pre>
@@ -2282,110 +2424,12 @@ iex(5)&gt; head
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We pattern match the head of <code>shopping_list</code> to <code>first_product</code>. But we don&#8217;t need the tail and indicate that by prefix it with a <code>_</code>.</td>
+<td>We pattern match the head of <code>shopping_list</code> to <code>first_product</code>. But we don&#8217;t need the tail, and we indicate that by prefixing it with a <code>_</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Just double-checking. No, it is not there.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>We can use just a <code>_</code> too. Using <code>_tail</code> just improves a bit the code readablity.
-So everybody knows that we don&#8217;t need that value but can guess what it would be.</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_matching_against_a_variable"><a class="anchor" href="#_matching_against_a_variable"></a>Matching against a variable</h3>
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Assuming I&#8217;d like to fetch the second product of a shopping_list list but only if the first product is
-an <code>organge</code>. I could do this like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; shopping_list = ["apple", "orange", "banana", "pineapple"]
-["apple", "orange", "banana", "pineapple"]
-iex(2)&gt; ["apple", second_product | _tail] = shopping_list <i class="conum" data-value="1"></i><b>(1)</b>
-["apple", "orange", "banana", "pineapple"]
-iex(3)&gt; second_product
-"orange"
-iex(4)&gt; ["potato", second_product | _tail] = shopping_list <i class="conum" data-value="2"></i><b>(2)</b>
-** (MatchError) no match of right hand side value: ["apple", "orange", "banana", "pineapple"]</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Is this cool or not!?</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Just checking what happens if it doesn&#8217;t match. <code>MatchError</code> is a good indicator for a missmatch.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>But let&#8217;s now assume that you want to match the first product against the content of the variable
-<code>first_product</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; shopping_list = ["apple", "orange", "banana", "pineapple"]
-["apple", "orange", "banana", "pineapple"]
-iex(2)&gt; product = "potato" <i class="conum" data-value="1"></i><b>(1)</b>
-"potato"
-iex(3)&gt; [product, second_product | _tail] = shopping_list <i class="conum" data-value="2"></i><b>(2)</b>
-["apple", "orange", "banana", "pineapple"]
-iex(4)&gt; product
-"apple"
-iex(5)&gt; second_product
-"orange"
-iex(6)&gt; product = "potato" <i class="conum" data-value="3"></i><b>(3)</b>
-"potato"
-iex(7)&gt; [^product, second_product | _tail] = shopping_list <i class="conum" data-value="4"></i><b>(4)</b>
-** (MatchError) no match of right hand side value: ["apple", "orange", "banana", "pineapple"]
-
-iex(7)&gt; product = "apple" <i class="conum" data-value="5"></i><b>(5)</b>
-"apple"
-iex(8)&gt; [^product, second_product | _tail] = shopping_list <i class="conum" data-value="6"></i><b>(6)</b>
-["apple", "orange", "banana", "pineapple"]</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We bind the string <code>potato</code> to the variable <code>product</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Now we try to match <code>[product, second_product | _tail]</code> to <code>shopping_list</code>.
-That should result in an <code>MatchError</code> because <code>product</code> represents <code>potato</code>.
-But no <code>MatchError</code>. Because Elixir doesn&#8217;t know that you want to actually use the bound
-value of <code>product</code>. It thinks that you want to bind the first element of the list to the
-variable <code>product</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Let&#8217;s try it again.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>To match against the content of <code>product</code> we have to prefix it with a <code>^</code>. By doing
-so we get a <code>MatchError</code> because it doesn&#8217;t match.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Let&#8217;s bind "apple" to <code>product</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Bingo! Now we got a working pattern match against a variable.</td>
+<td>We can use just a <code>_</code> too. Using <code>_tail</code> just improves the code readability
+a bit.</td>
 </tr>
 </table>
 </div>
@@ -2413,10 +2457,7 @@ so we get a <code>MatchError</code> because it doesn&#8217;t match.</td>
 ...(1)&gt;     circle(:normal, radius)
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Area,
- &lt;&lt;70, 79, 82, 49, 0, 0, 6, 40, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 138,
-   0, 0, 0, 15, 11, 69, 108, 105, 120, 105, 114, 46, 65, 114, 101, 97, 8, 95,
-   95, 105, 110, 102, 111, 95, 95, 7, 99, ...&gt;&gt;, {:circle, 1}}
+{:module, Area, ...
 iex(2)&gt; Area.circle(:exact, 4)
 50.26548245744
 iex(3)&gt; Area.circle(:normal, 4)
@@ -2463,24 +2504,19 @@ all the details at <a href="https://hexdocs.pm/elixir/guards.html" class="bare">
 ...(1)&gt;   def can_vote?(age) when is_integer(age) do <i class="conum" data-value="2"></i><b>(2)</b>
 ...(1)&gt;     false
 ...(1)&gt;   end
+...(1)&gt;
+...(1)&gt;   def can_vote?(_age) do <i class="conum" data-value="3"></i><b>(3)</b>
+...(1)&gt;     raise ArgumentError, "age should be an integer"
+...(1)&gt;   end
 ...(1)&gt; end
-{:module, Law,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 32, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 138,
-   0, 0, 0, 15, 10, 69, 108, 105, 120, 105, 114, 46, 76, 97, 119, 8, 95, 95,
-   105, 110, 102, 111, 95, 95, 7, 99, 111, ...&gt;&gt;, {:can_vote?, 1}}
+{:module, Law, ...
 iex(2)&gt; Law.can_vote?(15)
 false
 iex(3)&gt; Law.can_vote?(20)
 true
-iex(4)&gt; Law.can_vote?("test") <i class="conum" data-value="3"></i><b>(3)</b>
-** (FunctionClauseError) no function clause matching in Law.can_vote?/1
-
-    The following arguments were given to Law.can_vote?/1:
-
-        # 1
-        "test"
-
-    iex:2: Law.can_vote?/1</code></pre>
+iex(4)&gt; Law.can_vote?("test") <i class="conum" data-value="4"></i><b>(4)</b>
+** (ArgumentError) age should be an integer
+    iex:4: Law.can_vote?/1</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2495,41 +2531,12 @@ iex(4)&gt; Law.can_vote?("test") <i class="conum" data-value="3"></i><b>(3)</b>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Since <code>"test"</code> is a string and not an integer no function matches this.</td>
+<td>This clause catches any value that is not called with an integer.</td>
 </tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Sometimes it is useful to have a catch all at the end:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; defmodule GuardExample do
-...(1)&gt;   def is_a_number?(value) when is_integer(value) or is_float(value) do
-...(1)&gt;     true
-...(1)&gt;   end
-...(1)&gt;
-...(1)&gt;   def is_a_number?(_value) do <i class="conum" data-value="1"></i><b>(1)</b>
-...(1)&gt;     false
-...(1)&gt;   end
-...(1)&gt; end
-{:module, GuardExample,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 56, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 150,
-   0, 0, 0, 15, 19, 69, 108, 105, 120, 105, 114, 46, 71, 117, 97, 114, 100, 69,
-   120, 97, 109, 112, 108, 101, 8, 95, 95, ...&gt;&gt;, {:is_a_number?, 1}}
-iex(2)&gt; GuardExample.is_a_number?(3)
-true
-iex(3)&gt; GuardExample.is_a_number?(3.14)
-true
-iex(4)&gt; GuardExample.is_a_number?("one")
-false</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>_value</code> catches everything that was not caught by the first <code>is_a_number?/1</code> definition.</td>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Since <code>"test"</code> is a string and not an integer, the ArgumentError that we
+wrote is raised.</td>
 </tr>
 </table>
 </div>
@@ -2544,7 +2551,7 @@ false</code></pre>
 <p></p>
 </div>
 <div class="paragraph">
-<p><code>case</code> is a controll structure which matches a given value to a couple of
+<p><code>case</code> is a control structure which matches a given value to a couple of
 matching cases until one matches.</p>
 </div>
 <div class="paragraph">
@@ -2570,10 +2577,7 @@ numbers to integers:</p>
 ...(1)&gt;     end
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Morse,
- &lt;&lt;70, 79, 82, 49, 0, 0, 6, 240, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 141,
-   0, 0, 0, 14, 12, 69, 108, 105, 120, 105, 114, 46, 77, 111, 114, 115, 101, 8,
-   95, 95, 105, 110, 102, 111, 95, 95, 7, ...&gt;&gt;, {:morse_to_number, 1}}
+{:module, Morse, ...
 iex(2)&gt; Morse.morse_to_number("-....") <i class="conum" data-value="4"></i><b>(4)</b>
 6</code></pre>
 </div>
@@ -2590,7 +2594,7 @@ iex(2)&gt; Morse.morse_to_number("-....") <i class="conum" data-value="4"></i><b
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>_</code> is the catch all in case nothing matched yet. In this case return an <code>:error</code> atom.</td>
+<td><code>_</code> is the catch-all in case nothing matched yet. In this case, return an <code>:error</code> atom.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -2599,8 +2603,7 @@ iex(2)&gt; Morse.morse_to_number("-....") <i class="conum" data-value="4"></i><b
 </table>
 </div>
 <div class="paragraph">
-<p>Of course we could solve this problem just with functions too. It&#8217;s up to you
-what makes most sense in a given situation.</p>
+<p>Of course, we could solve this problem just with functions too. It&#8217;s up to you what makes the most sense in a given situation.</p>
 </div>
 </div>
 </div>
@@ -2611,8 +2614,8 @@ what makes most sense in a given situation.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p><code>if</code> and <code>unless</code> are the classics in any programming language. The following
-examples will show how to use them:</p>
+<p><code>if</code> is common to many programming languages. <code>unless</code> is equivalent to <code>if
+not</code>. The following examples will show how to use them:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2629,7 +2632,7 @@ nil</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Sometimes you see a one line short form:</p>
+<p>Sometimes you see a one-line short form:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2663,27 +2666,28 @@ Most Elixir developers prefer <code>case</code> over <code>if</code> or <code>un
 <div class="paragraph">
 <p>A variable points to a specific part of the memory where the data is stored. In
 many programming languages that data can be changed to update a variable. In
-Elixir it can not be changed. So that doesn&#8217;t mean that you can&#8217;t rebind a
+Elixir, you can&#8217;t change it. So that doesn&#8217;t mean that you can&#8217;t rebind a
 variable to a different value but that this new value gets a new piece of memory
 and doesn&#8217;t overwrite the old memory. Once a function returns a result and
-therefor has finished it&#8217;s work everything gets garbage collected (wiped blank).</p>
+therefore, has finished its work, everything gets garbage collected (wiped
+blank).</p>
 </div>
 <div class="paragraph">
-<p>Why is that important at all? With immutable variables we can be absolutly sure
-that other processes can not change their values while running parallel tasks.
-That has a massive effect. At the end it means that your Phoenix application can
-run on multiple CPUs on the same server in parallel. It even means that your
-Phoenix application can share multiple CPUs on serveral nodes of a
-server-cluster in your data center. It makes Elixir extremly scalable and save.</p>
+<p>Why is that important at all? With immutable variables, we can be sure that
+other processes can not change their values while running parallel tasks.  That
+has a massive effect. In the end, it means that your Phoenix application can run
+on multiple CPUs on the same server in parallel. It even means that your Phoenix
+application can share multiple CPUs on several nodes of a server cluster in your
+data center; this makes Elixir extremely scalable and save.</p>
 </div>
 <div class="paragraph">
 <p>But doesn&#8217;t that make your application slower? Funny thing: No. This way is
-actually faster. It is not efficiant to change data in memory.</p>
+faster. It is not efficient to change data in memory.</p>
 </div>
 <div class="paragraph">
 <p>But don&#8217;t worry. It is not as complicated as it sounds. Everytime you use a
-variable it uses the value of that moment in time. It will not be effected/changed
-afterwords:</p>
+variable it uses the value of that moment in time. It will not be
+effected/changed afterwords:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2737,10 +2741,7 @@ Banana
 </div>
 <div class="paragraph">
 <p>Until now encapsulated Strings in double quotes and we haven&#8217;t talked about char
-lists at all (IMO not needed for a beginners introduction). But there is one more
-mechanism to represent texts. They are called <code>Sigils</code> and start with a <code>~</code> (tilde)
-character which is followed by on letter which indicates what kind of sigil it is.
-After that you can use a couple of different delimiters:</p>
+lists at all (IMO not needed for a beginners introduction). But there is one more mechanism to represent texts. They are called <code>Sigils</code> and start with a <code>~</code> (tilde) character which is followed by one letter which indicates what kind of sigil it is. After that, you can use a couple of different delimiters:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2793,7 +2794,7 @@ true</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Modifier are supported too. For a complete list have a look at <a href="https://hexdocs.pm/elixir/Regex.html" class="bare">https://hexdocs.pm/elixir/Regex.html</a></td>
+<td>Modifiers are supported too. For a complete list have a look at <a href="https://hexdocs.pm/elixir/Regex.html" class="bare">https://hexdocs.pm/elixir/Regex.html</a></td>
 </tr>
 </table>
 </div>
@@ -2816,7 +2817,8 @@ WOW! "double" and 'single' quotes without escaping
 </div>
 </div>
 <div class="paragraph">
-<p>Sigils support heredocs too. You can use triple double- or single-quotes as separatos:</p>
+<p>Sigils support heredocs too. You can use triple, double, or single quotes as
+separators:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2861,8 +2863,7 @@ iex(2)&gt; shopping_cart_atoms = ~w(apple orange banana)a <i class="conum" data-
 <div class="sect2">
 <h3 id="_date_and_time"><a class="anchor" href="#_date_and_time"></a>Date and Time</h3>
 <div class="paragraph">
-<p>Elixir provides a couple of good to go time related Struct[structs] which
-all have their own sigil.</p>
+<p>Elixir provides a couple of good to go time-related Struct[structs] which all have their sigil.</p>
 </div>
 <div class="sect3">
 <h4 id="_date"><a class="anchor" href="#_date"></a>Date</h4>
@@ -3001,12 +3002,11 @@ Find more information about timezones and DateTime at <a href="https://hexdocs.p
 <p></p>
 </div>
 <div class="paragraph">
-<p>Recursions are magic and can be a dangerous trap at the same time.
-Because of immutability they are more important in Elixir than in
-other objectoriented programming languages.</p>
+<p>Recursions are often used when you would use a loop in an object-oriented
+language.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s write a function recursion function which provides a countdown:</p>
+<p>Let&#8217;s write a recursive function which provides a countdown:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3020,10 +3020,7 @@ other objectoriented programming languages.</p>
 ...(1)&gt;     countdown(n - 1) <i class="conum" data-value="5"></i><b>(5)</b>
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Example,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 188, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 166,
-   0, 0, 0, 17, 14, 69, 108, 105, 120, 105, 114, 46, 69, 120, 97, 109, 112, 108,
-   101, 8, 95, 95, 105, 110, 102, 111, 95, ...&gt;&gt;, {:countdown, 1}}
+{:module, Example, ...
 iex(2)&gt; Example.countdown(4) <i class="conum" data-value="6"></i><b>(6)</b>
 4
 3
@@ -3048,7 +3045,7 @@ iex(2)&gt; Example.countdown(4) <i class="conum" data-value="6"></i><b>(6)</b>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>We either have to use <code>Integer.to_string(n)</code> (we could to a "#{n}" too) to print that integer to STDOUT.</td>
+<td>We have to use <code>Integer.to_string(n)</code> to print the integer to STDOUT.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -3074,10 +3071,7 @@ iex(2)&gt; Example.countdown(4) <i class="conum" data-value="6"></i><b>(6)</b>
 ...(1)&gt;     head + sum(tail) <i class="conum" data-value="3"></i><b>(3)</b>
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Example,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 12, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 127,
-   0, 0, 0, 14, 14, 69, 108, 105, 120, 105, 114, 46, 69, 120, 97, 109, 112, 108,
-   101, 8, 95, 95, 105, 110, 102, 111, 95, ...&gt;&gt;, {:sum, 1}}
+{:module, Example, ...
 iex(2)&gt; Example.sum([10, 8, 12, 150]) <i class="conum" data-value="4"></i><b>(4)</b>
 180
 iex(3)&gt; [head | tail] = [150] <i class="conum" data-value="5"></i><b>(5)</b>
@@ -3125,10 +3119,7 @@ we want to double the value of every element of a list:</p>
 ...(1)&gt;     [head * 2 | double(tail)] <i class="conum" data-value="2"></i><b>(2)</b>
 ...(1)&gt;   end
 ...(1)&gt; end
-{:module, Example,
- &lt;&lt;70, 79, 82, 49, 0, 0, 5, 40, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 130,
-   0, 0, 0, 14, 14, 69, 108, 105, 120, 105, 114, 46, 69, 120, 97, 109, 112, 108,
-   101, 8, 95, 95, 105, 110, 102, 111, 95, ...&gt;&gt;, {:double, 1}}
+{:module, Example, ...
 iex(2)&gt; Ex
 Example      Exception
 iex(2)&gt; Example.double([10, 5, 999])
@@ -3150,15 +3141,16 @@ iex(2)&gt; Example.double([10, 5, 999])
 <div class="sect2">
 <h3 id="_how_to_tackle_a_recursion"><a class="anchor" href="#_how_to_tackle_a_recursion"></a>How to tackle a recursion</h3>
 <div class="paragraph">
-<p>Unless you are doing this every day you will get to problems where you know that a
-recursion is a good solution but you just can&#8217;t think of a good recursion for it.</p>
+<p>Unless you are doing this every day, you will get to problems where you know
+that recursion is a good solution, but you just can&#8217;t think of a good recursion
+for it.</p>
 </div>
 <div class="paragraph">
 <p>Let me share a pro tip for these situations: <a href="https://www.google.com" class="bare">https://www.google.com</a> and
-<a href="https://stackoverflow.com" class="bare">https://stackoverflow.com</a> are my life-saver in such situations. No embarrassment!</p>
+<a href="https://stackoverflow.com" class="bare">https://stackoverflow.com</a> are my lifesavers in such cases. No embarrassment!</p>
 </div>
 <div class="paragraph">
-<p>During this book we will work with recursions. So you&#8217;ll get a better feeling for
+<p>During this book, we will work with recursions. So you&#8217;ll get a better feeling for
 it.</p>
 </div>
 </div>
@@ -3171,8 +3163,8 @@ it.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>By now you understand the basics of Elixir. The next step is to create an
-application. In the Elixir ecosystem this is done with the (already installed)
+<p>By now, you understand the basics of Elixir. The next step is to create an
+application. In the Elixir ecosystem, this is done with the (already installed)
 command-line interface (CLI) <code>mix</code>. Let&#8217;s do that for a "Hello world!"
 application:</p>
 </div>
@@ -3219,7 +3211,7 @@ $ tree
 </div>
 </div>
 <div class="paragraph">
-<p>The Phoenix directory structure will be more complex but has the same core.</p>
+<p>The Phoenix directory structure will be more involved but has the same core.</p>
 </div>
 </div>
 </div>
@@ -3230,8 +3222,8 @@ $ tree
 <p></p>
 </div>
 <div class="paragraph">
-<p>A task is the mechanism to start code with <code>mix</code>. For our "Hello world!"
-programm we have to create the directory <code>lib/mix/tasks</code> and create the file
+<p>A task is a mechanism to start code with <code>mix</code>. For our "Hello world!"
+programme we have to create the directory <code>lib/mix/tasks</code> and create the file
 <code>lib/mix/tasks/start.ex</code> with this code:</p>
 </div>
 <div class="paragraph">
@@ -3268,7 +3260,7 @@ Hello world!</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>.ex</code> file gets compiled and the <code>start</code> task gets run. The compile is only
+<p>The <code>.ex</code> file gets compiled, and the <code>start</code> task gets run. The compile is only
 done when needed. If we call <code>mix start</code> a second time no compile is needed:</p>
 </div>
 <div class="listingblock">
@@ -3278,9 +3270,10 @@ Hello world!</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Obviously <code>mix</code> as a topic is much more complex. In this section I just wanted
-to show you the very basic idea of mix. So that you know where to search if you
-want to know what happens if you do a <code>mix server</code> with a Phoenix application.</p>
+<p>Obviously <code>mix</code> as a topic is much more complicated. In this section, I just
+wanted to show you the very basic idea of <code>mix</code> so that you know where to search
+if you want to know what happens if you do a <code>mix server</code> with a Phoenix
+application.</p>
 </div>
 </div>
 </div>
@@ -3296,7 +3289,7 @@ your Phoenix application and it will autoformat all your Elixir source code
 files.</p>
 </div>
 <div class="paragraph">
-<p>You should use <code>mix format</code> everytime you are going to commit code to a
+<p>You should use <code>mix format</code> every time you are going to commit code to a
 repository.</p>
 </div>
 </div>
@@ -3319,16 +3312,15 @@ books:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://pragprog.com/book/cdc-elixir/learn-functional-programming-with-elixir">Learn Functional Programming with Elixir</a> by Ulisses Almeida ([@ulissesalmeida
-](<a href="https://twitter.com/ulissesalmeida)" class="bare">https://twitter.com/ulissesalmeida)</a>)</p>
+<p><a href="https://pragprog.com/book/cdc-elixir/learn-functional-programming-with-elixir">Learn Functional Programming with Elixir</a> by Ulisses Almeida (<a href="https://twitter.com/ulissesalmeida">@ulissesalmeida</a>)</p>
 <div class="paragraph">
-<p>In my opinion the best beginners book for Elixir.</p>
+<p>In my opinion, the best beginners book for Elixir.</p>
 </div>
 </li>
 <li>
-<p><a href="https://twitter.com/pragdave)">Programming Elixir 1.6</a>(<a href="https://pragprog.com/book/elixir16/programming-elixir-1-6" class="bare">https://pragprog.com/book/elixir16/programming-elixir-1-6</a>) by Dave Thomas ([@pragdave]</p>
+<p>[Programming Elixir 1.6](<a href="https://pragprog.com/book/elixir16/programming-elixir-1-6" class="bare">https://pragprog.com/book/elixir16/programming-elixir-1-6</a>) by Dave Thomas (<a href="https://twitter.com/pragdave">@pragdave</a>)</p>
 <div class="paragraph">
-<p>Dave - as always - wrote a very book book which shines a light into many details.</p>
+<p>Dave - as always - wrote a very book which shines a light into many details.</p>
 </div>
 </li>
 </ul>
@@ -3345,7 +3337,7 @@ books:</p>
 </div>
 <footer class="footer">
   <p>Copyright (C) 2020-2020 Stefan Wintermeyer - <a href="https://www.wintermeyer-consulting.de">wintermeyer-consulting.de</a> - Twitter: <a href="https://twitter.com/wintermeyer">@wintermeyer</a></p>
-  <p>This webpage was build with <a href="https://antora.org">Antora</a>.</p>
+  <p>This webpage was built with <a href="https://antora.org">Antora</a>.</p>
 </footer>
 <script src="../../antora-assets/js/site.js"></script>
 <script async src="../../antora-assets/js/vendor/highlight.js"></script>
