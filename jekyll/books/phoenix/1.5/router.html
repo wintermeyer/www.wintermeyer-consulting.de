@@ -189,15 +189,18 @@
     <a class="nav-link" href="ecto-basics.html#ecto-seeds">Seeds</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="ecto-basics.html#ecto-list">Return all Entries of a Table</a>
+    <a class="nav-link" href="ecto-basics.html#ecto-query">Querying the Database</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="ecto-basics.html#ecto-get">Return one Entry of a Table by ID</a>
+    <a class="nav-link" href="ecto-basics.html#ecto-update">Update an Entry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-associations">Associations</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="index.html#training">Remote Training</a>
+    <a class="nav-link" href="index.html#remote-training">Remote training for beginners</a>
   </li>
 </ul>
   </li>
@@ -242,12 +245,12 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>We have used <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html">Phoenix.Router</a>
-plenty of times in <a href="phoenix-basics.html" class="page">Phoenix Basics</a> and you already
-understand the concept. So this is just a small chapter with some useful
-details.</p>
+plenty of times in <a href="phoenix-basics.html" class="page">Phoenix Basics</a>, and you probably
+already understand the basics. So this is just a small chapter with some useful
+extra details.</p>
 </div>
 <div class="paragraph">
-<p>All code in this chapter will result form this base application:</p>
+<p>All code in this chapter will result from this base application:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -259,7 +262,11 @@ $ cd demo</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We don&#8217;t include the <a href="https://hexdocs.pm/phoenix_live_dashboard/Phoenix.LiveDashboard.html">Phoenix.LiveDashboard</a> (--no-dashboard) to keep our router setup tidy. Otherwise, a million routes would leave just to the real-time performance monitoring dashboard, which is not a topic in this chapter.</td>
+<td>We don&#8217;t include the
+<a href="https://hexdocs.pm/phoenix_live_dashboard/Phoenix.LiveDashboard.html">Phoenix.LiveDashboard</a>
+(--no-dashboard) to keep our router setup tidy. Otherwise, there will be many
+routes created just for the real-time performance monitoring dashboard, which
+is not a topic in this chapter.</td>
 </tr>
 </table>
 </div>
@@ -293,7 +300,8 @@ end</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For us, relevant is just the last <code>/</code> part.</p>
+<p>At this stage, we will concentrate on the last function, which starts with
+<code>scope "/"</code>.</p>
 </div>
 </div>
 </div>
@@ -301,7 +309,8 @@ end</pre>
 <h2 id="mix-phx-routes"><a class="anchor" href="#mix-phx-routes"></a>Display existing routes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With the command <code>mix phx.routes</code> you get a list of all defined routes. In our vanilla demo system this is the output:</p>
+<p>Running the command <code>mix phx.routes</code> will return a list of all defined routes.
+In our vanilla demo system, this is the output:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -316,11 +325,14 @@ websocket  WS   /socket/websocket    DemoWeb.UserSocket <i class="conum" data-va
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This route is for a HTTP GET request for the root path - which gets matched by <code>/</code> - of our application. It triggers the <code>:index</code> action in the <code>DemoWeb.PageController</code> controller.</td>
+<td>This route is for a HTTP GET request for the root path - which gets matched
+by <code>/</code> - of our application. It triggers the <code>:index</code> action in the
+<code>DemoWeb.PageController</code> controller.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>No need to discuss <code>websockets</code> in this chapter. <mark>I will remove that line in following exampless to clean up the output.</mark></td>
+<td>No need to discuss <code>websockets</code> in this chapter. <mark>I will remove that line
+in following examples to clean up the output.</mark></td>
 </tr>
 </table>
 </div>
@@ -331,7 +343,9 @@ websocket  WS   /socket/websocket    DemoWeb.UserSocket <i class="conum" data-va
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In more complex applications with a dashboard, the output of <code>mix phx.routes</code> gets quite a bit longer. Then <code>mix phx.routes | grep "whatever-you-search"</code> becomes a convenient tool on the command line.
+In more complex applications with a dashboard, the output of <code>mix
+phx.routes</code> gets quite a bit longer. Then <code>mix phx.routes | grep
+"<em>search-item</em>"</code> is a useful way of filtering the output.
 </td>
 </tr>
 </table>
@@ -342,10 +356,9 @@ In more complex applications with a dashboard, the output of <code>mix phx.route
 <h2 id="router-params"><a class="anchor" href="#router-params"></a>Params</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Often you have some sort of ID in the URL or other params you need to access in your application. And sometimes you want that to handle that in the router.</p>
-</div>
-<div class="paragraph">
-<p>We create a product view of our <code>demo</code> application to show how it&#8217;s working. We have to touch/create three files to make this happen:</p>
+<p>There are many times when you will want to set a parameter, such as ID, in the
+route. The following example will look at how we can set the parameter in the
+router, and how we can access it in the controller.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/router.ex</div>
@@ -366,7 +379,8 @@ end
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We ask the router to match everything at that position to the parameter <code>:id</code>.</td>
+<td>We ask the router to match everything at that position to the parameter
+<code>:id</code>.</td>
 </tr>
 </table>
 </div>
@@ -378,7 +392,7 @@ end
 
   def show(conn, %{"id" =&gt; id}) do <i class="conum" data-value="1"></i><b>(1)</b>
     conn
-    |&gt; assign(:id, id)
+    |&gt; assign(:id, id) <i class="conum" data-value="2"></i><b>(2)</b>
     |&gt; render("show.html")
   end
 end</code></pre>
@@ -389,6 +403,12 @@ end</code></pre>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>We match the <code>id</code> in the params.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>In this example, we just add the id to the <code>assigns</code> map. Normally, we
+would have fetched the product with that ID from the database and manipulated
+the data before rendering the template.</td>
 </tr>
 </table>
 </div>
@@ -410,13 +430,13 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Just a simple display. Normally we would have fetched the product with that id from our database and display it.</td>
+<td>Just a simple display.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>If you open <a href="http://localhost:4000/products/1" class="bare">http://localhost:4000/products/1</a> with your browser you&#8217;ll see this
-log entry:</p>
+<p>If you open <a href="http://localhost:4000/products/1" class="bare">http://localhost:4000/products/1</a> in your browser, you&#8217;ll see this
+log entry in the terminal:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -428,7 +448,7 @@ log entry:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>And just as a final proof the screenshot:</p>
+<p>And here is the screenshot:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -438,14 +458,14 @@ log entry:</p>
 <div class="sect2">
 <h3 id="router-query-string"><a class="anchor" href="#router-query-string"></a>Query String</h3>
 <div class="paragraph">
-<p>Query Strings don&#8217;t belong in the router but are handled very similarly to the above params in the controller.</p>
+<p>To handle query strings, we do not need to add anything to the router. We just
+need to make some small changes to the controller.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s assume we want to add the query string "color=blue" to our product request:
-<a href="http://localhost:4000/products/1?color=blue" class="bare">http://localhost:4000/products/1?color=blue</a></p>
-</div>
-<div class="paragraph">
-<p>We can&#8217;t match for it in the router but Phoenix does realize what happens:</p>
+<p>For example, if we add the query string "color=blue" to our product request
+(<a href="http://localhost:4000/products/1?color=blue" class="bare">http://localhost:4000/products/1?color=blue</a>) and open this URL in the browser,
+we can see from the log entry (shown below) that Phoenix has automatically
+added <code>color</code> to the <code>params</code> (parameters) map.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -460,12 +480,14 @@ log entry:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Both parameter become part of the <code>params</code> map.</td>
+<td>Both parameters have been added to the <code>params</code> map.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Without doing anything in the router, the query string parameter <code>color</code> finds it&#8217;s way into the controller. But we have to change the controller a bit:</p>
+<p>Without adding anything to the router, the query string parameter <code>color</code> can
+be accessed in the controller, but we need to make a few changes to the
+controller:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/controllers/product_controller.ex</div>
@@ -511,7 +533,10 @@ end</code></pre>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The order of the <code>show/2</code> functions in the controller is significant. If we use the other order for this specific example the <code>%{"id" &#8658; id, "color" &#8658; color}</code> would never match because <code>%{"id" &#8658; id}</code> always matches first if it&#8217;s the first function.
+The order of the <code>show/2</code> functions in the controller is
+significant. If we use the other order for this specific example the <code>%{"id" &#8658;
+id, "color" &#8658; color}</code> would never match because <code>%{"id" &#8658; id}</code> always matches
+first if it&#8217;s the first function.
 </td>
 </tr>
 </table>
@@ -533,7 +558,9 @@ The order of the <code>show/2</code> functions in the controller is significant.
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Because we call this template from two different functions we have to take care of the case when the color assign hasn&#8217;t taken place. The alternative would be a different template for each function.</td>
+<td>Because we call this template from two different functions we have to take
+care of the case when the color assigns hasn&#8217;t taken place. Alternatively,
+we could use a different template for each function.</td>
 </tr>
 </table>
 </div>
@@ -543,7 +570,7 @@ The order of the <code>show/2</code> functions in the controller is significant.
 </div>
 </div>
 <div class="paragraph">
-<p>A view on the routes:</p>
+<p>A view of the routes:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -575,7 +602,8 @@ product_path  GET  /products/:id                          DemoWeb.ProductControl
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We use the <code>DemoWeb.ProductController :show</code> route and add the <code>id</code> to it. To increase the current <code>@id</code> we have to call <code>String.to_integer/1</code> first.</td>
+<td>We use the <code>DemoWeb.ProductController :show</code> route and add the <code>id</code> to it.
+To increase the current <code>@id</code> we have to call <code>String.to_integer/1</code> first.</td>
 </tr>
 </table>
 </div>
@@ -583,7 +611,8 @@ product_path  GET  /products/:id                          DemoWeb.ProductControl
 <div class="sect2">
 <h3 id="_link_with_query"><a class="anchor" href="#_link_with_query"></a>Link with query</h3>
 <div class="paragraph">
-<p>Assuming you&#8217;d like to link to the first product with the query "color=orange" you&#8217;d have to use this code:</p>
+<p>And if you would like to link to the first product with the query
+"color=orange", you would use this code:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/controllers/product_controller.ex</div>
@@ -601,7 +630,7 @@ product_path  GET  /products/:id                          DemoWeb.ProductControl
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This results in a link to <code><a href="http://localhost:4000/products/1?color=orange" class="bare">http://localhost:4000/products/1?color=orange</a></code></td>
+<td>This returns a link to <code><a href="http://localhost:4000/products/1?color=orange" class="bare">http://localhost:4000/products/1?color=orange</a></code></td>
 </tr>
 </table>
 </div>
@@ -613,7 +642,7 @@ product_path  GET  /products/:id                          DemoWeb.ProductControl
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the previous easy code examples, we always put the routes on the first level.
-But of course, you can use sublevel paths too. Here&#8217;s an example:</p>
+But of course, you can use paths with sublevels too. Here&#8217;s an example:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/router.ex</div>
@@ -678,7 +707,8 @@ end
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The parameter <code>an</code> which is automatically named as the last match segment contains the whole match. You can use that to to some interesting things.</td>
+<td>The parameter is automatically named <code>an</code>, and it contains the whole match.
+You can use that to do some interesting things.</td>
 </tr>
 </table>
 </div>
@@ -688,7 +718,10 @@ end
 <h2 id="_misc"><a class="anchor" href="#_misc"></a>Misc</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There&#8217;s no need to replicate the official documentation in this chapter. By now, you understand the concept of <code>Phoenix.Router</code>. You&#8217;ll find solutions for all the exceptional cases which are not handled in this chapter in the official documentation at <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html" class="bare">https://hexdocs.pm/phoenix/Phoenix.Router.html</a></p>
+<p>There&#8217;s no need to replicate the official documentation in this chapter. By
+now, you understand the concept of <code>Phoenix.Router</code>. You&#8217;ll find solutions for
+all the exceptional cases which are not handled in this chapter in the official
+documentation at <a href="https://hexdocs.pm/phoenix/Phoenix.Router.html" class="bare">https://hexdocs.pm/phoenix/Phoenix.Router.html</a></p>
 </div>
 </div>
 </div>

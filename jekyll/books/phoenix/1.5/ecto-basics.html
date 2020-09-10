@@ -189,15 +189,18 @@
     <a class="nav-link" href="#ecto-seeds">Seeds</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#ecto-list">Return all Entries of a Table</a>
+    <a class="nav-link" href="#ecto-query">Querying the Database</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#ecto-get">Return one Entry of a Table by ID</a>
+    <a class="nav-link" href="#ecto-update">Update an Entry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#ecto-associations">Associations</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="index.html#training">Remote Training</a>
+    <a class="nav-link" href="index.html#remote-training">Remote training for beginners</a>
   </li>
 </ul>
   </li>
@@ -243,7 +246,8 @@
 <div class="paragraph">
 <p>Ecto is a persistence framework for Elixir. That is a fancy way of saying that
 we use Ecto to talk to a SQL database. This chapter will introduce you to the
-very basics of Ecto in the Phoenix context. Which means that whenever available, we use functions that were created by Phoenix generators.</p>
+very basics of Ecto in the Phoenix context. This means that whenever available,
+we use functions that were created by Phoenix generators.</p>
 </div>
 <div class="paragraph">
 <p>You&#8217;ll learn:</p>
@@ -285,10 +289,10 @@ very basics of Ecto in the Phoenix context. Which means that whenever available,
 <td class="content">
 <div class="paragraph">
 <p>We are going to use a <a href="https://www.postgresql.org">PostgreSQL</a> database. Ecto
-works fine with other databases too (e.g. <a href="https://mariadb.com">MariaDB</a>) but most
+works fine with other databases too (e.g. <a href="https://mariadb.com">MariaDB</a>), but most
 Phoenix developers prefer PostgreSQL. For this book, we assume that you have a
-PostgreSQL user on your development system which was granted the right to create
-a database and which has the following credentials:</p>
+PostgreSQL user on your development system with the right to create a database
+and the following credentials:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -350,16 +354,16 @@ The database for Bookstore.Repo has been created</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-In case you want to drop this database (e.g. to re-run the
-<code>mix ecto.create</code> command) you can do so with the command <code>mix ecto.drop</code>
+In case you want to drop this database (e.g. to rerun the <code>mix
+ecto.create</code> command) you can do so with the command <code>mix ecto.drop</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>The configuration for this development database can be found in the file
-<code>config/dev.exs</code>. Please change that in case you use a different database or
-user.</p>
+<code>config/dev.exs</code>. Please make changes to that file if you use a different
+database or user.</p>
 </div>
 <div class="listingblock">
 <div class="title">config/dev.exs</div>
@@ -383,7 +387,10 @@ config :bookstore, Bookstore.Repo,
 <h2 id="ecto-create-table"><a class="anchor" href="#ecto-create-table"></a>Create a Table</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The generator <code>mix phx.gen.context</code> (<a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html" class="bare">https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html</a>) can be used to create a context with a couple of useful functions around an Ecto schema.</p>
+<p>For this example, we are going to use the <code>mix phx.gen.context</code>
+generator(<a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html" class="bare">https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Context.html</a>), which
+creates a database table and adds files that are useful for working with the
+new table.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -392,14 +399,15 @@ config :bookstore, Bookstore.Repo,
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can do everything a generator does manually, but it is faster and results in fewer errors if you use a generator.
+You can do everything a generator does manually, but it is faster and
+results in fewer errors if you use a generator.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>As a first resource, we want to create a table with authors. In the Phoenix world
-we have to put that new resource <code>authors</code> into a context.</p>
+<p>As a first resource, we want to create a table with authors. In the Phoenix
+world, we have to put that new resource <code>authors</code> into a context.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -408,9 +416,12 @@ we have to put that new resource <code>authors</code> into a context.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-A context is an API boundary for one or more resources. It was included in
-Phoenix with version 1.3. Don&#8217;t lose any sleep on the question of what a context is. You&#8217;ll get a feeling about it soon. Good naming of contexts is
-essential but not at this stadium of your Ecto learning process.
+A context(<a href="https://hexdocs.pm/phoenix/contexts.html" class="bare">https://hexdocs.pm/phoenix/contexts.html</a>) is an API boundary for
+one or more resources. Since version 1.3 of Phoenix, it has been recommended to
+organize the code that interfaces with the database using contexts, as this can
+help make the code easier to test, maintain and refactor. At this stage, don&#8217;t
+worry if you find the idea of contexts difficult to understand. You will soon
+get a feel for them as you work through the examples.
 </td>
 </tr>
 </table>
@@ -430,11 +441,28 @@ Remember to update your repository by running migrations:
     $ mix ecto.migrate</code></pre>
 </div>
 </div>
+<div class="sect2">
+<h3 id="ecto-migrations"><a class="anchor" href="#ecto-migrations"></a>Migrations</h3>
 <div class="paragraph">
-<p>Migrations are used to keep track of the process of generating or changing your database. If you are in a team of multiple developers, migrations are the tool so that you don&#8217;t pull each other&#8217;s carpets.</p>
+<p>Migrations are used to keep track of the process of generating or changing your
+database. This makes it a lot easier to keep all the databases, of other
+developers in your team, the production server, etc., synchronized.</p>
 </div>
 <div class="paragraph">
-<p>The migration the generator created is stored in the file <code>priv/repo/migrations/20200526112425_create_authors.exs</code>. What is does is pretty clear once you have a look into it:</p>
+<p>The generated migration is stored in the file <code>priv/repo/migrations/20200526112425_create_authors.exs</code>. What it does is pretty clear once you have a look into it:</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Migration filenames include a timestamp. It is better not to copy and
+paste the migration filenames as you work through this chapter.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">priv/repo/migrations/20200526112425_create_authors.exs</div>
@@ -459,7 +487,10 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>timestamps()</code> generates the fields <code>updated_at</code> and <code>inserted_at</code>. Both are updated with the current timestamp during the creation of a dataset. Afterwards, only <code>updated_at</code> is updated with the current timestamp whenever Ecto changes that dataset.</td>
+<td><code>timestamps()</code> generates the fields <code>updated_at</code> and <code>inserted_at</code>. Both are
+updated with the current timestamp during the creation of a dataset. Afterwards,
+only <code>updated_at</code> is updated with the current timestamp whenever Ecto changes
+that dataset.</td>
 </tr>
 </table>
 </div>
@@ -480,8 +511,8 @@ Generated bookstore app
 </div>
 </div>
 <div class="paragraph">
-<p>The migration script created the table <code>authors</code> in the database <code>bookstore_dev</code>.
-But let&#8217;s double check:</p>
+<p>According to this output, the <code>authors</code> table was created in the <code>bookstore_dev</code>
+database. But let&#8217;s double check:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -515,12 +546,12 @@ bookstore_dev=# \q <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>\q</code> is the command to quit the command-line client.</td>
+<td><code>\q</code> is the command to quit the PostgreSQL command-line client.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The migration created that table and added the columns.</p>
+<p>We can see that the migration created the <code>authors</code> table and added the columns.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -544,7 +575,7 @@ bookstore_dev=# \q <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In case you test the rollback now you have to run the migration again
+<p>If you test the rollback now, you will have to run the migration again
 afterwards.</p>
 </div>
 </td>
@@ -552,20 +583,10 @@ afterwards.</p>
 </table>
 </div>
 <div class="paragraph">
-<p><code>phx.gen.context</code> generated in addition to the migration the schema in <code>lib/bookstore/store/author.ex</code> and the context module <code>lib/bookstore/store.ex</code>. We&#8217;ll tackle both in the next section.</p>
+<p><code>phx.gen.context</code> generated, in addition to the migration file, the schema in
+<code>lib/bookstore/store/author.ex</code> and the context module in
+<code>lib/bookstore/store.ex</code>. We&#8217;ll look at both of these files in the next section.</p>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Migration filenames include a timestamp. Obviously, you are doing this at a later time than I. So you have to adjust the filenames in this chapter
-accordingly. No copy and paste for migration filenames!
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -574,10 +595,10 @@ accordingly. No copy and paste for migration filenames!
 <div class="sectionbody">
 <div class="paragraph">
 <p>We have a database and a table. But we still need to create our first set of
-data. To do that we have to open the <code>iex</code>. Within a Phoenix project, we can do
+data. To do that, we have to open <code>iex</code>. Within a Phoenix project, we can do
 this with the command <code>iex -S mix phx.server</code>. It loads the whole Phoenix
 project. It starts the webserver too (you see it sorting out the assets
-during startup) but right now we only use the <code>iex</code>.</p>
+during startup) but right now we only use <code>iex</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -594,12 +615,14 @@ iex(1)&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Actually you will see a couple of more messages here which are related to the asset pipeline (e.g. CSS and JavaScript). No need to bother with that now.</td>
+<td>Actually you will see a couple of more messages here which are related to
+the assets pipeline (e.g. CSS and JavaScript). No need to bother with those now.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The context module <code>lib/bookstore/store.ex</code> includes the <code>create_author/1</code> function which we use to create a new author:</p>
+<p>The context module in <code>lib/bookstore/store.ex</code> includes the <code>create_author/1</code>
+function which we use to create a new author:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -626,8 +649,8 @@ INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at",
 </td>
 <td class="content">
 Use <code>alias Bookstore.Store</code> at the beginning of an <code>iex</code> session and
-afterwards <code>Store.create_author()</code> to save typing time. Often makes code easier
-to read.
+afterwards <code>Store.create_author()</code> to save typing time. This can make the code
+easier to read.
 </td>
 </tr>
 </table>
@@ -640,7 +663,8 @@ to read.
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If you wander what <code>create_author/1</code> exactly does:</p>
+<p>If you are wondering what <code>create_author/1</code> does, look at the
+<code>lib/bookstore/store.ex</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/bookstore/store.ex</div>
@@ -661,11 +685,13 @@ end
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Creates a new Author changeset with the attributes.</td>
+<td>Creates a new Author changeset with the attributes.
+Changesets(<a href="https://hexdocs.pm/ecto/Ecto.Changeset.html" class="bare">https://hexdocs.pm/ecto/Ecto.Changeset.html</a>) are structs that can be
+used to filter, cast and validate the data.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Uses <code>Repo</code> to insert the changeset into the table.</td>
+<td>Uses <code>Bookstore.Repo</code> to insert the changeset into the database table.</td>
 </tr>
 </table>
 </div>
@@ -685,7 +711,9 @@ end
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Assuming you&#8217;d like to assign the new author to the variable <code>author</code>. How would you do that? <code>create_author/1</code> results in a tuple and not an Author. Pattern matching for the rescue! Example:</p>
+<p>Assuming you&#8217;d like to assign the new author to the variable <code>author</code>. How would
+you do that? <code>create_author/1</code> returns a tuple and not an Author. Pattern
+matching to the rescue! Example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -761,8 +789,8 @@ and it lists the reasons in the <code>errors</code> list:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>It seems that some sort of data validation happens. To understand that we have
-to look into <code>lib/bookstore/store/author.ex</code></p>
+<p>It seems that some sort of data validation is happening. To understand how this
+works, we have to look at the <code>lib/bookstore/store/author.ex</code> file.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/bookstore/store/author.ex</div>
@@ -780,10 +808,10 @@ to look into <code>lib/bookstore/store/author.ex</code></p>
   end
 
   @doc false
-  def changeset(author, attrs) do <i class="conum" data-value="2"></i><b>(2)</b>
+  def changeset(author, attrs) do
     author
-    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account]) <i class="conum" data-value="3"></i><b>(3)</b>
-    |&gt; validate_required([:first_name, :last_name, :twitter_account]) <i class="conum" data-value="4"></i><b>(4)</b>
+    |&gt; cast(attrs, [:first_name, :last_name, :twitter_account]) <i class="conum" data-value="2"></i><b>(2)</b>
+    |&gt; validate_required([:first_name, :last_name, :twitter_account]) <i class="conum" data-value="3"></i><b>(3)</b>
   end
 end</code></pre>
 </div>
@@ -796,20 +824,22 @@ end</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><a href="https://hexdocs.pm/ecto/Ecto.Changeset.html">Ecto.Changeset</a> is a mechanism to filter, cast and validate the data.</td>
+<td><a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#cast/4">cast/4</a> casts the input.
+Only fields which are listed in the list can make it through. Everything else is
+thrown away right here.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#cast/4">cast/4</a> casts the input. Only fields which are listed in the list can make it through. Everything else is thrown away right there.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Here&#8217;s the reason why <code>Bookstore.Store.create_author(%{})</code> resulted in an error. The function <a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#validate_required/3">validate_required/3</a> checks weather all the list items are included.</td>
+<td>Here&#8217;s the reason why <code>Bookstore.Store.create_author(%{})</code> resulted in an
+error. The function
+<a href="https://hexdocs.pm/ecto/Ecto.Changeset.html#validate_required/3">validate_required/3</a>
+checks whether all the list items are included.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Changesets are the gatekeepers of Ecto. Let&#8217;s add some validations to our author changeset as an example:</p>
+<p>Changesets are the gatekeepers of Ecto. In the next example, let&#8217;s add some more
+validations to our author changeset:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/bookstore/store/author.ex</div>
@@ -896,8 +926,12 @@ shouldn&#8217;t happen because it is unique. We have to add a validation for tha
 </div>
 <div class="paragraph">
 <p>A uniqueness validation needs a uniqueness database index. Since we haven&#8217;t
-added an index during the creation of the <code>authors</code> table we have to add a
-migration to do it now:</p>
+added an index during the creation of the <code>authors</code> table, we have to add a
+migration to do it now.</p>
+</div>
+<div class="paragraph">
+<p>To add a migration, we first need to create a migration file using the <code>mix
+ecto.gen.migration</code> command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -907,7 +941,8 @@ Compiling 1 file (.ex)
 </div>
 </div>
 <div class="paragraph">
-<p>The generator created the migration file. But we have to fill it with live:</p>
+<p>Next, we have to edit the generated file, adding a function to create a unique
+index:</p>
 </div>
 <div class="listingblock">
 <div class="title">priv/repo/migrations/20200527054827_add_twitter_account_index.exs</div>
@@ -922,7 +957,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Run the migration:</p>
+<p>And finally, we need to run the migration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -941,24 +976,28 @@ Key (twitter_account)=(pragdave) is duplicated.
 </div>
 </div>
 <div class="paragraph">
-<p>Ups! Because we have two entries with the same <code>twitter_account</code> the unique
+<p>Oops! Because we have two entries with the same <code>twitter_account</code> the unique
 index can not be created. We can solve this in the following ways:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Delete one entry in the table and re-run the migration.</p>
+<p>Delete one entry in the table and rerun the migration.</p>
 </li>
 <li>
-<p>Do a <code>mix ecto.drop</code>, <code>mix ecto.create</code> and <code>mix ecto.migrate</code>. That destroys the existing data. Since this is a development system, there is little harm.</p>
+<p>Do a <code>mix ecto.drop</code>, <code>mix ecto.create</code> and <code>mix ecto.migrate</code>. That destroys
+the existing data. Since this is a development system, there is little harm in
+doing this.</p>
 </li>
 <li>
-<p>Do a <code>mix ecto.reset</code> which does all the above. Plus it populates the database with seeds if you have them. We don&#8217;t have seeds yet.</p>
+<p>Do a <code>mix ecto.reset</code>, which is an alias (defined in the <code>mix.exs</code> file) for
+the above set of commands. It also populates the database with seeds if you
+have them. We don&#8217;t have any seeds yet.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>We take the shortcut <code>mix ecto.reset</code>:</p>
+<p>We will use the alias <code>mix ecto.reset</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1000,8 +1039,11 @@ The database for Bookstore.Repo has been created <i class="conum" data-value="2"
 </table>
 </div>
 <div class="paragraph">
-<p>The uniqueness index in the table does make sure that we can&#8217;t add a second author with the same Twitter account to the table, but this constraint violation
-would raise an exception. Better than nothing but not what we want. We want an error to our changeset. So we have to add one more line to the changeset:</p>
+<p>The uniqueness index in the table does make sure that we can&#8217;t add a second
+author with the same Twitter account to the table, but this constraint violation
+raises an exception. This is better than nothing, but not what we want. We
+want an error added to our changeset, and so we have to add one more line to the
+changeset:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/bookstore/store/author.ex</div>
@@ -1076,7 +1118,10 @@ us that the dataset is saved.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Works too. The second attempt to create an entry with the same data results in <code>{:error, #Ecto.Changeset}</code>. The <code>errors</code> tell us that <code>twitter_account: {"has already been taken", [constraint: :unique, constraint_name: "authors_twitter_account_index"]}</code>.</td>
+<td>Works too. The second attempt to create an entry with the same data results
+in <code>{:error, #Ecto.Changeset}</code>. The <code>errors</code> tell us that <code>twitter_account:
+{"has already been taken", [constraint: :unique, constraint_name:
+"authors_twitter_account_index"]}</code>.</td>
 </tr>
 </table>
 </div>
@@ -1084,7 +1129,12 @@ us that the dataset is saved.</td>
 <div class="sect2">
 <h3 id="_uniqueness_over_multiple_fields"><a class="anchor" href="#_uniqueness_over_multiple_fields"></a>Uniqueness over multiple fields</h3>
 <div class="paragraph">
-<p>Sometimes you need to assure a uniqueness not just over one but over multiple fields. To show how this is done, I assume that our <code>authors</code> table should not contain two authors with the same full name (e.g. no two <code>Dave Thomas</code> or <code>Stefan Wintermeyer</code>). To achieve that we have to check <code>fist_name</code> and <code>last_name</code> in combination. We have to do that in the database with a combined index.</p>
+<p>Sometimes you need to assure a uniqueness not just over one but over multiple
+fields. To show how this is done, I assume that our <code>authors</code> table should not
+contain two authors with the same full name (e.g. no two <code>Dave Thomas</code> or
+<code>Stefan Wintermeyer</code>). To achieve that we have to check <code>first_name</code> and
+<code>last_name</code> in combination. We have to do that in the database with a combined
+index.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1108,7 +1158,7 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Creates a concatinated index of the fields <code>first_name</code> and <code>last_name</code>.</td>
+<td>Creates a concatenated index of the fields <code>first_name</code> and <code>last_name</code>.</td>
 </tr>
 </table>
 </div>
@@ -1133,7 +1183,8 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This <code>unique_constraint/1</code> will trigger an error message instead of an exception without it.</td>
+<td>This <code>unique_constraint/1</code> will trigger an error message instead of raising
+an exception.</td>
 </tr>
 </table>
 </div>
@@ -1188,11 +1239,11 @@ INSERT INTO "authors" ("first_name","last_name","inserted_at","updated_at") VALU
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Reset our database.</td>
+<td>Resets our database.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Set a <code>Bookstore.Store</code> alias to saves us some precious time to type the command.</td>
+<td>Sets a <code>Bookstore.Store</code> alias to saves us some precious time to type the command.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -1212,8 +1263,10 @@ INSERT INTO "authors" ("first_name","last_name","inserted_at","updated_at") VALU
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Here&#8217;s a slightly different approach for those of you who say that an error for
-<code>:first_name</code> is not ideal.</p>
+<p>In the example above, the error message says that the <code>:first_name</code> has been
+taken, but, strictly speaking, this is not correct because the constraint is for
+the <code>:first_name</code> and <code>:last_name</code> together. Below is a slightly different
+approach, where a more descriptive name is set for the index.</p>
 </div>
 <div class="listingblock">
 <div class="title">priv/repo/migrations/20200527071855_add_full_name_index.exs</div>
@@ -1298,7 +1351,7 @@ INSERT INTO "authors" ("first_name","last_name","inserted_at","updated_at") VALU
 <div class="sectionbody">
 <div class="paragraph">
 <p>Often you need the database prefilled with data for your application. That&#8217;s
-what seeds are for. By default, they are in the file <code>priv/repo/seeds.exs</code>. For
+what seeds are for. By default, they are in the <code>priv/repo/seeds.exs</code> file. For
 our bookstore we can work with these seeds:</p>
 </div>
 <div class="listingblock">
@@ -1324,7 +1377,7 @@ Store.create_author(%{
 </div>
 </div>
 <div class="paragraph">
-<p>To populate the database we call.</p>
+<p>To populate the database we call <code>mix run priv/repo/seeds.exs</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1344,7 +1397,9 @@ INSERT INTO "authors" ("first_name","last_name","twitter_account","inserted_at",
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-During development, the command <code>mix ecto.reset</code> is often very useful. It resets the database (drop, create and migrate) and runs the seeds.
+During development, the command <code>mix ecto.reset</code> is often very useful. It
+resets the database (drops, creates and migrates the database) and runs the
+seeds.
 </td>
 </tr>
 </table>
@@ -1352,11 +1407,22 @@ During development, the command <code>mix ecto.reset</code> is often very useful
 </div>
 </div>
 <div class="sect1">
-<h2 id="ecto-list"><a class="anchor" href="#ecto-list"></a>Return all Entries of a Table</h2>
+<h2 id="ecto-query"><a class="anchor" href="#ecto-query"></a>Querying the Database</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The generated <code>Bookstore.Store</code> offers a <code>list_authors</code> function which simply
-returns a list of all authors in the table:</p>
+<p>After adding data to the database table, we now want to be able to fetch any
+data that we need.</p>
+</div>
+<div class="paragraph">
+<p>In this section, we will look at fetching all of a table&#8217;s entries, fetching a
+single entry using the ID (primary key) and fetching a single entry using one
+or more attributes.</p>
+</div>
+<div class="sect2">
+<h3 id="ecto-list"><a class="anchor" href="#ecto-list"></a>Return all of a Table&#8217;s Entries</h3>
+<div class="paragraph">
+<p>The generated <code>Bookstore.Store</code> module offers a <code>list_authors/0</code> function which
+simply returns a list of all authors in the table:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1397,48 +1463,88 @@ SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inser
 </div>
 </div>
 <div class="paragraph">
-<p>We can use all the mechanisms of a list with this result:</p>
+<p>If we look at the code for <code>list_authors/0</code>, we can see that it uses Ecto&#8217;s
+<code>Repo.all/1</code> to fetch the data:</p>
 </div>
 <div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(2)&gt; authors = Bookstore.Store.list_authors
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Store do
 [...]
-iex(3)&gt; [first_author | _] = authors <i class="conum" data-value="1"></i><b>(1)</b>
+  alias Bookstore.Repo
+  alias Bookstore.Store.Author
+
 [...]
-iex(4)&gt; first_author
-%Bookstore.Store.Author{
-  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
-  first_name: "Dave",
-  id: 1,
-  inserted_at: ~N[2020-05-27 11:48:17],
-  last_name: "Thomas",
-  twitter_account: "pragdave",
-  updated_at: ~N[2020-05-27 11:48:17]
-}
-iex(5)&gt; for author &lt;- authors do
-...(5)&gt; IO.puts author.last_name
-...(5)&gt; end
-Thomas
-Gray
-Almeida
-[:ok, :ok, :ok]</code></pre>
+  def list_authors do
+    Repo.all(Author) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+[...]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>With pattern matching we take the first item of the list (the head) and assign it to <code>first_author</code>.</td>
+<td><code>Repo.all/1</code> requires one argument, which should be a 'queryable' data
+structure (at this stage, there&#8217;s no need to worry about what 'queryable'
+means). In this case, it is the name of the module where the schema is defined.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As <code>list_authors/0</code> returns a list, we can use pattern matching to get item(s)
+from the output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; authors = Bookstore.Store.list_authors
+[...]
+iex(2)&gt; [first_author | _] = authors <i class="conum" data-value="1"></i><b>(1)</b>
+[...]
+iex(3)&gt; first_author
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-09-04 02:40:21],
+  last_name: "Thomas",
+  twitter_account: "pragdave",
+  updated_at: ~N[2020-09-04 02:40:21]
+}
+iex(4)&gt; [first_author, second_author | _] = authors <i class="conum" data-value="2"></i><b>(2)</b>
+[...]
+iex(5)&gt; second_author
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "James",
+  id: 2,
+  inserted_at: ~N[2020-09-04 02:40:21],
+  last_name: "Gray",
+  twitter_account: "jeg2",
+  updated_at: ~N[2020-09-04 02:40:21]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>With pattern matching we take the first item of the list (the head) and
+assign it to <code>first_author</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>And on this line, we can get the second item of the list and assign it to
+<code>second_author</code>.</td>
 </tr>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="ecto-get"><a class="anchor" href="#ecto-get"></a>Fetch one Entry of a Table by ID</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="ecto-get"><a class="anchor" href="#ecto-get"></a>Fetch Entries by ID</h3>
 <div class="paragraph">
-<p>If you know the <code>id</code> an dataset and you want to fetch it use <code>get_author!/1</code> which got generated in the <code>Bookstore.Store</code> module. Let me first show you how to use it:</p>
+<p>If you know the <code>id</code> of a dataset and you want to fetch it, use <code>get_author!/1</code>,
+which is in the <code>Bookstore.Store</code> module. Let me first show you how to use it:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1457,42 +1563,29 @@ SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inser
 </div>
 </div>
 <div class="paragraph">
-<p>And here is the concise code of it:</p>
+<p>And let&#8217;s look at the code for <code>get_author!/1</code>. Here, we see that it uses
+Ecto&#8217;s <code>Repo.get!/2</code> to fetch the single entry:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/bookstore/store.ex</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Store do
-[...]
-  alias Bookstore.Repo
-  alias Bookstore.Store.Author
-
-[...]
-  def get_author!(id), do: Repo.get!(Author, id)
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def get_author!(id), do: Repo.get!(Author, id) <i class="conum" data-value="1"></i><b>(1)</b>
 [...]</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-One can argue that <code>get_author!(id)</code> is not easier/better than <code>Repo.get!(Author, id)</code>.
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The second argument for <code>Repo.get!</code> is the entry&#8217;s ID.</td>
 </tr>
 </table>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>Functions which end with a <code>!</code> (exclamation point) raise an exception if something goes wrong. Let me show you this with <code>get/2</code> and <code>get!/2</code> for an <code>id</code> we don&#8217;t have in our table:</p>
+<p>[IMPORTANT] ==== Functions which end with a <code>!</code> (exclamation point) raise an
+exception if something goes wrong. Let me show you this with <code>get/2</code> and
+<code>get!/2</code> for an <code>id</code> we don&#8217;t have in our table:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1515,17 +1608,116 @@ from a0 in Bookstore.Store.Author,
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Nothing happens. The ID 10000 doesn&#8217;t exist in the table. The function returns <code>nil</code>.</td>
+<td>The ID 10000 doesn&#8217;t exist in the table, and the function returns <code>nil</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>All hell breaks loose. As dramatic as an exception sounds, it is often the better way because it will result in a 404 page for your web application. It&#8217;s easier to catch bugs, and you can be sure not to display something wrong.</td>
+<td>The requested ID doesn&#8217;t exist, and the function raises an exception. In
+your Phoenix application, if this happens in a function called by a controller,
+phoenix will automatically display a 404 page (this functionality depends on
+<code>phoenix_ecto</code>, which is included in this example app).</td>
 </tr>
 </table>
 </div>
-</td>
+</div>
+<div class="sect2">
+<h3 id="ecto-get-by"><a class="anchor" href="#ecto-get-by"></a>Fetch Entries by Attribute</h3>
+<div class="paragraph">
+<p>There are many times when we want to fetch an entry using one or more of the
+entry&#8217;s attributes. One way of doing this is to use the <code>Repo.get_by!/2</code>
+function.</p>
+</div>
+<div class="paragraph">
+<p>For example, let&#8217;s create a function to fetch an entry using the author&#8217;s
+twitter account name:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def get_author_by_twitter!(twitter_account) do <i class="conum" data-value="1"></i><b>(1)</b>
+    Repo.get_by!(Author, twitter_account: twitter_account) <i class="conum" data-value="2"></i><b>(2)</b>
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We have added a <code>!</code> to the end of this function (as it is using
+<code>Repo.get_by!</code>) to make it clear that it will raise an exception if no results
+are found. As mentioned earlier, if this happens, Phoenix will handle the
+exception and render a 404 page.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The second argument for <code>Repo.get_by!</code> should be a keyword list or map.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>And here is the output for <code>get_author_by_twitter!/1</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; Bookstore.Store.get_author_by_twitter!("jeg2")
+[debug] QUERY OK source="authors" db=6.1ms decode=0.8ms queue=1.1ms idle=1649.9ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."twitter_account" = $1) ["jeg2"]
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "James",
+  id: 2,
+  inserted_at: ~N[2020-09-04 02:40:21],
+  last_name: "Gray",
+  twitter_account: "jeg2",
+  updated_at: ~N[2020-09-04 02:40:21]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can also use <code>Repo.get_by!/2</code> to fetch an entry based on multiple attributes.
+In the next example, we will create a function that returns an entry based on
+the <code>first_name</code> and <code>last_name</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def get_author_by_first_name_last_name!(first_name, last_name) do
+    Repo.get_by!(Author, first_name: first_name, last_name: last_name) <i class="conum" data-value="1"></i><b>(1)</b>
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Again, the second argument for <code>Repo.get_by!</code> is a keyword list, this time
+containing two entries (for <code>first_name</code> and <code>last_name</code>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is the output if the entry is found:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; Bookstore.Store.get_author_by_first_name_last_name!("Ulisses", "Almeida")
+[debug] QUERY OK source="authors" db=6.3ms decode=0.7ms queue=1.0ms idle=405.5ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE ((a0."first_name" = $1) AND (a0."last_name" = $2)) ["Ulisses", "Almeida"]
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  first_name: "Ulisses",
+  id: 3,
+  inserted_at: ~N[2020-09-04 02:40:21],
+  last_name: "Almeida",
+  twitter_account: "ulissesalmeida",
+  updated_at: ~N[2020-09-04 02:40:21]
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1533,8 +1725,9 @@ from a0 in Bookstore.Store.Author,
 <h2 id="ecto-update"><a class="anchor" href="#ecto-update"></a>Update an Entry</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to change a dataset, you&#8217;d have to assign it to a variable first. Assuming
-we want to update the <code>twitter_account</code> or the dataset with the <code>id</code> 1 with nil we&#8217;d do the following:</p>
+<p>If you want to change a dataset, you have to assign it to a variable first.
+Assuming we want to update the <code>twitter_account</code> of the dataset with the <code>id</code> 1,
+we would do the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1606,13 +1799,328 @@ SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inser
 </div>
 </div>
 <div class="sect1">
-<h2 id="_accociations"><a class="anchor" href="#_accociations"></a>Accociations</h2>
+<h2 id="ecto-associations"><a class="anchor" href="#ecto-associations"></a>Associations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://hexdocs.pm/ecto/2.2.11/associations.html" class="bare">https://hexdocs.pm/ecto/2.2.11/associations.html</a></p>
+<p>In this section, we will look at how to define and work with associations between schemas.</p>
+</div>
+<div class="paragraph">
+<p>There are three kinds of associations that we can use: one-to-one, one-to-many
+and many-to-many. In the following example, we will look at the one-to-many
+association. We will create an association in which each author is associated
+with many books.</p>
+</div>
+<div class="paragraph">
+<p>First, we need to generate a migration file to create the <code>books</code> table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix ecto.gen.migration create_books
+Compiling 1 file (.ex)
+* creating priv/repo/migrations/20200907084536_create_books.exs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, we need to edit the migration file to create the <code>books</code> table and to add
+a reference to the <code>author</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">priv/repo/migrations/20200907084536_create_books.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Repo.Migrations.CreateBooks do
+  use Ecto.Migration
+
+  def change do
+    create table(:books) do
+      add :title, :string
+      add :author_id, references(:authors) <i class="conum" data-value="1"></i><b>(1)</b>
+
+      timestamps()
+    end
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This adds an <code>author_id</code> column to the <code>books</code> table which references an
+entry in the <code>authors</code> table.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now run the migration by calling <code>mix ecto.migrate</code>:</p>
+</div>
+<div class="paragraph">
+<p>We now need to add a <code>Bookstore.Store.Book</code> module with the schema for the
+<code>books</code> table:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/book.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Bookstore.Store.Book do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  alias Bookstore.Store.Author
+
+  schema "books" do
+    field :title, :string
+    belongs_to :author, Author <i class="conum" data-value="1"></i><b>(1)</b>
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(book, attrs) do
+    book
+    |&gt; cast(attrs, [:title, :author_id])
+    |&gt; validate_required([:title, :author_id])
+  end
+end</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>belongs_to</code> macro makes the associated schema accessible through the
+book.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We also need to make a small change to the <code>Bookstore.Store.Author</code> module:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store/book.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  schema "authors" do
+    [...]
+    has_many :books, Book <i class="conum" data-value="1"></i><b>(1)</b>
+    [...]
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>has_many</code> lets us access the books through the author.</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="ecto-querying-associations"><a class="anchor" href="#ecto-querying-associations"></a>Querying Associations</h3>
+<div class="paragraph">
+<p>We have created the one-to-many association between <code>authors</code> and <code>books</code>, and
+we have updated the schemas, so we can now start adding new <code>books</code> to the
+database. To do this, we will add a <code>create_book</code> function to the
+<code>Bookstore.Store</code> context module:</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  alias Bookstore.Store.Book
+
+  def create_book(attrs) do
+    %Book{}
+    |&gt; Book.changeset(attrs)
+    |&gt; Repo.insert()
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we are ready to try this out in <code>iex</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; Bookstore.Store.create_book(%{title: "Programming Elixir", author_id: 1})
+[debug] QUERY OK db=8.0ms decode=1.7ms queue=2.8ms idle=1669.3ms
+INSERT INTO "books" ("author_id","title","inserted_at","updated_at") VALUES ($1,$2,$3,$4) RETURNING "id" [1, "Programming Elixir", ~N[2020-09-08 01:17:34], ~N[2020-09-08 01:17:34]]
+{:ok,
+ %Bookstore.Store.Book{
+   __meta__: #Ecto.Schema.Metadata&lt;:loaded, "books"&gt;,
+   author: #Ecto.Association.NotLoaded&lt;association :author is not loaded&gt;,
+   author_id: 1,
+   id: 4,
+   inserted_at: ~N[2020-09-08 01:17:34],
+   title: "Programming Elixir",
+   updated_at: ~N[2020-09-08 01:17:34]
+ }}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now want to write some queries to fetch this data from the database.
+We will add two functions to the <code>Bookstore.Store</code> context module - one that
+returns a list of an author&#8217;s books and one that fetches a book by querying the
+title.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/bookstore/store.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">[...]
+  def list_books_by_author(author) do
+    Book
+    |&gt; where(author_id: ^author.id) <i class="conum" data-value="1"></i><b>(1)</b>
+    |&gt; Repo.all()
+  end
+[...]
+  def get_book_by_title!(title) do
+    Repo.get_by!(Book, title: title)
+  end
+[...]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>When using external values in query expressions, we need to prefix the
+value with a <code>^</code> sign. We will look at the <code>where</code> macro later, when we start
+using more complex queries.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see how these queries work in <code>iex</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; author = Bookstore.Store.get_author_by_twitter!("pragdave") <i class="conum" data-value="1"></i><b>(1)</b>
+[debug] QUERY OK source="authors" db=6.0ms decode=0.8ms queue=1.3ms idle=1390.3ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at" FROM "authors" AS a0 WHERE (a0."twitter_account" = $1) ["pragdave"]
+%Bookstore.Store.Author{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+  books: #Ecto.Association.NotLoaded&lt;association :books is not loaded&gt;,
+  first_name: "Dave",
+  id: 1,
+  inserted_at: ~N[2020-09-08 01:56:38],
+  last_name: "Thomas",
+  twitter_account: "pragdave",
+  updated_at: ~N[2020-09-08 01:56:38]
+}
+iex(2)&gt; Bookstore.Store.list_books_by_author(author)
+[debug] QUERY OK source="books" db=1.3ms queue=1.4ms idle=1802.0ms
+SELECT b0."id", b0."title", b0."author_id", b0."inserted_at", b0."updated_at" FROM "books" AS b0 WHERE (b0."author_id" = $1) [1]
+[
+  %Bookstore.Store.Book{
+    __meta__: #Ecto.Schema.Metadata&lt;:loaded, "books"&gt;,
+    author: #Ecto.Association.NotLoaded&lt;association :author is not loaded&gt;, <i class="conum" data-value="2"></i><b>(2)</b>
+    author_id: 1,
+    id: 1,
+    inserted_at: ~N[2020-09-08 01:56:51],
+    title: "Programming Elixir",
+    updated_at: ~N[2020-09-08 01:56:51]
+  }
+]
+iex(3)&gt; Bookstore.Store.get_book_by_title!("Programming Elixir")
+[debug] QUERY OK source="books" db=1.6ms queue=3.6ms idle=969.6ms
+SELECT b0."id", b0."title", b0."author_id", b0."inserted_at", b0."updated_at" FROM "books" AS b0 WHERE (b0."title" = $1) ["Programming Elixir"]
+%Bookstore.Store.Book{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "books"&gt;,
+  author: #Ecto.Association.NotLoaded&lt;association :author is not loaded&gt;,
+  author_id: 1,
+  id: 1,
+  inserted_at: ~N[2020-09-08 01:56:51],
+  title: "Programming Elixir",
+  updated_at: ~N[2020-09-08 01:56:51]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We fetch the <code>author</code> as we need to use it in the <code>list_books_by_author/1</code> function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>By default, the associated data (in this case, the <code>author</code> data) is not
+loaded. In the next subsection, we will look at how to load this data.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ecto-preloading-associated-data"><a class="anchor" href="#ecto-preloading-associated-data"></a>Preloading Associated Data</h3>
+<div class="paragraph">
+<p>As can be seen in the examples above, the data for an associated table is not
+loaded by default. To request this data, we need to preload it, using either
+<code>Ecto.Query.preload</code> or <code>Ecto.Repo.preload</code>. In this subsection, we will use
+<code>Ecto.Repo.preload</code>, which allows us to preload structs after they have been
+fetched from the database.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s open up <code>iex</code> and see how preloading data works:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">iex(1)&gt; elixir_book = Bookstore.Store.get_book_by_title!("Programming Elixir") <i class="conum" data-value="1"></i><b>(1)</b>
+[debug] QUERY OK source="books" db=5.9ms decode=0.7ms queue=1.1ms idle=809.0ms
+SELECT b0."id", b0."title", b0."author_id", b0."inserted_at", b0."updated_at" FROM "books" AS b0 WHERE (b0."title" = $1) ["Programming Elixir"]
+%Bookstore.Store.Book{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "books"&gt;,
+  author: #Ecto.Association.NotLoaded&lt;association :author is not loaded&gt;,
+  author_id: 1,
+  id: 1,
+  inserted_at: ~N[2020-09-08 01:56:51],
+  title: "Programming Elixir",
+  updated_at: ~N[2020-09-08 01:56:51]
+}
+iex(2)&gt; Bookstore.Repo.preload(elixir_book, :author) <i class="conum" data-value="2"></i><b>(2)</b>
+[debug] QUERY OK source="authors" db=0.5ms queue=0.8ms idle=151.0ms
+SELECT a0."id", a0."first_name", a0."last_name", a0."twitter_account", a0."inserted_at", a0."updated_at", a0."id" FROM "authors" AS a0 WHERE (a0."id" = $1) [1]
+%Bookstore.Store.Book{
+  __meta__: #Ecto.Schema.Metadata&lt;:loaded, "books"&gt;,
+  author: %Bookstore.Store.Author{ <i class="conum" data-value="3"></i><b>(3)</b>
+    __meta__: #Ecto.Schema.Metadata&lt;:loaded, "authors"&gt;,
+    books: #Ecto.Association.NotLoaded&lt;association :books is not loaded&gt;,
+    first_name: "Dave",
+    id: 1,
+    inserted_at: ~N[2020-09-08 01:56:38],
+    last_name: "Thomas",
+    twitter_account: "pragdave",
+    updated_at: ~N[2020-09-08 01:56:38]
+  },
+  author_id: 1,
+  id: 1,
+  inserted_at: ~N[2020-09-08 01:56:51],
+  title: "Programming Elixir",
+  updated_at: ~N[2020-09-08 01:56:51]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We first fetch the <code>book</code> with the title "Programming Elixir".</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We use a single atom to preload a single association. To preload multiple
+associations, we would use a list of atoms.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We can now see the associated (<code>author</code>) data.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For more information about associations, see
+<a href="https://hexdocs.pm/ecto/2.2.11/associations.html" class="bare">https://hexdocs.pm/ecto/2.2.11/associations.html</a></p>
 </div>
 <div class="paragraph">
 <p><mark>Work in progess</mark></p>
+</div>
 </div>
 </div>
 </div>

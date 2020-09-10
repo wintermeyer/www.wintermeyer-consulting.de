@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Phoenix&#8217;s Basics :: Phoenix Beginner&#x27;s Guide</title>
+    <title>Phoenix Basics :: Phoenix Beginner&#x27;s Guide</title>
     <link rel="canonical" href="https://www.wintermeyer-consulting.de/books/phoenix/1.5/phoenix/1.5/phoenix-basics.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../antora-assets/css/site.css">
@@ -189,15 +189,18 @@
     <a class="nav-link" href="ecto-basics.html#ecto-seeds">Seeds</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="ecto-basics.html#ecto-list">Return all Entries of a Table</a>
+    <a class="nav-link" href="ecto-basics.html#ecto-query">Querying the Database</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="ecto-basics.html#ecto-get">Return one Entry of a Table by ID</a>
+    <a class="nav-link" href="ecto-basics.html#ecto-update">Update an Entry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ecto-basics.html#ecto-associations">Associations</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="index.html#training">Remote Training</a>
+    <a class="nav-link" href="index.html#remote-training">Remote training for beginners</a>
   </li>
 </ul>
   </li>
@@ -237,21 +240,22 @@
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Phoenix&#8217;s Basics</h1>
+<h1 class="page">Phoenix Basics</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Phoenix follows the
 <a href="https://en.wikipedia.org/wiki/Model–view–controller">Model-View-Controller</a> (MVC)
-architecture. If you are not familiar with that: Just follow my lead. MVC is
+architecture. If you are not familiar with that, just follow my lead. MVC is
 just a set of rules of what goes where so that everybody knows where stuff is.
 No one expects you to follow it, but it makes life easier if you do. After a
-couple of examples, you&#8217;ll get a feeling for it. Same goes for the directory
+couple of examples, you&#8217;ll get a feeling for it. The same goes for the directory
 structure and the file names.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter, I&#8217;ll show you how you can create simple webpages which have some
-programming logic. But we will not touch the database yet. Step by step!</p>
+programming logic. But we will not touch the database yet - we want to take this
+one step at a time.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -283,7 +287,9 @@ Phoenix v1.5.1</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <code>mix phx.new</code>. That is outdated. Since Phoenix version 1.3 the syntax is <code>mix phx.whatever</code>.
+In some old tutorials, or blog posts, you&#8217;ll see <code>mix phoenix.new</code>,
+instead of <code>mix phx.new</code>. That is outdated. Since Phoenix version 1.3, all the
+phoenix-related mix commands start with <code>mix phx</code>.
 </td>
 </tr>
 </table>
@@ -310,7 +316,9 @@ In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <
 </ul>
 </div>
 <div class="paragraph">
-<p>In this chapter, we are only going to use the development environment. It offers some pleasantries which make the life of a developer easier (e.g. more verbose error messages and auto-reload after code changes).</p>
+<p>In this chapter, we are only going to use the development environment. It offers
+some features which make the life of a developer easier (e.g. more verbose error
+messages and auto-reload after code changes).</p>
 </div>
 </div>
 </div>
@@ -318,8 +326,9 @@ In some old webpages you&#8217;ll find <code>mix phoenix.new</code> instead of <
 <h2 id="the-base-setup"><a class="anchor" href="#the-base-setup"></a>The Base Setup</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>mix phx.new application_name</code> command creates the foundation of every Phoenix application which generates all needed files and the
-directory structure.</p>
+<p>The <code>mix phx.new application_name</code> command creates the foundation of every
+Phoenix application which generates all the needed files and the basic directory
+structure.</p>
 </div>
 <div class="paragraph">
 <p>We call our new application <code>demo</code>:</p>
@@ -349,11 +358,11 @@ You can also run your app inside IEx (Interactive Elixir) as:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>'--no-ecto' creates a new application without the Ecto (database connector) part. We don&#8217;t need a database for the basic examples.</td>
+<td>'--no-ecto' creates a new application without Ecto (the database connector). We don&#8217;t need a database for the basic examples.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>You always want to press <code>Y</code> here. And yes, it sometimes takes forever.</td>
+<td>You always want to press <code>Y</code> here, and yes, it sometimes takes forever.</td>
 </tr>
 </table>
 </div>
@@ -429,7 +438,11 @@ development laptop. That must be the great speed of Phoenix/Elixir everybody is 
 </div>
 </div>
 <div class="paragraph">
-<p>What we see is the default <code>index.html.eex</code> page. The file extension <code>eex</code> stands for <a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> and means that this is a mix of static HTML and dynamic Elixir code which generated HTML. These files are called templates and are located in the <code>lib/demo_web/templates/</code> directory. A new Phoenix application has two templates:</p>
+<p>What we see is the default <code>index.html.eex</code> page. The file extension <code>eex</code>
+stands for <a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> and means that this
+is a mix of static HTML and dynamic Elixir code which generates HTML. These
+files are called templates and are located in the <code>lib/demo_web/templates/</code>
+directory. A new Phoenix application has two templates:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -448,13 +461,15 @@ lib/demo_web/templates/
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-It is no coincidence that the subdirectory is called <code>demo_web</code>. Because we named our application <code>demo</code> that name will be used in multiple places.
+As we named our application <code>demo</code>, the subdirectory in which templates
+are stored is called <code>demo_web</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s have a look into <code>index.html.eex</code> which contains the core part of the page.</p>
+<p>Let&#8217;s have a look into <code>index.html.eex</code>, which contains the main content of the
+page.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/templates/page/index.html.eex</div>
@@ -500,7 +515,7 @@ It is no coincidence that the subdirectory is called <code>demo_web</code>. Beca
 </div>
 </div>
 <div class="paragraph">
-<p>But a bit of HTML boilerplate is missing and can be found in <code>lib/demo_web/templates/layout/app.html.eex</code>.</p>
+<p>But a bit of HTML boilerplate is missing, and that can be found in <code>lib/demo_web/templates/layout/app.html.eex</code>.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/templates/layout/app.html.eex</div>
@@ -544,7 +559,7 @@ It is no coincidence that the subdirectory is called <code>demo_web</code>. Beca
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>You might want to change the language here in case this webpage is going to be in an other language than English.</td>
+<td>If the webpage is not in English, you will need to change the language here.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -552,15 +567,16 @@ It is no coincidence that the subdirectory is called <code>demo_web</code>. Beca
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Phoenix&#8217;s asset management takes care of the CSS and JavaScript. No need to worry about it for now.</td>
+<td>Phoenix&#8217;s asset management takes care of the CSS and JavaScript. No need to
+worry about that for now.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>This is the boilerplate header part you are seeing on the top of every page.</td>
+<td>This is the boilerplate header you are seeing on the top of every page.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>This part renders so called flash messages. We&#8217;ll get to that later.</td>
+<td>This part renders so called flash messages. We&#8217;ll get to those later.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
@@ -575,14 +591,17 @@ It is no coincidence that the subdirectory is called <code>demo_web</code>. Beca
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-<a href="https://hexdocs.pm/eex/EEx.html">Embedded Elixir</a> (<code>.eex</code>) uses the <code>&lt;% %&gt;</code> syntax to embed Elixir code in HTML. <code>&lt;% %&gt;</code> runs the Elixir code within. <code>&lt;%= %&gt;</code> runs the Elixir code and includes the result of that as HTML in the template.
+Embedded Elixir (<code>.eex</code>) uses the <code>&lt;% %&gt;</code> syntax to embed Elixir
+code in HTML. <code>&lt;% %&gt;</code> runs the Elixir code within. <code>&lt;%= %&gt;</code> runs the Elixir
+code and includes the result of that as HTML in the template.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>Feel free to change the content of <code>app.html.eex</code> and <code>index.html.eex</code> while
-having <a href="http://localhost:4000" class="bare">http://localhost:4000</a> opened in a browser. In development mode, each save of those files triggers a reload of the page in the browser.</p>
+having <a href="http://localhost:4000" class="bare">http://localhost:4000</a> opened in a browser. In development mode, each save
+of those files triggers a reload of the page in the browser.</p>
 </div>
 </div>
 </div>
@@ -662,7 +681,7 @@ end</code></pre>
 </div>
 <div class="paragraph">
 <p>Last step: We have to create a template file. Please do so and include this
-source code into it:</p>
+source code in it:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/templates/page/hello.html.eex</div>
@@ -681,7 +700,9 @@ source code into it:</p>
 <div class="sect2">
 <h3 id="_hello_world_with_its_controller"><a class="anchor" href="#_hello_world_with_its_controller"></a>Hello World with its controller</h3>
 <div class="paragraph">
-<p>In the last section, we added the <code>:hello</code> action to the already existing <code>PageController</code>. But in many cases, it makes sense to create a separate controller. Let&#8217;s do that, so you know how to.</p>
+<p>In the last section, we added the <code>:hello</code> action to the already existing
+<code>PageController</code>. But in many cases, it makes sense to create a separate
+controller. Let&#8217;s do that, so you know how to.</p>
 </div>
 <div class="paragraph">
 <p>We start with changing the route:</p>
@@ -721,7 +742,10 @@ source code into it:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>It says <code>function DemoWeb.ExampleController.init/1 is undefined</code> which leads us to the next missing piece: A controller. That file needs to be named <code>example_controller.ex</code> and is has to be saved in the <code>lib/demo_web/controllers</code> directory. Here is the content of it:</p>
+<p>It says <code>function DemoWeb.ExampleController.init/1 is undefined</code> which leads us
+to the next missing piece: a controller. That file needs to be named
+<code>example_controller.ex</code> and has to be saved in the <code>lib/demo_web/controllers</code>
+directory. Here is the content of it:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/controllers/example_controller.ex</div>
@@ -739,12 +763,15 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Important: <code>DemoWeb.ExampleController</code></td>
+<td>The module name is <code>DemoWeb.ExampleController</code>. This was defined in the
+router code above, where the <code>ExampleController</code> is under the <code>DemoWeb</code> namespace.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>After a reload we get a new error message: <code>function DemoWeb.ExampleView.render/2 is undefined</code>. So we need to create a view file:</p>
+<p>After a reload we get a new error message: <code>function
+DemoWeb.ExampleView.render/2 is undefined</code>, so we need to create a view file,
+called <code>example_view.ex</code>, and add it to the <code>lib/demo_web/views</code> directory:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/views/example_view.ex</div>
@@ -813,22 +840,26 @@ end</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>Phoenix will always lead you through the way. If something is missing it will say so in the error message.</p>
+<p>Phoenix will always lead you through the way. If something is missing, it will
+say so in the error message.</p>
 </div>
-<div class="admonitionblock warning">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Obviously <code>demo_web</code>, <code>example_controller.ex</code>, <code>example_view.ex</code> and <code>hello.html.eex</code> are just names which fit for our "Hello World!" example. You have to adjust them for your case.
+Obviously <code>demo_web</code>, <code>example_controller.ex</code>, <code>example_view.ex</code> and
+<code>hello.html.eex</code> are just names which fit our "Hello World!" example. In your
+own app, you will need to come up with more descriptive names.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>For our example the directory and file structure looks like this:</p>
+<p>In our example, the directory and file structure of the <code>demo_web</code> subdirectory
+looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -860,20 +891,30 @@ lib/demo_web/views
 <div class="paragraph">
 <p>According to the
 <a href="https://en.wikipedia.org/wiki/Model–view–controller">Model-View-Controller</a> (MVC)
-architecture we do our programming stuff in the controller and use the template
+architecture, we do our programming stuff in the controller and use the template
 just to display the results. Therefore we need a mechanism to transport this data
-from the controller into the template. That mechanism is the <code>conn</code> struct. Let&#8217;s have a look into it:</p>
+from the controller into the template. That mechanism is the <code>conn</code> struct.
+Let&#8217;s have a look at it:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --no-ecto
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new demo --no-ecto <i class="conum" data-value="1"></i><b>(1)</b>
 [...]
 $ cd demo
 $ mix phx.server</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We create a new phoenix app.</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>A new route to inspect the content of <code>conn</code> and we add a second route for a playground page:</p>
+<p>We add a new route to inspect the contents of <code>conn</code>, and we add a second route
+for a playground page:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/router.ex</div>
@@ -898,12 +939,12 @@ $ mix phx.server</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>For now we put it into the <code>PageController</code>.</td>
+<td>For now, we add this route to the <code>PageController</code>.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>In the page controller we add an <code>inspect</code> and a <code>playground</code> action:</p>
+<p>In the page controller, we add an <code>inspect</code> and a <code>playground</code> action:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/controllers/page_controller.ex</div>
@@ -926,7 +967,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And finally this piece of code into the <code>inspect.html.eex</code> template:</p>
+<p>And finally, we add this piece of code to the <code>inspect.html.eex</code> template:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/templates/page/inspect.html.eex</div>
@@ -953,7 +994,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That is quite a bit of information in the <code>@conn</code> struct. Here is the complete content:</p>
+<p>There is quite a lot of information in the <code>conn</code> struct. Here is the complete content:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1031,7 +1072,10 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We can use the <code>playground.html.eex</code> to display specific parts of that:</p>
+<p>We can use the <code>playground</code> route to display specific parts of the <code>conn</code> struct.</p>
+</div>
+<div class="paragraph">
+<p>Add the following code to the <code>playground.html.eex</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/demo_web/templates/page/playground.html.eex</div>
@@ -1083,11 +1127,12 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>With <code>assign/3</code> we can add new variables to the conn struct.</td>
+<td>With <code>assign/3</code> we can add data to the <code>assigns</code> map in the conn struct.
+The <code>assigns</code> map is where we normally put shared data.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Same result but a different coding style.</td>
+<td>This achieves the same result, but with a different coding style.</td>
 </tr>
 </table>
 </div>
@@ -1106,7 +1151,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To access that we change the <code>playground.html.eex</code> template:</p>
+<p>To access that, we need to change the <code>playground.html.eex</code> template:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/hello_world_web/templates/page/playground.html.eex</div>
@@ -1129,11 +1174,13 @@ end</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>We can access the value of <code>headline</code> through the longer <code>@conn.assigns.headline</code>.</td>
+<td>We can access the value of <code>headline</code> through the longer
+<code>@conn.assigns.headline</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>But normaly we access it via the shortform <code>@headline</code>. The <code>@</code>-version is accessable for all subcontent of <code>@conn.assigns</code>.</td>
+<td>But normally, we access it via the shortform <code>@headline</code>. All the values in
+the <code>assigns</code> map can be accessed using the <code>@</code> prefix.</td>
 </tr>
 </table>
 </div>
@@ -1146,7 +1193,8 @@ end</code></pre>
 <h3 id="static-clock"><a class="anchor" href="#static-clock"></a>Static Clock</h3>
 <div class="paragraph">
 <p>The current application always displays the same content. The easiest way to
-change that is to display the time. For that we add a <code>timestamp</code> variable in the controller and display it in the template:</p>
+change that is to display the current time. For that, we are going to add a
+<code>timestamp</code> variable in the controller and display it in the template:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/hello_world_web/controllers/page_controller.ex</div>
@@ -1163,6 +1211,9 @@ def playground(conn, _params) do
 end
 [...]</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>And we need to update the template as well:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/hello_world_web/templates/page/playground.html.eex</div>
@@ -1190,16 +1241,25 @@ end
 <div class="sectionbody">
 <div class="paragraph">
 <p>The web consists of webpages which link to each other. So the next step on our
-venture for the ultimate Phoenix application is a game of ping-pong. <code><a href="http://localhost:4000/ping" class="bare">http://localhost:4000/ping</a></code> will display a link to
+venture for the ultimate Phoenix application is a game of ping-pong.
+<code><a href="http://localhost:4000/ping" class="bare">http://localhost:4000/ping</a></code> will display a link to
 <code><a href="http://localhost:4000/pong" class="bare">http://localhost:4000/pong</a></code> and vice versa.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new game --no-ecto
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mix phx.new game --no-ecto <i class="conum" data-value="1"></i><b>(1)</b>
 [...]
 $ cd game
 $ mix phx.server</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Again, we create a new phoenix app.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>First, we have to set the routes for ping and pong:</p>
@@ -1257,7 +1317,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And the <code>ping.html.eex</code> template:</p>
+<p>And create the <code>ping.html.eex</code> template:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/hello_world_web/templates/page/ping.html.eex</div>
@@ -1266,7 +1326,7 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Perfect. What a nice ping we have created page:</p>
+<p>Perfect. What a nice ping page we have created:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1274,7 +1334,8 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The missing pong counter part is easy:</p>
+<p>The missing pong counterpart is easy. First, create the <code>pong.html.eex</code>
+template:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/hello_world_web/templates/page/pong.html.eex</div>
@@ -1283,13 +1344,16 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>But for Ping-Pong, we need a <code>href</code> link between both pages. We could add
-one manually with <code>&lt;a href="/pong"&gt;Pong&lt;/a&gt;</code> but that would not be very clean.
-Since we have a router in Phoenix, we can use that to create clean routes for our links.</p>
+<p>Something is missing, though. As this is Ping-Pong, we need to add <code>href</code> links
+to both pages linking to each other. We could add these manually with <code>&lt;a
+href="/pong"&gt;Pong&lt;/a&gt;</code> but that would not be very clean.  Since we have a
+router in Phoenix, we can use that to create clean routes for our links.</p>
 </div>
 <div class="paragraph">
-<p>We either have to stop the Phoenix server (<code>CTRL-C</code> twice!) or open a new terminal with the same direction to run a <code>mix phx.routes</code> which returns all known routes.
-Because we are only interested in the routes for <code>PageController</code> we <code>grep</code> for those:</p>
+<p>We either have to stop the Phoenix server (<code>CTRL-C</code> twice!) or open a new
+terminal in the same directory to run <code>mix phx.routes</code> which returns all
+known routes. Because we are only interested in the routes for <code>PageController</code>
+we <code>grep</code> for those:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1303,7 +1367,8 @@ Because we are only interested in the routes for <code>PageController</code> we 
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>For us important is the <code>page_path</code> and the <code>:ping</code> and <code>:pong</code>.</td>
+<td>To set the link, we need to know the name of the path, <code>page_path</code>, and the
+name of the route, <code>:ping</code>.</td>
 </tr>
 </table>
 </div>
@@ -1358,7 +1423,7 @@ Because we are only interested in the routes for <code>PageController</code> we 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You&#8217;ll find the syntax for links with specific params or queries in the
+You&#8217;ll find more information about links with specific parameters or queries in the
 <a href="router.html" class="page">Router chapter</a>.
 </td>
 </tr>
@@ -1367,7 +1432,8 @@ You&#8217;ll find the syntax for links with specific params or queries in the
 <div class="sect2">
 <h3 id="_link_class"><a class="anchor" href="#_link_class"></a>Link Class</h3>
 <div class="paragraph">
-<p>Sometimes your design team wants to add a specific CSS class to a link. Here&#8217;s how you do that:</p>
+<p>Sometimes your design team wants to add a specific CSS class to a link. Here&#8217;s
+how you can do that:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/game_web/templates/page/pong.html.eex</div>
@@ -1375,7 +1441,7 @@ You&#8217;ll find the syntax for links with specific params or queries in the
 <pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;h1&gt;Pong&lt;/h1&gt;
 
 &lt;p&gt;
-&lt;%= link "Ping!", to: Routes.page_path(@conn, :ping, class: "btn") %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;%= link "Ping!", to: Routes.page_path(@conn, :ping), class: "btn" %&gt; <i class="conum" data-value="1"></i><b>(1)</b>
 &lt;/p&gt;</code></pre>
 </div>
 </div>
@@ -1383,7 +1449,7 @@ You&#8217;ll find the syntax for links with specific params or queries in the
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Just add a <code>class: "whatever"</code> to the link helper.</td>
+<td>Just add <code>class: "<em>class-name</em>"</code> to the link helper.</td>
 </tr>
 </table>
 </div>
@@ -1397,9 +1463,9 @@ You&#8217;ll find the syntax for links with specific params or queries in the
 <p></p>
 </div>
 <div class="paragraph">
-<p>Of course, any web application doesn&#8217;t only have dynamic webpages but also
-some static files. The best example would be a <code>robots.txt</code> or a <code>favicon.ico</code> file. There is the <code>assets/static/</code> directory where we can put those files.
-By default the following files are already in that directory:</p>
+<p>Static files, such as images, the <code>robots.txt</code> file, etc., are stored in the
+<code>assets/static/</code> directory. By default the following files are already in that
+directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1417,8 +1483,10 @@ interaction with the Phoenix application. In development, there is some
 interaction, but that has a small footprint.</p>
 </div>
 <div class="paragraph">
-<p>But adding a file to that directory is not enough. You have to whitelist it else, Phoenix won&#8217;t know what you want. Assuming we add an <code>ads.txt</code> file into the <code>assets/static/</code> directory. Then we have to update the
-<code>lib/hello_world_web/endpoint.ex</code> file accordingly:</p>
+<p>If you want to add a new static file to your application, you first need to add
+the file to the <code>assets/static/</code> directory. Then, you need to make sure that the
+file is allowlisted in the <code>plug Plug.Static</code> function in the
+<code>lib/hello_world_web/endpoint.ex</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/hello_world_web/endpoint.ex</div>
@@ -1438,7 +1506,7 @@ plug Plug.Static,
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>All static files or directories have to be whitelisted in this list.</td>
+<td>All static files or directories have to be allowlisted here.</td>
 </tr>
 </table>
 </div>
@@ -1446,12 +1514,13 @@ plug Plug.Static,
 <h3 id="images"><a class="anchor" href="#images"></a>Images</h3>
 <div class="paragraph">
 <p>Images are a particular case of static files. They can be stored in the
-<code>assets/static/images/</code> directory which is by default whitelisted to include
-static files.</p>
+<code>assets/static/images/</code> directory which is by default already allowlisted.</p>
 </div>
 <div class="paragraph">
 <p>In every fresh Phoenix installation you&#8217;ll find the Phoenix logo file stored at
-<code>assets/static/images/phoenix.png</code>. That image is used in the default <code>app.html.eex</code> and there we can have a look how to access that image from within <code>.eex</code>:</p>
+<code>assets/static/images/phoenix.png</code>. That image is used in the default
+<code>app.html.eex</code> and there we can have a look how to access that image from within
+<code>.eex</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1460,7 +1529,8 @@ static files.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can use <code>Routes.static_path(@conn, "/images/phoenix.png")</code> to address the image in any <code>.eex</code>.</p>
+<p>You can use <code>Routes.static_path(@conn, "/images/phoenix.png")</code> to access this
+image in any <code>.eex</code> file.</p>
 </div>
 </div>
 </div>
@@ -1469,7 +1539,9 @@ static files.</p>
 <h2 id="css"><a class="anchor" href="#css"></a>CSS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As written in the <a href="index.html#preface" class="page">Preface</a>: We&#8217;ll not waste time in this book by making our webpages pretty. But in case you want to add some CSS into your demo application, you can do so by referencing the <code>assets/css/app.scss</code> file.</p>
+<p>As written in the <a href="index.html#preface" class="page">Preface</a>: We&#8217;ll not waste time in this
+book by making our webpages pretty. But in case you want to add some CSS to your
+demo application, you can do so by referencing the <code>assets/css/app.scss</code> file.</p>
 </div>
 </div>
 </div>
