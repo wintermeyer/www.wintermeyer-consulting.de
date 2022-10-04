@@ -15,8 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: Wintermeyer Consulting
 email: sw@wintermeyer-consulting.de
-description: > # this means to ignore newlines until "baseurl:"
-  Wintermeyer Consulting. Butter und Brot: Ruby on Rails, Phoenix und WebPerformance. Ansonsten: Jekyll und CouchDB.
+description: "Wintermeyer Consulting. Butter und Brot: Ruby on Rails, Phoenix und WebPerformance. Ansonsten: Jekyll und CouchDB."
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.wintermeyer-consulting.de" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: wintermeyer
