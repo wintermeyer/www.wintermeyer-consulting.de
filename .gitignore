@@ -12,3 +12,4 @@ _drafts
 # Deployment
 #
 export/
+jekyll/node_modules
