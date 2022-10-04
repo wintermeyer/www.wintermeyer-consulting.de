@@ -1,12 +1,12 @@
 
-- name: Ruby on Rails 5.2
-  excerpt: "Ruby on Rails 5.2 Training"
+- name: Ruby on Rails 7.0
+  excerpt: "Ruby on Rails 7.0 Training"
   url: /trainings/rails.html
   duration: 2
   trainings:
-    - date: 2018-08-13
+    - date: 2023-01-23
       location: Koblenz
-  price: 1200
+  price: 1750
   tags:
     - Rails
 
@@ -15,9 +15,9 @@
   url: /trainings/phoenix.html
   duration: 2
   trainings:
-    - date: 2018-09-12
+    - date: 2023-01-30
       location: Koblenz
-  price: 1200
+  price: 1750
   tags:
     - Phoenix
 
@@ -26,8 +26,8 @@
   url: /trainings/webperformance.html
   duration: 1
   trainings:
-    - date: 2018-09-14
+    - date: 2023-02-07
       location: Koblenz
-  price: 980
+  price: 1900
   tags:
     - WebPerf
