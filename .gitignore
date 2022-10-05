@@ -1,9 +1,10 @@
 # Jekyll
 # 
-_site
-_drafts
-.sass-cache
-.asset-cache
+jekyll/_site
+jekyll/_drafts
+jekyll/.sass-cache
+jekyll/.asset-cache
+jekyll/.jekyll-cache
 
 # OS X
 #
@@ -11,5 +12,5 @@ _drafts
 
 # Deployment
 #
-export/
+jekyll/export/
 jekyll/node_modules
