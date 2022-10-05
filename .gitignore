@@ -1,10 +1,10 @@
 # Jekyll
 # 
-jekyll/_site
-jekyll/_drafts
-jekyll/.sass-cache
-jekyll/.asset-cache
-jekyll/.jekyll-cache
+_site
+_drafts
+.sass-cache
+.asset-cache
+.jekyll-cache
 
 # OS X
 #

@@ -5,7 +5,7 @@ URL="www.wintermeyer-consulting.de"
 
 # Build the HTML files
 #
-cd ~/Development/GitHub/$URL/jekyll
+cd ~/Github/$URL/jekyll/
 echo "* Generating the HTML files with Jekyll"
 JEKYLL_ENV=production jekyll build
 
@@ -15,15 +15,15 @@ echo
 
 # Create a new export directory
 #
-cd ~/Development/GitHub/$URL
+cd ~/Github/$URL/
 mkdir -p export/jekyll/
 rm -rf export/jekyll/_site
 cp -r jekyll/_site export/jekyll/
 
 # Run HTML Minifier
 #
-echo "* Run html-minifier for all HTML files"
-html-minifier -c conf/html-minifier.conf  --file-ext html --input-dir jekyll/_site/ --output-dir export/jekyll/_site/
+#echo "* Run html-minifier for all HTML files"
+#html-minifier -c conf/html-minifier.conf  --file-ext html --input-dir jekyll/_site/ --output-dir export/jekyll/_site/ 2>&1 /dev/null
 
 echo "* Compress HTML files"
 echo "** gzip"
@@ -49,7 +49,7 @@ tempfoo=`basename $0`
 TMPFILE=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
 
 echo "* Deploy with rsync"
-rsync -rlpcgoDvz --log-file=$TMPFILE --delete export/jekyll/_site/* stefan@$URL:/var/www/$URL/current/
+# rsync -rlpcgoDvz --log-file=$TMPFILE --delete export/jekyll/_site/* stefan@mothership.frankfurt.amooma.de:/var/www/$URL/current/
 
 # Remove the tempfile
 #
