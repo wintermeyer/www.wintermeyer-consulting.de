@@ -78,12 +78,12 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
-  jekyll
+  jekyll (~> 4.2)
   jekyll-feed (~> 0.6)
   jekyll_image_encode
   sass
   tzinfo-data
-  webrick
+  webrick (~> 1.7)
 
 BUNDLED WITH
    2.3.13
