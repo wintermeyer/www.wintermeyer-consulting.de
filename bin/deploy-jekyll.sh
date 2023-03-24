@@ -7,7 +7,7 @@ URL="www.wintermeyer-consulting.de"
 #
 cd ~/Development/GitHub/$URL/jekyll
 echo "* Generating the HTML files with Jekyll"
-JEKYLL_ENV=production jekyll build
+JEKYLL_ENV=production bundle exec jekyll build
 
 echo -n "Number of generated HTML Files:"
 find _site -name "*.*ml" | wc -l
