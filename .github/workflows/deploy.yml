@@ -1,0 +1,68 @@
+name: Deploy Jekyll Site
+
+on:
+  push:
+    branches:
+      - master  # Adjust this to your default branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1'  # Specify your Ruby version
+
+    - name: Install dependencies
+      run: |
+        cd jekyll
+        bundle install
+
+    - name: Build site
+      run: |
+        cd jekyll
+        JEKYLL_ENV=production bundle exec jekyll build
+
+    - name: Install html-minifier
+      run: |
+        npm install -g html-minifier
+  
+    - name: Minify HTML files
+      run: |
+        html-minifier -c conf/html-minifier.conf --file-ext html --input-dir jekyll/_site/ --output-dir jekyll/_site/ 2>&1 /dev/null
+
+    - name: Install zopfli and brotli
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y zopfli brotli
+
+    - name: Compress HTML files with zopfli and brotli
+      run: |
+        find jekyll/_site -name "*.*ml" -exec echo -n "." \; -exec zopfli --i70 {} \; -exec brotli --quality=10 {} \;
+
+    - name: Deploy to Server
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
+        rsync -avz --delete jekyll/_site/ $SERVER_USER@$SERVER_IP:$DEPLOY_PATH
+
+    - name: Log deployment success
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      run: |
+        ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "logger -t deployment 'Successfully deployed to ${DEPLOY_PATH} from the GitHub repository.'"
